@@ -4,6 +4,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <ctype.h>
 #include <sys/types.h>
 
 const char* ROOT_DIR = "/proc/";
@@ -133,9 +134,11 @@ void scan_root(){
             continue;
         }
 
+        char tmp[256];
         char proc_dir[256];
         char proc_stat[256];
-        snprintf(proc_dir, 256, "%s%s%s", ROOT_DIR, "/", p->d_name); //Path of the directory
+        snprintf(tmp, 256, "%s%s", ROOT_DIR, "/");
+        snprintf(proc_dir, 256, "%s%s", tmp, p->d_name); //Path of the directory
         snprintf(proc_stat, 256, "%s%s", proc_dir, "/stat");         //Path of the stat file
 
         int pid;
@@ -186,9 +189,11 @@ void scan_task(const char* curr_dir, int ppid){
     }
     struct dirent* p = NULL;
     while((p = readdir(dir)) != NULL){
+        char tp[256];
         char dir_proc[256];
         char stat_file[256];
-        snprintf(dir_proc, 256, "%s%s%s", curr_dir, "/", p->d_name);
+        snprintf(tp, 256, "%s%s", curr_dir, "/");
+        snprintf(dir_proc, 256, "%s%s", tp, p->d_name);
         snprintf(stat_file, 256, "%s%s", dir_proc, "/stat");
         FILE *pFile;
         pFile = fopen(stat_file, "r");
