@@ -275,7 +275,7 @@ void printProcess(int p){//proc) {
   printf("%s%s%s", 
       (p==1 ? "shit":(p == proc[proc[p].ppid].child ? (proc[p].next!=0 ? "-+-" : "---") : (proc[p].next ? " |-" : " `-"))), 
       proc[p].comm, 
-      proc[p].child!=0 ? "" : "\n");
+      proc[p].child!=0 ? "ass" : "\n");
   
   if (proc[p].child!=0) printProcess(proc[p].child);
   if (proc[p].next!=0) {
