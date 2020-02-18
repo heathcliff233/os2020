@@ -167,7 +167,7 @@ void scan_root(){
         * PID0 is the ppid of PID2
         * PID2 is the ppid of all system calls
         */
-        if( ppid==0 || ppid==2 || !(ppid<pid_max && pid<pid_max) ){
+        if( /*ppid==0 ||*/ ppid==2 || !(ppid<pid_max && pid<pid_max) ){
             continue;
         }
         int comm_len = strlen(comm) + 1;
@@ -180,7 +180,10 @@ void scan_root(){
             strncat(proc[pid].comm, pidStr, 10);
         }
         proc[pid].is_root = 1;
-        add_child(ppid, pid);
+        if(pid==1) printf("%s\n",proc[pid].comm);
+        if(pid != 1){
+            add_child(ppid, pid);
+        }
 
         //Enter the task directory and scan tasks of the root
         char task_dir[256];
@@ -228,7 +231,6 @@ void scan_task(const char* curr_dir, int ppid){
 
         int comm_len = strlen(comm) + 1;
         proc[pid].comm = (char *)malloc(sizeof(char) * (comm_len));
-        if(pid==1) printf("%s\n",proc[pid].comm);
         strncpy(proc[pid].comm, comm, comm_len);
         proc[pid].comm[comm_len - 1] = '\0';
         if(arg_p == 1){
