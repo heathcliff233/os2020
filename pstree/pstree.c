@@ -180,7 +180,7 @@ void scan_root(){
             strncat(proc[pid].comm, pidStr, 10);
         }
         proc[pid].is_root = 1;
-        if(pid==1) printf("%s\n",proc[pid].comm);
+        if(pid==1) printf("pid=1\n");//("%s\n",proc[pid].comm);
         if(pid != 1){
             add_child(ppid, pid);
         }
