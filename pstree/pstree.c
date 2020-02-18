@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
     scan_root();
     memset(tabs, 0, sizeof(tabs_ptr));  //TODO: fix it! Segmentation fault
     //print_tree(1);
-    printf("start print");
+    printf("start print\n");
     printProcess(1);
 
     //free(list);
@@ -273,7 +273,7 @@ void printProcess(int p){//proc) {
   /* print (pid) to name */
 
   printf("%s%s%s", 
-      (p==1 ? "":(p == proc[proc[p].ppid].child ? (proc[p].next!=0 ? "-+-" : "---") : (proc[p].next ? " |-" : " `-"))), 
+      (p==1 ? "shit":(p == proc[proc[p].ppid].child ? (proc[p].next!=0 ? "-+-" : "---") : (proc[p].next ? " |-" : " `-"))), 
       proc[p].comm, 
       proc[p].child!=0 ? "" : "\n");
   
