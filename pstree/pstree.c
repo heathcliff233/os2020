@@ -25,8 +25,7 @@ int main(int argc, char *argv[]) {
 */
 
 
-typedef struct Process
-{
+typedef struct Process{
     char *comm; //The filename of the executable, in parentheses.
     pid_t ppid; //The PID of the parent of the process.
     int son;    //The son of the process.
@@ -35,7 +34,6 @@ typedef struct Process
 } Process;
 
 Process* proc;  //Table of process information
-int root;       //Root of all process
 pid_t pid_max;  //Index of the max PID
 
 char tabs[1024];
@@ -88,7 +86,7 @@ int main(int argc, char *argv[]){
     init();
     scan_root();
     memset(tabs, 0, sizeof(tabs_ptr));
-    print_tree(root);
+    print_tree(1);
 
     free(list);
     free(proc);
@@ -125,7 +123,7 @@ int is_digit(char* s){
 }
 
 void scan_root(){
-    //Scan root processes for pstree display with no args.
+    //Scan root processes.
     DIR* dir = opendir(ROOT_DIR);
     // TODO: handle exceptions
     struct dirent* p = NULL;
@@ -133,9 +131,102 @@ void scan_root(){
         if(!is_digit(p->d_name)){
             continue;
         }
+
+        char proc_dir[256];
+        char proc_stat[256];
+        snprintf(proc_dir, 256, "%s%s%s", ROOT_DIR, "/", p->d_name); //Path of the directory
+        snprintf(proc_stat, 256, "%s%s", proc_dir, "/stat");         //Path of the stat file
+
+        int pid;
+        char comm[256];  //The filename of the executable, in parentheses.
+        char state[256]; //One of the characters, indicating process state
+        int ppid;
+
+        //Read the stat file to pid structure table
+        FILE* st;
+        st = fopen(proc_stat, "r");
+        if(st == NULL){
+            continue;
+        }
+        fscanf(st, "%d (%[^)]) %s %d", &pid, comm, state, &ppid); 
+        // %[^)] is to match to the char before ')'
+        fclose(st);
+        // TODO: deal with special cases of PID 0, 1, 2
+       /* 
+        * PID0 is not in the directory
+        * PID0 is the ppid of PID2
+        * PID2 is the ppid of all system calls
+        */
+        if( ppid==0 || ppid==2 || !(ppid<pid_max && pid<pid_max) ){
+            continue;
+        }
+        int comm_len = strlen(comm) + 1;
+        proc[pid].comm = (char*)malloc(sizeof(char)*(comm_len));
+        strncpy(proc[pid].comm, comm, comm_len);
+        proc[pid].comm[comm_len-1] = '\0';
+        proc[pid].is_root = 1;
+        add_child(ppid, pid);
+
+        //Enter the task directory and scan tasks of the root
+        char task_dir[256];
+        snprintf(task_dir, 256, "%s%s", proc_dir, "/task");
+        scan_task(task_dir, pid);
+
     }
-    // TODO: not finished
+    closedir(dir);
 
 }
 
+void scan_task(const char* curr_dir, int ppid){
+    //Scan tasks of the root processes
+    DIR* dir = opendir(curr_dir);
+    if(!dir){
+        return;
+    }
+    struct dirent* p = NULL;
+    while((p = readdir(dir)) != NULL){
+        char dir_proc[256];
+        char stat_file[256];
+        snprintf(dir_proc, 256, "%s%s%s", curr_dir, "/", p->d_name);
+        snprintf(stat_file, 256, "%s%s", dir_proc, "/stat");
+        FILE *pFile;
+        pFile = fopen(stat_file, "r");
 
+        if (pFile == NULL){
+            continue;
+        }
+
+        int pid;
+        char comm[256];
+        fscanf(pFile, "%d (%[^)])", &pid, comm);
+        fclose(pFile);
+
+        if (
+            !(pid < pid_max && ppid < pid_max) ||
+            !(proc[pid].comm == NULL) ||
+            (pid == ppid))
+        {
+            continue;
+        }
+
+        int comm_len = strlen(comm) + 1;
+        proc[pid].comm = (char *)malloc(sizeof(char) * (comm_len));
+        strncpy(proc[pid].comm, comm, comm_len);
+        proc[pid].comm[comm_len - 1] = '\0';
+        add_child(ppid, pid);
+
+    }
+    closedir(dir);
+
+}
+
+void add_child(int ppid, int pid){
+    //Link the proc
+    //TODO
+
+}
+
+void print_tree(int root){
+    //Print the proc structure
+    //TODO
+}
