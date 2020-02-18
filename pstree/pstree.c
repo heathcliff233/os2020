@@ -160,6 +160,8 @@ void scan_root(){
         }
         fscanf(st, "%d (%[^)]) %s %d", &pid, comm, state, &ppid); 
         // %[^)] is to match to the char before ')'
+
+        if(pid==1)printf("found pid 1\n");
         fclose(st);
         // TODO: deal with special cases of PID 0, 1, 2
        /* 
