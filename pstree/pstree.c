@@ -142,11 +142,11 @@ void scan_root(){
         }
         printf("in loop\n");
 
-        char tmp[256];
+        //char tmp[256];
         char proc_dir[256];
         char proc_stat[256];
-        snprintf(tmp, 256, "%s%s", ROOT_DIR, "/");
-        snprintf(proc_dir, 256, "%s%s", tmp, p->d_name); //Path of the directory
+        //snprintf(tmp, 256, "%s%s", ROOT_DIR, "/");
+        snprintf(proc_dir, 256, "%s%s", ROOT_DIR, p->d_name); //Path of the directory
         snprintf(proc_stat, 256, "%s%s", proc_dir, "/stat");         //Path of the stat file
 
         int pid;
