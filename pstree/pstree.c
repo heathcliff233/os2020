@@ -162,6 +162,7 @@ void scan_root(){
         // %[^)] is to match to the char before ')'
 
         if(pid==1)printf("found pid 1\n");
+        printf("PID %d\n",pid);
         fclose(st);
         // TODO: deal with special cases of PID 0, 1, 2
        /* 
