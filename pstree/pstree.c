@@ -45,7 +45,8 @@ void scan_root();
 void scan_task();
 int is_digit(char* s);
 void add_child(int parent, int child);
-void tree_sort(int root);
+//void tree_sort(int root);
+//int tree_cmp(int p1, int p2);
 void print_tree(int root);
 
 int main(int argc, char *argv[]){
@@ -221,12 +222,146 @@ void scan_task(const char* curr_dir, int ppid){
 }
 
 void add_child(int ppid, int pid){
-    //Link the proc
-    //TODO
+    //Link the proc with binary tree
+    proc[pid].ppid = ppid;
+    int child = proc[ppid].child;
+    if(child == 0){
+        proc[ppid].child = pid;
+    }else{
+        if(arg_n == 1){
+            if(pid < child){
+                proc[pid].next = child;
+                proc[ppid].child = pid;
+            }else{
+                while((proc[child].next!=0)&&(pid>proc[child].next)){
+                    child = proc[child].next;
+                }
+                proc[pid].next = proc[child].next;
+                proc[child].next = pid;
+            }
+
+        }else{
+            proc[pid].next = child;
+            proc[ppid].child = pid;
+        }
+    }
 
 }
 
-void print_tree(int root){
+/*
+void tree_sort(int root){
+    if(proc[root].next == 0){
+        root = proc[root].child;
+        tree_sort(root);
+    }
+    int neo = proc[root].next;
+    if(tree_cmp(root, neo)){
+        int par = proc[root].ppid;
+        proc[]
+        proc[root].next = proc[neo].next;
+        proc[neo].next = root;
+        int neo_c = proc[neo].child;
+        if(neo_c != 0){
+            tree_sort(proc[neo].child);
+        }
+    }
+    if(proc[root])
+
+
+    int ptr = 0;
+    list[ptr] = proc[root].child;
+    while (proc[list[ptr]].next != 0){
+        list[ptr + 1] = proc[list[ptr]].next;
+        ptr += 1;
+    }
+
+    qsort(list, ptr + 1, sizeof(int), tree_cmp);
+
+    //root has no 'next'
+    proc[root].child = list[0];
+    for (int i = 0; i < ptr; i++){
+        proc[list[i]].next = list[i + 1];
+    }
+    proc[list[ptr]].next = 0;
+
+    memset(list, 0, sizeof(int) * (ptr + 1));
+
+}
+
+int tree_cmp(int p1, int p2){ 
+    // return 1 if a should be placed after b
+
+    if (arg_n == 0){
+        return strcmp(proc[p1].comm, proc[p2].comm) > 0;
+    }else{
+        return p1 > p2;
+    }
+}
+*/
+
+void print_tree(int r){
     //Print the proc structure
-    //TODO
+    if (r == 0){
+        return;
+    }
+
+    int tabs_ptr_backup = tabs_ptr;
+
+    if (r != 1){
+        printf("-");
+        tabs_ptr += 1;
+    }
+    if (proc[r].is_root == 0){ 
+        // have no child, print within {}
+        printf("{%s}", proc[r].comm);
+        tabs_ptr += (strlen(proc[r].comm) + 2);
+    }else{
+        printf("%s", proc[r].comm);
+        tabs_ptr += strlen(proc[r].comm);
+    }
+    if (arg_p == 1){
+        printf("(%d)", r);
+        char pid_str[32];
+        sprintf(pid_str, "%d", r);
+        tabs_ptr += (2 + strlen(pid_str));
+    }
+    if (proc[r].child != 0){
+        if (proc[proc[r].child].next != 0){
+            tabs[tabs_ptr + 1] = 1;
+            printf("-+");
+        }else{
+            tabs[tabs_ptr + 1] = 0;
+            printf("--");
+        }
+        tabs_ptr += 2;
+        // tabs[tabs_ptr - 1] = 1;
+        print_tree(proc[r].child);
+        int son_ptr = proc[proc[r].child].next;
+        while (son_ptr != 0){
+            for (int i = 0; i < tabs_ptr - 1; i++){
+                if (tabs[i] == 0){
+                    printf(" ");
+                }
+                else{
+                    printf("|");
+                }
+            }
+            if (proc[son_ptr].next != 0){
+                printf("|");
+            }else{
+                tabs[tabs_ptr - 1] = 0;
+                printf("`");
+            }
+            print_tree(son_ptr);
+            son_ptr = proc[son_ptr].next;
+        }
+    }
+    else{
+        printf("\n");
+    }
+    for (int i = tabs_ptr_backup; i < tabs_ptr; i++){
+        tabs[i] = 0;
+    }
+    tabs_ptr = tabs_ptr_backup;
+    return;
 }
