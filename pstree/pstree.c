@@ -88,7 +88,7 @@ int main(int argc, char *argv[]){
     init();
     scan_root();
     memset(tabs, 0, sizeof(tabs_ptr));
-    print("before print");
+    printf("before print");
     print_tree(1);
 
     free(list);
