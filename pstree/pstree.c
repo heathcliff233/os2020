@@ -87,8 +87,7 @@ int main(int argc, char *argv[]){
 
     init();
     scan_root();
-    memset(tabs, 0, sizeof(tabs_ptr));
-    printf("before print");
+    memset(tabs, 0, sizeof(tabs_ptr));  //TODO: fix it! Segmentation fault
     print_tree(1);
 
     free(list);
