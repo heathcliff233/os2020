@@ -137,7 +137,7 @@ void scan_root(){
     // TODO: handle exceptions
     struct dirent* p = NULL;
     while((p = readdir(dir)) != NULL){
-        if(!is_digit(p->d_name)){
+        if((p->d_name[0] < '0')||(p->d_name[0] > '9')){
             continue;
         }
         printf("in loop\n");
