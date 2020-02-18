@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
                 }else if (strcmp(argv[i], "--show-pids") == 0){
                     arg_p = 1;
                 }else if (strcmp(argv[i], "--version") == 0){
-                    fprintf(stderr, "fuck you OJJJ\n");
+                    fprintf(stderr, "pstree version 2.5 by 181240019\n");
                     return 0;
                 }
             }else{
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
                     }else if (argv[i][j] == 'p'){
                         arg_p = 1;
                     }else if (argv[i][j] == 'V'){
-                        fprintf(stderr, "fuck you OJJJ\n");
+                        fprintf(stderr, "pstree version 2.5 by 181240019\n");
                         return 0;
                     }
                 }
