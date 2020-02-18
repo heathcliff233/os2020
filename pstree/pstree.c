@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 typedef struct Process{
     char *comm; //The filename of the executable, in parentheses.
     pid_t ppid; //The PID of the parent of the process.
-    int son;    //The son of the process.
+    int child;    //The child of the process.
     int next;   //The brother of the process.
     int is_root;//Whether it should be expanded, determine the style to print.
 } Process;
@@ -108,7 +108,7 @@ void init(){
     for (int i = 0; i < pid_max; i++){
         proc[i].comm = NULL;
         proc[i].ppid = 0;
-        proc[i].son = 0;
+        proc[i].child = 0;
         proc[i].next = 0;
         proc[i].is_root = 0;
     }
