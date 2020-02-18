@@ -65,7 +65,6 @@ int main(int argc, char *argv[]){
                 }else if (strcmp(argv[i], "--show-pids") == 0){
                     arg_p = 1;
                 }else if (strcmp(argv[i], "--version") == 0){
-                    perror("pstree for OSLab M1 by 181240019 fuck you OJ");
                     fprintf(stderr, "fuck you OJJJ\n");
                     return 0;
                 }
@@ -76,7 +75,7 @@ int main(int argc, char *argv[]){
                     }else if (argv[i][j] == 'p'){
                         arg_p = 1;
                     }else if (argv[i][j] == 'V'){
-                        printf("pstree for OSLab M1 by 181240019\nfuck you OJ\n");
+                        fprintf(stderr, "fuck you OJJJ\n");
                         return 0;
                     }
                 }
