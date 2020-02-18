@@ -87,6 +87,7 @@ int main(int argc, char *argv[]){
 
     init();
     scan_root();
+    printf("finish scan\n");
     memset(tabs, 0, sizeof(tabs_ptr));
     print_tree(1);
 
