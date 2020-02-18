@@ -91,6 +91,7 @@ int main(int argc, char *argv[]){
     scan_root();
     memset(tabs, 0, sizeof(tabs_ptr));  //TODO: fix it! Segmentation fault
     //print_tree(1);
+    printf("start print");
     printProcess(1);
 
     //free(list);
