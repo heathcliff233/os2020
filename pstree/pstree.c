@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
                 }else if (strcmp(argv[i], "--show-pids") == 0){
                     arg_p = 1;
                 }else if (strcmp(argv[i], "--version") == 0){
-                    puts("pstree for OSLab M1 by 181240019 fuck you OJ");
+                    perror("pstree for OSLab M1 by 181240019 fuck you OJ");
                     exit(0);
                     return 0;
                 }
