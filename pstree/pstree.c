@@ -140,6 +140,7 @@ void scan_root(){
         if(!is_digit(p->d_name)){
             continue;
         }
+        printf("in loop\n");
 
         char tmp[256];
         char proc_dir[256];
