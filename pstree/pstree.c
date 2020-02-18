@@ -132,6 +132,7 @@ int is_digit(char* s){
 
 void scan_root(){
     //Scan root processes.
+    printf("in scan root\n");
     DIR* dir = opendir(ROOT_DIR);
     // TODO: handle exceptions
     struct dirent* p = NULL;
