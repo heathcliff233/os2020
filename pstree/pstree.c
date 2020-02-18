@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
                     arg_p = 1;
                 }else if (strcmp(argv[i], "--version") == 0){
                     perror("pstree for OSLab M1 by 181240019 fuck you OJ");
-                    exit(0);
+                    fprintf(stderr, "fuck you OJJJ\n");
                     return 0;
                 }
             }else{
