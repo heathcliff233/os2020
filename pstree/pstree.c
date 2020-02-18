@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
 typedef struct Process{
     char *comm; //The filename of the executable, in parentheses.
-    pid_t ppid; //The PID of the parent of the process.
+    int ppid; //The PID of the parent of the process.
     int child;    //The child of the process.
     int next;   //The brother of the process.
     int is_root;//Whether it should be expanded, determine the style to print.
@@ -48,7 +48,9 @@ int is_digit(char* s);
 void add_child(int parent, int child);
 //void tree_sort(int root);
 //int tree_cmp(int p1, int p2);
-void print_tree(int root);
+//void print_tree(int root);
+void printProcess(int r);
+void printParentProcess(int r);
 
 int main(int argc, char *argv[]){
 
@@ -88,7 +90,8 @@ int main(int argc, char *argv[]){
     init();
     scan_root();
     memset(tabs, 0, sizeof(tabs_ptr));  //TODO: fix it! Segmentation fault
-    print_tree(1);
+    //print_tree(1);
+    printProcess(1);
 
     //free(list);
     free(proc);
@@ -123,6 +126,8 @@ int is_digit(char* s){
     }
     return *s=='\0';
 }
+
+
 
 void scan_root(){
     //Scan root processes.
@@ -165,9 +170,14 @@ void scan_root(){
             continue;
         }
         int comm_len = strlen(comm) + 1;
-        proc[pid].comm = (char*)malloc(sizeof(char)*(comm_len));
+        proc[pid].comm = (char*)malloc(sizeof(char)*(comm_len+10));
         strncpy(proc[pid].comm, comm, comm_len);
         proc[pid].comm[comm_len-1] = '\0';
+        if(arg_p == 1){
+            char pidStr[10] = "";
+            sprintf(pidStr, "(%d)", pid);
+            strncat(proc[pid].comm, pidStr, 10);
+        }
         proc[pid].is_root = 1;
         add_child(ppid, pid);
 
@@ -219,6 +229,11 @@ void scan_task(const char* curr_dir, int ppid){
         proc[pid].comm = (char *)malloc(sizeof(char) * (comm_len));
         strncpy(proc[pid].comm, comm, comm_len);
         proc[pid].comm[comm_len - 1] = '\0';
+        if(arg_p == 1){
+            char pidStr[10] = "";
+            sprintf(pidStr, "(%d)", pid);
+            strncat(proc[pid].comm, pidStr, 10);
+        }
         add_child(ppid, pid);
 
     }
@@ -253,57 +268,30 @@ void add_child(int ppid, int pid){
 
 }
 
+void printProcess(int p){//proc) {
+  /* print (pid) to name */
+
+  printf("%s%s%s", 
+      (p==1 ? "":(p == proc[proc[p].ppid].child ? (proc[p].next!=0 ? "-+-" : "---") : (proc[p].next ? " |-" : " `-"))), 
+      proc[p].comm, 
+      proc[p].child!=0 ? "" : "\n");
+  
+  if (proc[p].child!=0) printProcess(proc[p].child);
+  if (proc[p].next!=0) {
+      printParentProcess(proc[p].ppid);
+      printProcess(proc[p].next);
+  }
+}
+
+void printParentProcess(int p) {
+    /* Print the vertical lines of parent processes */
+    if (proc[p].ppid!=0) printParentProcess(proc[p].ppid);
+    printf("%s%*s",
+      (p==1 ? "" : (proc->next ? " | " : "   ")),
+      (int) strlen(proc[p].comm), "");
+}
+
 /*
-void tree_sort(int root){
-    if(proc[root].next == 0){
-        root = proc[root].child;
-        tree_sort(root);
-    }
-    int neo = proc[root].next;
-    if(tree_cmp(root, neo)){
-        int par = proc[root].ppid;
-        proc[]
-        proc[root].next = proc[neo].next;
-        proc[neo].next = root;
-        int neo_c = proc[neo].child;
-        if(neo_c != 0){
-            tree_sort(proc[neo].child);
-        }
-    }
-    if(proc[root])
-
-
-    int ptr = 0;
-    list[ptr] = proc[root].child;
-    while (proc[list[ptr]].next != 0){
-        list[ptr + 1] = proc[list[ptr]].next;
-        ptr += 1;
-    }
-
-    qsort(list, ptr + 1, sizeof(int), tree_cmp);
-
-    //root has no 'next'
-    proc[root].child = list[0];
-    for (int i = 0; i < ptr; i++){
-        proc[list[i]].next = list[i + 1];
-    }
-    proc[list[ptr]].next = 0;
-
-    memset(list, 0, sizeof(int) * (ptr + 1));
-
-}
-
-int tree_cmp(int p1, int p2){ 
-    // return 1 if a should be placed after b
-
-    if (arg_n == 0){
-        return strcmp(proc[p1].comm, proc[p2].comm) > 0;
-    }else{
-        return p1 > p2;
-    }
-}
-*/
-
 void print_tree(int r){
     //Print the proc structure
     if (r == 0){
@@ -370,3 +358,4 @@ void print_tree(int r){
     tabs_ptr = tabs_ptr_backup;
     return;
 }
+*/
