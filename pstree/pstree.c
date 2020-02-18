@@ -157,6 +157,7 @@ void scan_root(){
         //Read the stat file to pid structure table
         FILE* st;
         st = fopen(proc_stat, "r");
+        printf("%s\n",proc_stat);
         if(st == NULL){
             continue;
         }
