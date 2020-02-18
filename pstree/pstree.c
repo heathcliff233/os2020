@@ -140,7 +140,7 @@ void scan_root(){
         if((p->d_name[0] < '0')||(p->d_name[0] > '9')){
             continue;
         }
-        printf("in loop\n");
+        //printf("in loop\n");
 
         //char tmp[256];
         char proc_dir[256];
@@ -157,15 +157,15 @@ void scan_root(){
         //Read the stat file to pid structure table
         FILE* st;
         st = fopen(proc_stat, "r");
-        printf("%s\n",proc_stat);
+        //printf("%s\n",proc_stat);
         if(st == NULL){
             continue;
         }
         fscanf(st, "%d (%[^)]) %s %d", &pid, comm, state, &ppid); 
         // %[^)] is to match to the char before ')'
 
-        if(pid==1)printf("found pid 1\n");
-        printf("PID %d\n",pid);
+        //if(pid==1)printf("found pid 1\n");
+        //printf("PID %d\n",pid);
         fclose(st);
         // TODO: deal with special cases of PID 0, 1, 2
        /* 
@@ -282,9 +282,9 @@ void printProcess(int p){//proc) {
   /* print (pid) to name */
 
   printf("%s%s%s", 
-      (p==1 ? "shit":(p == proc[proc[p].ppid].child ? (proc[p].next!=0 ? "-+-" : "---") : (proc[p].next ? " |-" : " `-"))), 
+      (p==1 ? "":(p == proc[proc[p].ppid].child ? (proc[p].next!=0 ? "-+-" : "---") : (proc[p].next ? " |-" : " `-"))), 
       proc[p].comm, 
-      proc[p].child!=0 ? "ass" : "\n");
+      proc[p].child!=0 ? "" : "\n");
   
   if (proc[p].child!=0) printProcess(proc[p].child);
   if (proc[p].next!=0) {
