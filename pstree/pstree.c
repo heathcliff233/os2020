@@ -39,7 +39,7 @@ pid_t pid_max;  //Index of the max PID
 
 char tabs[1024];
 int tabs_ptr = 0;
-int* list;
+//int* list;
 
 void init();
 void scan_root();
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
     memset(tabs, 0, sizeof(tabs_ptr));  //TODO: fix it! Segmentation fault
     print_tree(1);
 
-    free(list);
+    //free(list);
     free(proc);
     return 0;
 }
@@ -103,8 +103,8 @@ void init(){
     fscanf(pFile, "%d", &pid_max); // Get the max pid
     fclose(pFile);
 
-    list = (int *)malloc(sizeof(int) * ((int)pid_max + 1));
-    memset(list, 0, sizeof(int) * ((int)pid_max + 1));
+    //list = (int *)malloc(sizeof(int) * ((int)pid_max + 1));
+    //memset(list, 0, sizeof(int) * ((int)pid_max + 1));
 
     proc = (Process *)malloc(sizeof(Process) * (pid_max + 1));
     for (int i = 0; i < pid_max; i++){
