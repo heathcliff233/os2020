@@ -228,6 +228,7 @@ void scan_task(const char* curr_dir, int ppid){
 
         int comm_len = strlen(comm) + 1;
         proc[pid].comm = (char *)malloc(sizeof(char) * (comm_len));
+        if(pid==1) printf("%s",proc[pid].comm);
         strncpy(proc[pid].comm, comm, comm_len);
         proc[pid].comm[comm_len - 1] = '\0';
         if(arg_p == 1){
