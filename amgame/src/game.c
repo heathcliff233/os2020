@@ -21,11 +21,13 @@ int main(const char *args) {
     int key = 0;
     // clear_screen();
     while ((key = read_key()) != _KEY_NONE) {
-      clear_screen();
+      // clear_screen();
       //kbd_event(key);         // 处理键盘事件
       if (key == _KEY_ESCAPE) {
         _halt(0);
       }
+      clear_screen();
+
     }
     splash();
     next_frame += 1000 / FPS; // 计算下一帧的时间
