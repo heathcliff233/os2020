@@ -30,7 +30,7 @@ int main(const char *args) {
     int key = _KEY_NONE;
     for(int i=0;i<1000;++i) orange[i]=R;
     //splash();
-    while (key=read_key != _KEY_NONE) {
+    while ((key=read_key()) != _KEY_NONE) {
       if (KEYCODE(key)==_KEY_ESCAPE){
         if(ISKEYDOWN(key)) is_halt = 1;
       }else{
@@ -42,7 +42,9 @@ int main(const char *args) {
       _halt(0);
     }
     //clear_screen();
-    draw_rect(orange,0,0,20,20);
+    if(is_print == 1) {
+      draw_rect(orange,0,0,20,20);
+    }
     //while(uptime() < base);
 
     next_frame += 1000 / FPS; // 计算下一帧的时间
