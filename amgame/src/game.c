@@ -19,8 +19,9 @@ int main(const char *args) {
     while(uptime() < next_frame);
     // print_key();
     int key = 0;
-    clear_screen();
+    // clear_screen();
     while ((key = read_key()) != _KEY_NONE) {
+      clear_screen();
       //kbd_event(key);         // 处理键盘事件
     }
     if (key == _KEY_ESCAPE) {
