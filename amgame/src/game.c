@@ -23,9 +23,9 @@ int main(const char *args) {
     while ((key = read_key()) != _KEY_NONE) {
       clear_screen();
       //kbd_event(key);         // 处理键盘事件
-    }
-    if (key == _KEY_ESCAPE) {
-      _halt(0);
+      if (key == _KEY_ESCAPE) {
+        _halt(0);
+      }
     }
     splash();
     next_frame += 1000 / FPS; // 计算下一帧的时间
