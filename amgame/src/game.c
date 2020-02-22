@@ -14,21 +14,22 @@ int main(const char *args) {
   splash();
 
   puts("Press any key to see its key code...\n");
-  int next_frame = 0;
+  //int next_frame = 0;
   while (1) {
-    while(uptime() < next_frame);
+    //while(uptime() < next_frame);
     int key = _KEY_NONE;
     splash();
     while (key == _KEY_NONE) {
       key = read_key();
     }
-
+    int base = uptime() + 1000;
     if (key == _KEY_ESCAPE) {
       _halt(0);
     }
     clear_screen();
+    while(uptime() < base);
 
-    next_frame += 1000 / FPS; // 计算下一帧的时间
+    //next_frame += 1000 / FPS; // 计算下一帧的时间
   }
   return 0;
 }
