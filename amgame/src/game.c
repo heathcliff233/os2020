@@ -1,7 +1,7 @@
 #include <game.h>
 #include <klib.h>
 
-#define FPS 10
+#define FPS 1
 
 // Operating system is a C program!
 int main(const char *args) {
