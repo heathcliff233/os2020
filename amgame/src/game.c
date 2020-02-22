@@ -1,4 +1,5 @@
 #include <game.h>
+#include <klib.h>
 
 #define FPS 10
 
@@ -20,7 +21,7 @@ int main(const char *args) {
     int key = 0;
     clear_screen();
     while ((key = readkey()) != _KEY_NONE) {
-      kbd_event(key);         // 处理键盘事件
+      //kbd_event(key);         // 处理键盘事件
     }
     if (key == _KEY_ESCAPE) {
       _halt(0);
