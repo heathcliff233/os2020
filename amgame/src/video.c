@@ -32,3 +32,8 @@ void splash() {
     }
   }
 }
+
+void clear_screen() {
+  init();
+  draw_tile(0, 0, w, h, 0xffffff);
+}
