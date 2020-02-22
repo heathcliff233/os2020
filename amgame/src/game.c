@@ -17,19 +17,17 @@ int main(const char *args) {
   int next_frame = 0;
   while (1) {
     while(uptime() < next_frame);
-    // print_key();
-    int key = 0;
+    int key = _KEY_NONE;
     splash();
-    while ((key = read_key()) != _KEY_NONE) {
-      // clear_screen();
-      //kbd_event(key);         // 处理键盘事件
-      if (key == _KEY_ESCAPE) {
-        _halt(0);
-      }
-      clear_screen();
-      break;
+    while (key == _KEY_NONE) {
+      key = read_key();
     }
-    // splash();
+
+    if (key == _KEY_ESCAPE) {
+      _halt(0);
+    }
+    clear_screen();
+
     next_frame += 1000 / FPS; // 计算下一帧的时间
   }
   return 0;
