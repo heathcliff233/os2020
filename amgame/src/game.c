@@ -95,6 +95,7 @@ void draw_num(int i, int j){
       break;
     }
   }
+  draw_rect_pure(x, y, 5*8, 8, B);
   draw_string(c, x, y, W, B);
 
 }
