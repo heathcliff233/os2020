@@ -8,8 +8,8 @@
 #define ISKEYDOWN(x) (((x)&0x8000))
 #define KEYCODE(x) ((x)&0x7fff)
 
-uint32_t orange[1000];
 int game_map[4][4] = {0};
+int change;
 
 void game_init();
 void draw_num(int i, int j);
@@ -26,7 +26,6 @@ int main(const char *args) {
   while (1) {
     while(uptime() < next_frame);
     int key = _KEY_NONE;
-    for(int i=0;i<1000;++i) orange[i]=R;
     while ((key=read_key()) != _KEY_NONE) {
       if(ISKEYDOWN(key)){
         key = KEYCODE(key);
@@ -101,6 +100,7 @@ void draw_num(int i, int j){
 }
 
 void forward(int key){
+  change = 0;
   int x, y, sign;
   switch(key) {
     case _KEY_D : 
@@ -108,6 +108,7 @@ void forward(int key){
         for(sign=2; sign>=0; sign--){
           x = sign;
           while(x<3 && (game_map[y][x+1]==0 || game_map[y][x]==game_map[y][x+1])){
+            change = 1;
             if(game_map[y][x+1]==0){
               game_map[y][x+1]=game_map[y][x];
             }else{
@@ -124,6 +125,7 @@ void forward(int key){
         for(sign=1; sign<4; sign++){
           x = sign;
           while(x>0 && (game_map[y][x-1]==0 || game_map[y][x]==game_map[y][x-1])){
+            change = 1;
             if(game_map[y][x-1]==0){
               game_map[y][x-1] = game_map[y][x];
             }else{
@@ -140,6 +142,7 @@ void forward(int key){
         for(sign=1; sign<4; sign++){
           y = sign;
           while(y>0 && (game_map[y-1][x]==0 || game_map[y][x]==game_map[y-1][x])){
+            change = 1;
             if(game_map[y-1][x]==0){
               game_map[y-1][x] = game_map[y][x];
             }else{
@@ -156,6 +159,7 @@ void forward(int key){
         for(sign=2; sign>=0; sign--){
           y = sign;
           while(y<3 && (game_map[y+1][x]==0 || game_map[y][x]==game_map[y+1][x])){
+            change = 1;
             if(game_map[y+1][x]==0){
               game_map[y+1][x]=game_map[y][x];
             }else{
@@ -167,6 +171,9 @@ void forward(int key){
         }
       }break;
 
+  }
+  if(change == 0){
+    return;
   }
   int ret = generate();
   if(ret==0){
