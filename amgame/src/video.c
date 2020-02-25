@@ -132,8 +132,12 @@ void draw_string(const char *str, int x, int y, int color_char, int color_back)
     */
     int pivot = 0;
     while(str[pivot] != '\0'){
-      draw_char(str[pivot], x+8*pivot , y, color_char, color_back);
-      pivot ++;
+      pivot++;
+    }
+    int base = pivot;
+    while(pivot > 0){
+      draw_char(str[pivot-1], x+8*(base-pivot) , y, color_char, color_back);
+      pivot --;
     }
 }
 
