@@ -89,7 +89,7 @@ void draw_num(int i, int j){
       break;
     }
   }
-  draw_string(c, x, y, W, B);
+  draw_string(c, x, y, B, R);
 
 }
 
