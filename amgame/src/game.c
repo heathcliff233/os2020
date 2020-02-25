@@ -80,6 +80,11 @@ void draw_num(int i, int j){
   char c[6];
   int lst;
   for(int id = 0; id<5; id++){
+    if(id==0 && num==0){
+      c[0] = '0';
+      c[1] = '\0';
+      break;
+    }
     if(num > 0){
       lst = num%10;
       c[id] = lst + '0';
@@ -90,7 +95,7 @@ void draw_num(int i, int j){
       break;
     }
   }
-  draw_string(c, x, y, B, R);
+  draw_string(c, x, y, W, B);
 
 }
 
