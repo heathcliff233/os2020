@@ -58,10 +58,8 @@ void game_init(){
       game_map[i][j] = 0;
     }
   }
-  int x, y;
-  srand(time(0));
-  x = rand()%4;
-  y = rand()%4;
+  int x = 1;
+  int y = 1;
   game_map[y][x] = 2;
   draw();
 }
@@ -92,7 +90,6 @@ void draw_num(int i, int j){
     }
   }
   draw_string(c, x, y, B, W);
-  free(c);
 
 }
 

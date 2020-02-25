@@ -1,5 +1,6 @@
 #include <game.h>
 #include <klib.h>
+#include <fonts.h>
 
 #define SIDE 16
 #define char_p 1
