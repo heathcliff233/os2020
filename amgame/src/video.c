@@ -122,11 +122,18 @@ void draw_char(char ch, int x, int y, int color_char, int color_black) {
 
 void draw_string(const char *str, int x, int y, int color_char, int color_back)
 {
-    int len = strlen(str);
-    draw_rect_pure(x, y, len * char_p * p * (char_w + char_space), char_h * char_p * p * 2, color_back);
+    //int len = strlen(str);
+    draw_rect_pure(x, y, 4 * char_p * p * (char_w + char_space), char_h * char_p * p * 2, color_back);
+    /*
     for (int i = 0; i < len; i++)
     {
         draw_char(str[i], x + i * char_p * p * (char_w + char_space), y, color_char, color_back);
+    }
+    */
+    int pivot = 0;
+    while(str[pivot] != '\0'){
+      draw_char(str[pivot], x+5*pivot , y, color_char, color_back);
+      pivot ++;
     }
 }
 
