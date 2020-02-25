@@ -16,7 +16,7 @@ static void init() {
   w = info.width;
   h = info.height;
 }
-/*
+
 static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // careful! stack is limited!
   _DEV_VIDEO_FBCTRL_t event = {
@@ -28,7 +28,7 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   }
   _io_write(_DEV_VIDEO, _DEVREG_VIDEO_FBCTRL, &event, sizeof(event));
 }
-*/
+
 /*
 void splash() {
   init();
@@ -70,7 +70,7 @@ void clear_screen()
     draw_rect_pure(0, 0, w, h, 0x0);
     draw_sync();
 }
-
+/*
 static void draw_rect_small(int x, int y, int wt, int ht, uint32_t color)
 {
     if (x + wt > w || y + ht > h)
@@ -84,7 +84,7 @@ static void draw_rect_small(int x, int y, int wt, int ht, uint32_t color)
     }
     draw_rect(pixels, x, y, wt, ht);
 }
-
+*/
 void draw_rect_pure(int x, int y, int w, int h, uint32_t color)
 {
     for (int ix = 0; ix * SIDE <= w; ix++)
@@ -102,7 +102,8 @@ void draw_rect_pure(int x, int y, int w, int h, uint32_t color)
             {
                 dy = SIDE;
             }
-            draw_rect_small(x + ix * SIDE, y + iy * SIDE, dx, dy, color);
+            //draw_rect_small(x + ix * SIDE, y + iy * SIDE, dx, dy, color);
+            draw_tile(x + ix * SIDE, y + iy * SIDE, dx, dy, color);
         }
     }
 }
