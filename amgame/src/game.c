@@ -14,6 +14,7 @@ int game_map[4][4] = {0};
 void game_init();
 void draw_num(int i, int j);
 void forward(int key);
+void draw();
 int generate();
 
 // Operating system is a C program!
@@ -21,10 +22,8 @@ int main(const char *args) {
   _ioe_init();
   int next_frame = 0;
   int is_halt = 0;
-  int is_print = 0;
   game_init();
   while (1) {
-    is_print = 0;
     while(uptime() < next_frame);
     int key = _KEY_NONE;
     for(int i=0;i<1000;++i) orange[i]=R;
@@ -77,8 +76,8 @@ void draw(){
 
 void draw_num(int i, int j){
   int num = game_map[i][j];
-  int y = 5*i;
-  int x = 5*j;
+  int y = 3*8*i;
+  int x = 5*8*j;
   char c[6];
   int lst;
   for(int id = 0; id<5; id++){
@@ -98,7 +97,7 @@ void draw_num(int i, int j){
 }
 
 void forward(int key){
-  int x, y, i, sign;
+  int x, y, sign;
   switch(key) {
     case _KEY_D : 
       for(y=0; y<4; y++){

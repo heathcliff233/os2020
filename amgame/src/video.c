@@ -1,4 +1,5 @@
 #include <game.h>
+#include <klib.h>
 
 #define SIDE 16
 #define char_p 1
@@ -14,7 +15,7 @@ static void init() {
   w = info.width;
   h = info.height;
 }
-
+/*
 static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // careful! stack is limited!
   _DEV_VIDEO_FBCTRL_t event = {
@@ -26,6 +27,7 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   }
   _io_write(_DEV_VIDEO, _DEVREG_VIDEO_FBCTRL, &event, sizeof(event));
 }
+*/
 /*
 void splash() {
   init();
@@ -48,8 +50,7 @@ void clear_screen() {
 
 void init_screen()
 {
-    w = screen_width();
-    h = screen_height();
+    init();
 
     p = w > h ? h : w;
     p /= 200;
@@ -61,13 +62,6 @@ void init_screen()
     clear_screen();
 
     printf("Init with w = %d, h = %d\n", w, h);
-}
-
-void splash()
-{
-    draw_modele_all_clear();
-    draw_modele_all();
-    draw_sync();
 }
 
 void clear_screen()
