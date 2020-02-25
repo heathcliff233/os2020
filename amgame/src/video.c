@@ -132,7 +132,7 @@ void draw_string(const char *str, int x, int y, int color_char, int color_back)
     */
     int pivot = 0;
     while(str[pivot] != '\0'){
-      draw_char(str[pivot], x+5*pivot , y, color_char, color_back);
+      draw_char(str[pivot], x+8*pivot , y, color_char, color_back);
       pivot ++;
     }
 }
