@@ -108,23 +108,16 @@ void draw_rect_pure(int x, int y, int w, int h, uint32_t color)
     }
 }
 
-void draw_char(char c, int x, int y, int color_char, int color_back)
-{
-    if ((int)c > 127)
-    {
-        return;
-    }
-    int pixel_width = char_p * p;
-    for (int i = 0; i < char_h; i++)
-    {
-        for (int j = 0; j < char_w; j++)
-        {
-            int bit1 = (fonts[(int)c * 2] >> (63 - (i * char_h + j))) & 1;
-            draw_rect_pure(x + pixel_width * char_w - j * pixel_width, y + i * pixel_width, pixel_width, pixel_width, bit1 == 1 ? color_char : color_back);
-            int bit2 = (fonts[(int)c * 2 + 1] >> (63 - (i * char_h + j))) & 1;
-            draw_rect_pure(x + pixel_width * char_w - j * pixel_width, y + i * pixel_width + char_h * pixel_width, pixel_width, pixel_width, bit2 == 1 ? color_char : color_back);
-        }
-    }
+void draw_char(char ch, int x, int y, int color_char, int color_black) {
+  int i, j;
+  char *p = fonts[(int)ch];
+  for (i = 0; i < 8; i ++) 
+    for (j = 0; j < 8; j ++) 
+      if ((p[i] >> j) & 1){
+          draw_tile(x+j,y+i,1,1,0xffffff);
+      }else{
+          draw_tile(x+j,y+i,1,1,0x0);
+      }
 }
 
 void draw_string(const char *str, int x, int y, int color_char, int color_back)
