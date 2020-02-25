@@ -62,7 +62,7 @@ void init_screen()
 
     clear_screen();
 
-    printf("Init with w = %d, h = %d\n", w, h);
+    //printf("Init with w = %d, h = %d\n", w, h);
 }
 
 void clear_screen()
