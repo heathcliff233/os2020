@@ -60,6 +60,7 @@ void game_init(){
   }
   int x = 1;
   int y = 1;
+  draw_rect_pure(0,0,10,10,W);
   game_map[y][x] = 2;
   draw();
 }
