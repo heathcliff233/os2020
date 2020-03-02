@@ -1,0 +1,104 @@
+.TH "src/game.c" 3 "Mon Mar 2 2020" "amgame" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/game.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <game\&.h>\fP
+.br
+\fC#include <klib\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBFPS\fP   10"
+.br
+.ti -1c
+.RI "#define \fBW\fP   0xffffff"
+.br
+.ti -1c
+.RI "#define \fBB\fP   0x000000"
+.br
+.ti -1c
+.RI "#define \fBR\fP   0xff0000"
+.br
+.ti -1c
+.RI "#define \fBISKEYDOWN\fP(x)   (((x)&0x8000))"
+.br
+.ti -1c
+.RI "#define \fBKEYCODE\fP(x)   ((x)&0x7fff)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBgame_init\fP ()"
+.br
+.ti -1c
+.RI "void \fBdraw_num\fP (int i, int j)"
+.br
+.ti -1c
+.RI "void \fBforward\fP (int key)"
+.br
+.ti -1c
+.RI "void \fBdraw\fP ()"
+.br
+.ti -1c
+.RI "int \fBgenerate\fP ()"
+.br
+.ti -1c
+.RI "int \fBmain\fP (const char *args)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBgame_map\fP [4][4] = {0}"
+.br
+.ti -1c
+.RI "int \fBchange\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define B   0x000000"
+
+.SS "#define FPS   10"
+
+.SS "#define ISKEYDOWN(x)   (((x)&0x8000))"
+
+.SS "#define KEYCODE(x)   ((x)&0x7fff)"
+
+.SS "#define R   0xff0000"
+
+.SS "#define W   0xffffff"
+
+.SH "Function Documentation"
+.PP 
+.SS "void draw ()"
+
+.SS "void draw_num (int i, int j)"
+
+.SS "void forward (int key)"
+
+.SS "void game_init ()"
+
+.SS "int generate ()"
+
+.SS "int main (const char * args)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "int change"
+
+.SS "int game_map[4][4] = {0}"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for amgame from the source code\&.

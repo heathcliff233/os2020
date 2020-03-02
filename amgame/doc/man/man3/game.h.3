@@ -1,0 +1,57 @@
+.TH "include/game.h" 3 "Mon Mar 2 2020" "amgame" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/game.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <am\&.h>\fP
+.br
+\fC#include <amdev\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBsplash\fP ()"
+.br
+.ti -1c
+.RI "void \fBclear_screen\fP ()"
+.br
+.ti -1c
+.RI "void \fBprint_key\fP ()"
+.br
+.ti -1c
+.RI "void \fBinit_screen\fP ()"
+.br
+.ti -1c
+.RI "void \fBdraw_rect_pure\fP (int x, int y, int \fBw\fP, int \fBh\fP, uint32_t color)"
+.br
+.ti -1c
+.RI "void \fBdraw_char\fP (char c, int x, int y, int color_char, int color_back)"
+.br
+.ti -1c
+.RI "void \fBdraw_string\fP (const char *str, int x, int y, int color_char, int color_back)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void clear_screen ()"
+
+.SS "void draw_char (char c, int x, int y, int color_char, int color_back)"
+
+.SS "void draw_rect_pure (int x, int y, int w, int h, uint32_t color)"
+
+.SS "void draw_string (const char * str, int x, int y, int color_char, int color_back)"
+
+.SS "void init_screen ()"
+
+.SS "void print_key ()"
+
+.SS "void splash ()"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for amgame from the source code\&.

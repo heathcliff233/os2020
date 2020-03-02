@@ -1,0 +1,101 @@
+.TH "src/video.c" 3 "Mon Mar 2 2020" "amgame" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/video.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <game\&.h>\fP
+.br
+\fC#include <klib\&.h>\fP
+.br
+\fC#include <fonts\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSIDE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBchar_p\fP   1"
+.br
+.ti -1c
+.RI "#define \fBchar_w\fP   8"
+.br
+.ti -1c
+.RI "#define \fBchar_h\fP   8"
+.br
+.ti -1c
+.RI "#define \fBchar_space\fP   1"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit_screen\fP ()"
+.br
+.ti -1c
+.RI "void \fBclear_screen\fP ()"
+.br
+.ti -1c
+.RI "void \fBdraw_rect_pure\fP (int x, int y, int \fBw\fP, int \fBh\fP, uint32_t color)"
+.br
+.ti -1c
+.RI "void \fBdraw_char\fP (char ch, int x, int y, int color_char, int color_black)"
+.br
+.ti -1c
+.RI "void \fBdraw_string\fP (const char *str, int x, int y, int color_char, int color_back)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBw\fP"
+.br
+.ti -1c
+.RI "int \fBh\fP"
+.br
+.ti -1c
+.RI "int \fBp\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define char_h   8"
+
+.SS "#define char_p   1"
+
+.SS "#define char_space   1"
+
+.SS "#define char_w   8"
+
+.SS "#define SIDE   16"
+
+.SH "Function Documentation"
+.PP 
+.SS "void clear_screen ()"
+
+.SS "void draw_char (char ch, int x, int y, int color_char, int color_black)"
+
+.SS "void draw_rect_pure (int x, int y, int w, int h, uint32_t color)"
+
+.SS "void draw_string (const char * str, int x, int y, int color_char, int color_back)"
+
+.SS "void init_screen ()"
+
+.SH "Variable Documentation"
+.PP 
+.SS "int h"
+
+.SS "int p"
+
+.SS "int w"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for amgame from the source code\&.

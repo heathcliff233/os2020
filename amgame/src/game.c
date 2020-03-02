@@ -8,7 +8,7 @@
 #define ISKEYDOWN(x) (((x)&0x8000))
 #define KEYCODE(x) ((x)&0x7fff)
 
-int game_map[4][4] = {0};
+int game_map[4][4] = {0};  //!> table of all the numbers
 int change;
 
 void game_init();
@@ -46,11 +46,9 @@ int main(const char *args) {
   return 0;
 }
 
-/*
-|-----|-----|-----|-----|
-
-*/
-
+/**
+ * @note initialize the game
+ */
 void game_init(){
   for(int i=0; i<4; i++){
     for(int j=0; j<4; j++){
@@ -59,11 +57,14 @@ void game_init(){
   }
   int x = 1;
   int y = 1;
-  draw_char('a',0,0,R,W);
+  //draw_char('a',0,0,R,W);
   game_map[y][x] = 2;
   draw();
 }
 
+/**
+ * @note sum-up function to draw all the numbers on the table
+ */
 void draw(){
   for (int i=0; i<4; i++){
     for (int j=0; j<4; j++){
@@ -72,6 +73,12 @@ void draw(){
   }
 }
 
+/**
+ * @note scan the number into a string and draw a sequence of 8x8 figure of the number
+ * @param i game_map[i][j]
+ * @param j game_map[i][j]
+ * @todo did not fix logic of controlling font size 
+ */
 void draw_num(int i, int j){
   int num = game_map[i][j];
   int y = 3*8*i;
@@ -99,6 +106,11 @@ void draw_num(int i, int j){
 
 }
 
+/**
+ * @note main game logic, process the key input and renew the interface
+ * @param key key code of the valid input
+ * @todo still exist bug when all boxes are stuck
+ */
 void forward(int key){
   change = 0;
   int x, y, sign;
@@ -183,6 +195,10 @@ void forward(int key){
   }
 }
 
+/**
+ * @note generate a new 2 in an empty box
+ * @todo this generate function does not behave randomly
+ */
 int generate(){
   int x, y;
   for (y=0; y <4; y++){

@@ -85,6 +85,10 @@ static void draw_rect_small(int x, int y, int wt, int ht, uint32_t color)
     draw_rect(pixels, x, y, wt, ht);
 }
 */
+
+/**
+ * @note draw a pure rectangle of the specified size on desired position, fixed out of bound issue
+ */
 void draw_rect_pure(int x, int y, int w, int h, uint32_t color)
 {
     for (int ix = 0; ix * SIDE <= w; ix++)

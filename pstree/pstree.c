@@ -10,20 +10,20 @@
 const char* ROOT_DIR = "/proc/";
 const char* MAX_PID_FILE = "/proc/sys/kernel/pid_max";
 
-// To determine whether -n -p flag exist
+//! To determine whether -n -p flag exist
 int arg_n = 0;
 int arg_p = 0;
 
 typedef struct Process{
-    char *comm; //The filename of the executable, in parentheses.
-    int ppid;   //The PID of the parent of the process.
-    int child;  //The child of the process.
-    int next;   //The brother of the process.
-    int is_root;//Whether it should be expanded, determine the style to print.
+    char *comm; // The filename of the executable, in parentheses.
+    int ppid;   // The PID of the parent of the process.
+    int child;  // The child of the process.
+    int next;   // The brother of the process.
+    int is_root;// Whether it should be expanded, determine the style to print.
 } Process;
 
-Process* proc;  //Table of process information
-pid_t pid_max;  //Index of the max PID
+Process* proc;  //!Table of process information
+pid_t pid_max;  //!Index of the max PID
 
 void init();
 void scan_root();
@@ -34,7 +34,7 @@ void printParentProcess(int r);
 
 int main(int argc, char *argv[]){
 
-    // To preprocess args
+    //! To preprocess args
     for (int i = 0; i < argc; i++){
         assert(argv[i]); // always true
         if (argv[i][0] == '-'){
@@ -71,8 +71,8 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
+//! Initialize the table to store proc information 
 void init(){
-    // Initialize the table to store proc information 
     FILE *pFile;
     pFile = fopen(MAX_PID_FILE, "r");
     assert(pFile);
@@ -89,9 +89,8 @@ void init(){
     }
 }
 
-
+//! Scan root processes.
 void scan_root(){
-    //Scan root processes.
     printf("in scan root\n");
     DIR* dir = opendir(ROOT_DIR);
     // TODO: handle exceptions
@@ -103,15 +102,15 @@ void scan_root(){
 
         char proc_dir[256];
         char proc_stat[256];
-        snprintf(proc_dir, 256, "%s%s", ROOT_DIR, p->d_name); //Path of the directory
-        snprintf(proc_stat, 256, "%s%s", proc_dir, "/stat");         //Path of the stat file
+        snprintf(proc_dir, 256, "%s%s", ROOT_DIR, p->d_name); // Path of the directory
+        snprintf(proc_stat, 256, "%s%s", proc_dir, "/stat");  // Path of the stat file
 
         int pid;
-        char comm[256];  //The filename of the executable, in parentheses.
-        char state[256]; //One of the characters, indicating process state
+        char comm[256];  // The filename of the executable, in parentheses.
+        char state[256]; // One of the characters, indicating process state
         int ppid;
 
-        //Read the stat file to pid structure table
+        // Read the stat file to pid structure table
         FILE* st;
         st = fopen(proc_stat, "r");
         if(st == NULL){
@@ -122,10 +121,11 @@ void scan_root(){
 
         fclose(st);
         // TODO: deal with special cases of PID 0, 1, 2
-       /* 
-        * PID0 is not in the directory
-        * PID0 is the ppid of PID2
-        * PID2 is the ppid of all system calls
+       /**
+        * @note 
+        *       * PID0 is not in the directory
+        *       * PID0 is the ppid of PID2
+        *       * PID2 is the ppid of all system calls
         */
         if( ppid==2 || !(ppid<pid_max && pid<pid_max) ){
             continue;
@@ -155,8 +155,12 @@ void scan_root(){
 
 }
 
+/**
+ * @note Scan tasks of the root processes
+ * @param curr_dir target directory 
+ * 
+ */
 void scan_task(const char* curr_dir, int ppid){
-    //Scan tasks of the root processes
     DIR* dir = opendir(curr_dir);
     if(!dir){
         return;
@@ -205,8 +209,12 @@ void scan_task(const char* curr_dir, int ppid){
 
 }
 
+/** 
+ * @note Link the proc with binary tree
+ * @param ppid pid of parent
+ * @param pid pid of child
+ */
 void add_child(int ppid, int pid){
-    //Link the proc with binary tree
     proc[pid].ppid = ppid;
     int child = proc[ppid].child;
     if(child == 0){
@@ -246,8 +254,8 @@ void printProcess(int p){//proc) {
   }
 }
 
+//! Print the vertical lines of parent processes 
 void printParentProcess(int p) {
-    /* Print the vertical lines of parent processes */
     if (proc[p].ppid!=0) printParentProcess(proc[p].ppid);
     printf("%s%*s",
       (p==1 ? "" : (proc->next ? " | " : "   ")),
