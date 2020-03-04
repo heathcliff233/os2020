@@ -38,7 +38,6 @@ enum co_status {
   asm volatile("mov " SP ", %0" : "=g"(sp) : )
 
 struct co {
-  //int pid;
   int state;
   char name[32];
   void (*func)(void *);
@@ -64,6 +63,7 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   if(!setjmp(start_buf)) {
     stackEX(current->stack_ptr, stack_backup);
     current->func(current->arg);
+    if(DEBUG) printf("created but not jump yet\n");
     longjmp(wait_buf, 1);
 
   } else {
