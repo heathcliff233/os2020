@@ -56,7 +56,7 @@ struct co* head = NULL;
 struct co* current = NULL;
 
 static struct co* co_create(const char *name, void (*func)(void *), void *arg);
-//static void co_free(struct co* co);
+static void co_free(struct co* co);
 
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   if(DEBUG) printf("Start co %s\n", name);
@@ -103,7 +103,7 @@ void co_wait(struct co* co) {
     if(current == co) break;
   }
   co->state = CO_DEAD;
-  //co_free(co);
+  co_free(co);
   return;
 }
 
@@ -127,3 +127,22 @@ static struct co* co_create(const char *name, void (*func)(void *), void *arg) {
   return ret;
 }
 
+static void co_free(struct co* co) {
+  if(!head) return;
+  if(head == co) {
+    struct co* next = head->next;
+    free(head);
+    head = next;
+  }
+  if(head) {
+    struct co* cp = head;
+    while (cp->next) {
+      if(cp->next == co){
+        struct co* next = cp->next->next;
+        free(cp->next);
+        break;
+      }
+      cp = cp->next;
+    }
+  }
+}
