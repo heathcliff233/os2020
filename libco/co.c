@@ -33,7 +33,7 @@ enum co_status {
   asm volatile("mov " SP ", %0" : "=g"(sp) : )
 #define movto(dest, stack) \
   *(uintptr_t*)(stack + (((void*)&dest)-stack_backup))=(uintptr_t)dest;
-#define MAX_CO 128
+#define MAX_CO 16
 #define DEBUG true
 #define SZ_STACK 4096
 
