@@ -33,7 +33,7 @@ enum co_status {
   asm volatile("mov " SP ", %0" : "=g"(sp) : )
 #define movto(dest, stack) \
   *(uintptr_t*)(stack + (((void*)&dest)-stack_backup))=(uintptr_t)dest;
-#define MAX_CO 100
+#define MAX_CO 128
 #define DEBUG true
 #define SZ_STACK 4096
 
@@ -54,15 +54,17 @@ void* stack_backup = NULL;
 
 static struct co* new_co() {
   pool_id--;
-  routines[pool[pool_id]].stat = CO_NEW;
-  return &routines[pool[pool_id]];
+  //routines[pool[pool_id]].stat = CO_NEW;
+  //return &routines[pool[pool_id]];
+  routines[pool_id].stat = CO_NEW;
+  return &routines[pool_id];
 }
 
 void co_init() {
   int i;
   pool_id = MAX_CO;
   for(i=0; i<MAX_CO; i++){
-    pool[i] = i;
+    //pool[i] = i;
     routines[i].stat = 0;
   }
 }
@@ -81,15 +83,15 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   setSP(stack_top);
   if(!setjmp(current->tar_buf)) {
     setSP(stack_backup);
-    return current;
+//    return current;
   } else {
-    //current->stat = CO_RUNNING;
     func(arg);
     current->stat = CO_DEAD;
-    pool[pool_id++] = current-routines;
+    //pool[pool_id++] = current-routines;
     longjmp(ret_buf,1);
   }
-  return NULL;
+  //return NULL;
+  return current;
 }
 
 static void co_jmp(struct co* co){
