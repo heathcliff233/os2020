@@ -16,7 +16,7 @@
 
 
 #define DEBUG true
-#define SZ_STACK 4096
+#define SZ_STACK 16*4096
 #define NR_CO 16
 
 enum co_status {
