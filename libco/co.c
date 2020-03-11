@@ -15,7 +15,7 @@
 #include <stdbool.h>
 
 
-#define DEBUG true
+#define DEBUG false
 #define SZ_STACK 16*4096
 #define NR_CO 16
 
@@ -60,6 +60,7 @@ static void co_free(struct co* co);
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   if(DEBUG) printf("Start co %s\n", name);
   current = co_create(name, func, arg);
+  /*
   if(DEBUG) printf("created but no context switch\n");
   if(!setjmp(start_buf)) {
     stackEX(current->stack_ptr, stack_backup);
@@ -69,6 +70,7 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   } else {
     if(DEBUG) printf("init finished\n");
   }
+  */
   return current;
 }
 
@@ -80,7 +82,7 @@ void co_yield() {
       longjmp(start_buf, 1);
 
     } else {
-      struct co* next = current->next ? current->next : head;
+      struct co* next = current->next ? current->next : head->next;
       current->state = CO_WAITING;
       stackEX(next->stack_ptr, current->stack_ptr);
       current = next;
