@@ -59,6 +59,7 @@ struct co* current = NULL;
 
 
 int tot=0;
+static void co_free(struct co* co);
 
 __attribute__((constructor))static void Initiate()
 {
