@@ -119,6 +119,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg)
 	thd->arg = arg;
 	thd->state = CO_NEW;
 	Add(thd);
+  printf("finish\n");
   return thd;
 }
 
