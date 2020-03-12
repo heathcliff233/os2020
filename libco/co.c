@@ -16,7 +16,7 @@
 #include <time.h>
 
 
-#define DEBUG false
+#define DEBUG true
 #define SZ_STACK 16*4096
 //#define NR_CO 16
 
@@ -127,16 +127,16 @@ __attribute__((destructor))static void End()
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) 
 {
-  if(DEBUG) printf("start\n");
+  //if(DEBUG) printf("start\n");
 	struct co *thd = malloc(sizeof(struct co)); //Already freed it
-	if(DEBUG) printf("malloc\n");
+	//if(DEBUG) printf("malloc\n");
   thd->name = name;
 	thd->func = func;
 	thd->arg = arg;
 	thd->state = CO_NEW;
-  if(DEBUG) printf("before add\n");
+  //if(DEBUG) printf("before add\n");
 	Add(thd);
-  if(DEBUG) printf("finish\n");
+  //if(DEBUG) printf("finish\n");
   return thd;
 }
 
@@ -148,8 +148,9 @@ void Finish()
 	current = temp;
 	longjmp(current->buf, 1);
 }
+
 struct co* get_co(){
-  
+  /*
   if(head->next){
     struct co* tmp = head->next;
     while(tmp != NULL && tmp->state==CO_DEAD){
@@ -158,9 +159,9 @@ struct co* get_co(){
     return tmp;
   }
   return NULL;
-  
+  */
 
-  /*
+  
   if(tot > 0)
   { 
     struct co *temp = head;
@@ -178,7 +179,7 @@ struct co* get_co(){
     return temp;
   }
   else return NULL;
-  */
+  
 }
 
 void co_yield() {
