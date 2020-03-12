@@ -15,9 +15,9 @@
 #include <stdbool.h>
 
 
-#define DEBUG false
+#define DEBUG true
 #define SZ_STACK 16*4096
-#define NR_CO 16
+//#define NR_CO 16
 
 enum co_status {
   CO_NEW = 1, // 新创建，还未执行过
@@ -61,9 +61,9 @@ struct co {
   //void* stack_ptr;
 };
 
-static void* stack_backup;
-static jmp_buf start_buf;
-static jmp_buf wait_buf;
+//static void* stack_backup;
+//static jmp_buf start_buf;
+//static jmp_buf wait_buf;
 struct co* head = NULL;
 struct co* current = NULL;
 
