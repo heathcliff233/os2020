@@ -69,7 +69,7 @@ struct co* current = NULL;
 
 //static struct co* co_create(const char *name, void (*func)(void *), void *arg);
 static void co_free(struct co* co);
-
+/*
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   if(DEBUG) printf("Start co %s\n", name);
   
@@ -84,7 +84,7 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   head->next = ret;
 
   //current = co_create(name, func, arg);
-  /* 
+  //---------
   if(DEBUG) printf("created but no context switch\n");
   if(!setjmp(start_buf)) {
     stackEX(current->stack_ptr, stack_backup);
@@ -94,10 +94,30 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   } else {
     if(DEBUG) printf("init finished\n");
   }
-  */
+  //---------
   printf("init finished\n");
   //return current;
   return ret;
+}
+*/
+
+int tot=0;
+void Add(struct co *temp)
+{
+	temp->next = head->next;
+	head->next = temp;
+	tot++;
+}
+
+struct co *co_start(const char *name, void (*func)(void *), void *arg) 
+{
+	struct co *thd = malloc(sizeof(struct co)); //Already freed it
+	thd->name = name;
+	thd->func = func;
+	thd->arg = arg;
+	thd->state = CO_NEW;
+	Add(thd);
+  return thd;
 }
 
 void Finish()
