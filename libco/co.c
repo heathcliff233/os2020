@@ -167,7 +167,7 @@ void co_wait(struct co* co) {
   co_free(co);
   //return;
 }
-
+/*
 static struct co* co_create(const char *name, void (*func)(void *), void *arg) {
   printf("malloc\n");
   struct co* ret = malloc(sizeof(struct co));
@@ -177,7 +177,7 @@ static struct co* co_create(const char *name, void (*func)(void *), void *arg) {
   ret->arg = arg;
   //ret->next = NULL;
   //ret->stack_ptr = (void*)((((intptr_t)ret->stack + sizeof(ret->stack))>>4)<<4);
-  /*
+  //----------
   if(head) {
     struct co* cp = head;
     while (cp->next) {
@@ -187,13 +187,13 @@ static struct co* co_create(const char *name, void (*func)(void *), void *arg) {
   } else {
     head = ret;
   }
-  */
+  //----------
   ret->next = head->next;
   head->next = ret;
   printf("ret\n");
   return ret;
 }
-
+*/
 static void co_free(struct co* co) {
   /*
   if(!head) return;
