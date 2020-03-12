@@ -159,6 +159,7 @@ void co_wait(struct co* co) {
 }
 
 static struct co* co_create(const char *name, void (*func)(void *), void *arg) {
+  prinf("malloc\n");
   struct co* ret = malloc(sizeof(struct co));
   ret->state = CO_NEW;
   strncpy(ret->name, name, sizeof(ret->name));
