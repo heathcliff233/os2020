@@ -111,7 +111,7 @@ void Add(struct co *temp)
 
 __attribute__((constructor))static void Initiate()
 {
-  //srand(time(NULL));
+  srand(time(NULL));
   head = malloc(sizeof(struct co));
   head->next = NULL;
   current = co_start("main", NULL, NULL); 
@@ -148,6 +148,7 @@ void Finish()
 	longjmp(current->buf, 1);
 }
 struct co* get_co(){
+  /*
   if(head->next){
     struct co* tmp = head->next;
     while(tmp != NULL && tmp->state==CO_DEAD){
@@ -156,6 +157,24 @@ struct co* get_co(){
     return tmp;
   }
   return NULL;
+  */
+  if(tot > 0)
+  { 
+    struct co *temp = Head;
+    int Choose = rand() % tot + 1;
+    while(Choose > 0)
+    {
+      temp = temp->Next;
+      Choose--;
+    }
+    if(temp->Status == CO_DEAD)
+    {
+      temp = Head->Next;
+      while(temp != NULL && temp->Status == CO_DEAD)temp = temp->Next; 
+    }
+    return temp;
+  }
+  else return NULL;
 }
 
 void co_yield() {
@@ -189,6 +208,8 @@ void co_yield() {
 		uintptr_t retq = (uintptr_t)Finish;
 		memcpy((char *)temp, &retq, MASK + 1);
     stackEX((void *)temp, current->func, (uintptr_t)current->arg);
+  }else{
+    longjmp(current->buf, 1)
   }
 }
 
@@ -252,6 +273,7 @@ static void co_free(struct co* co) {
         cp->next = co->next;
         //free(cp->next);
         free(co);
+        tot--;
         break;
       }
       cp = cp->next;
