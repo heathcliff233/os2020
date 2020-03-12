@@ -203,6 +203,7 @@ void co_yield() {
     if(DEBUG) printf("go to thread %s \n",current->name);
   }
   */
+  if(DEBUG) printf("yield\n");
   if(!setjmp(current->buf)){
     current = get_co();
   }
@@ -230,6 +231,7 @@ void co_wait(struct co* co) {
   }
   co->state = CO_DEAD;
   */
+  printf("wait\n");
   while(co->state != CO_DEAD)co_yield();
   co_free(co);
   //return;
