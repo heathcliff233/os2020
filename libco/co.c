@@ -52,7 +52,7 @@ static inline void stackEX(void *sp, void *entry, uintptr_t arg){
 
 struct co {
   int state;
-  char name[32];
+  //char name[32];
   void (*func)(void *);
   void* arg;
   struct co* next;
@@ -76,7 +76,7 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   struct co* ret = malloc(sizeof(struct co));
   printf("fuck");
   ret->state = CO_NEW;
-  strncpy(ret->name, name, sizeof(ret->name));
+  //strncpy(ret->name, name, sizeof(ret->name));
   ret->func = func;
   ret->arg = arg;
   ret->next = head->next;
@@ -153,7 +153,7 @@ void co_yield() {
 }
 
 void co_wait(struct co* co) {
-  if(DEBUG) printf("wait for %s \n", co->name);
+  //if(DEBUG) printf("wait for %s \n", co->name);
   /*
   while(co->state != CO_RUNNING) {
     if(!setjmp(wait_buf)) {
