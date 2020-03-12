@@ -15,7 +15,7 @@
 #include <stdbool.h>
 
 
-#define DEBUG true
+#define DEBUG false
 #define SZ_STACK 16*4096
 //#define NR_CO 16
 
