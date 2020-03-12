@@ -111,8 +111,10 @@ void Add(struct co *temp)
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) 
 {
+  printf("start\n");
 	struct co *thd = malloc(sizeof(struct co)); //Already freed it
-	thd->name = name;
+	printf("malloc\n");
+  thd->name = name;
 	thd->func = func;
 	thd->arg = arg;
 	thd->state = CO_NEW;
