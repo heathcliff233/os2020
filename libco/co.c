@@ -213,6 +213,7 @@ void co_yield() {
 		temp = temp - MASK;
 		uintptr_t retq = (uintptr_t)Finish;
 		memcpy((char *)temp, &retq, MASK + 1);
+    if(DEBUG) printf("stack_ch\n");
     stackEX((void *)temp, current->func, (uintptr_t)current->arg);
   }else{
     longjmp(current->buf, 1);
