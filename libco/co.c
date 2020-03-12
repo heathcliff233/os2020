@@ -179,6 +179,7 @@ static struct co* co_create(const char *name, void (*func)(void *), void *arg) {
   */
   ret->next = head->next;
   head->next = ret;
+  printf("ret\n");
   return ret;
 }
 
