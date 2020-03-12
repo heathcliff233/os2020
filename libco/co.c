@@ -51,7 +51,7 @@ static inline void stackEX(void *sp, void *entry, uintptr_t arg){
 }
 
 struct co {
-  int state;
+  enum co_status state;
   const char* name;
   void (*func)(void *);
   void* arg;
@@ -154,7 +154,7 @@ void co_yield() {
 }
 
 void co_wait(struct co* co) {
-  if(DEBUG) printf("wait for %s \n", co->name);
+  //if(DEBUG) printf("wait for %s \n", co->name);
   /*
   while(co->state != CO_RUNNING) {
     if(!setjmp(wait_buf)) {
