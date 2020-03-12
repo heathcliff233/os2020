@@ -60,7 +60,7 @@ static void co_free(struct co* co);
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   if(DEBUG) printf("Start co %s\n", name);
   current = co_create(name, func, arg);
-  /*
+  
   if(DEBUG) printf("created but no context switch\n");
   if(!setjmp(start_buf)) {
     stackEX(current->stack_ptr, stack_backup);
@@ -70,7 +70,7 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   } else {
     if(DEBUG) printf("init finished\n");
   }
-  */
+  
   return current;
 }
 
