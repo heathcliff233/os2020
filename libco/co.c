@@ -233,7 +233,7 @@ void co_wait(struct co* co) {
   }
   co->state = CO_DEAD;
   */
-  printf("wait\n");
+  if(DEBUG)printf("wait\n");
   while(co->state != CO_DEAD)co_yield();
   co_free(co);
   //return;
