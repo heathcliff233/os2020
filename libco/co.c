@@ -127,7 +127,7 @@ __attribute__((destructor))static void End()
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) 
 {
-  //if(DEBUG) printf("start\n");
+  if(DEBUG) printf("start\n");
 	struct co *thd = malloc(sizeof(struct co)); //Already freed it
 	//if(DEBUG) printf("malloc\n");
   thd->name = name;
