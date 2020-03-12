@@ -28,19 +28,11 @@ enum co_status {
 };
 
 #if defined (__i386__)
-//  #define SP "%%esp"
   #define MASK 3
 #elif defined (__x86_64__)
-//  #define SP "%%rsp"
   #define MASK 7
 #endif
 
-/*
-#define stackEX(newsp, backup) \
-  asm volatile("mov " SP ", %0; mov %1, " SP : "=g"(backup) : "g"(newsp))
-#define getSP(sp) \
-  asm volatile("mov " SP ", %0" : "=g"(sp) : )
-*/
 static inline void stackEX(void *sp, void *entry, uintptr_t arg){
   asm volatile (
     #if defined (__x86_64__)
@@ -59,56 +51,14 @@ struct co {
   struct co* next;
   jmp_buf buf;
   char stack[SZ_STACK];
-  //void* stack_ptr;
 };
 
-//static void* stack_backup;
-//static jmp_buf start_buf;
-//static jmp_buf wait_buf;
 struct co* head = NULL;
 struct co* current = NULL;
 
-//static struct co* co_create(const char *name, void (*func)(void *), void *arg);
-static void co_free(struct co* co);
-/*
-struct co* co_start(const char *name, void (*func)(void *), void *arg) {
-  if(DEBUG) printf("Start co %s\n", name);
-  
-  struct co* ret = malloc(sizeof(struct co));
-  printf("fuck");
-  ret->state = CO_NEW;
-  ret->name = name;
-  //strncpy(ret->name, name, sizeof(ret->name));
-  ret->func = func;
-  ret->arg = arg;
-  ret->next = head->next;
-  head->next = ret;
 
-  //current = co_create(name, func, arg);
-  //---------
-  if(DEBUG) printf("created but no context switch\n");
-  if(!setjmp(start_buf)) {
-    stackEX(current->stack_ptr, stack_backup);
-    current->func(current->arg);
-    longjmp(wait_buf, 1);
-
-  } else {
-    if(DEBUG) printf("init finished\n");
-  }
-  //---------
-  printf("init finished\n");
-  //return current;
-  return ret;
-}
-*/
 
 int tot=0;
-void Add(struct co *temp)
-{
-	temp->next = head->next;
-	head->next = temp;
-	tot++;
-}
 
 __attribute__((constructor))static void Initiate()
 {
@@ -128,15 +78,14 @@ __attribute__((destructor))static void End()
 struct co *co_start(const char *name, void (*func)(void *), void *arg) 
 {
   if(DEBUG) printf("start\n");
-	struct co *thd = malloc(sizeof(struct co)); //Already freed it
-	//if(DEBUG) printf("malloc\n");
+	struct co *thd = malloc(sizeof(struct co)); 
   thd->name = name;
 	thd->func = func;
 	thd->arg = arg;
 	thd->state = CO_NEW;
-  //if(DEBUG) printf("before add\n");
-	Add(thd);
-  //if(DEBUG) printf("finish\n");
+  thd->next = head->next;
+  head->next = thd;
+  tot++;
   return thd;
 }
 
@@ -150,18 +99,7 @@ void Finish()
 }
 
 struct co* get_co(){
-  /*
-  if(head->next){
-    struct co* tmp = head->next;
-    while(tmp != NULL && tmp->state==CO_DEAD){
-      tmp = tmp->next;
-    }
-    return tmp;
-  }
-  return NULL;
-  */
 
-  
   if(tot > 0)
   { 
     struct co *temp = head;
@@ -183,26 +121,7 @@ struct co* get_co(){
 }
 
 void co_yield() {
-  /*
-  if(!setjmp(current->buf)) {
-    if(current->state == CO_NEW) {
-      stackEX(stack_backup, current->stack_ptr);
-      current->state = CO_WAITING;
-      longjmp(start_buf, 1);
 
-    } else {
-      struct co* next = current->next ? current->next : head->next;
-      current->state = CO_WAITING;
-      stackEX(next->stack_ptr, current->stack_ptr);
-      current = next;
-      longjmp(current->buf, 1);
-    }
-  } else {
-    stackEX(current->stack_ptr, stack_backup);
-    current->state = CO_RUNNING;
-    if(DEBUG) printf("go to thread %s \n",current->name);
-  }
-  */
   if(DEBUG) printf("yield\n");
   if(!setjmp(current->buf)){
     current = get_co();
@@ -222,72 +141,24 @@ void co_yield() {
 }
 
 void co_wait(struct co* co) {
-  //if(DEBUG) printf("wait for %s \n", co->name);
-  /*
-  while(co->state != CO_RUNNING) {
-    if(!setjmp(wait_buf)) {
-      current = co;
-      longjmp(co->buf, 1);
-    }
-    if(current == co) break;
-  }
-  co->state = CO_DEAD;
-  */
   if(DEBUG)printf("wait\n");
   while(co->state != CO_DEAD)co_yield();
   co_free(co);
-  //return;
+
 }
-/*
-static struct co* co_create(const char *name, void (*func)(void *), void *arg) {
-  printf("malloc\n");
-  struct co* ret = malloc(sizeof(struct co));
-  ret->state = CO_NEW;
-  strncpy(ret->name, name, sizeof(ret->name));
-  ret->func = func;
-  ret->arg = arg;
-  //ret->next = NULL;
-  //ret->stack_ptr = (void*)((((intptr_t)ret->stack + sizeof(ret->stack))>>4)<<4);
-  //----------
-  if(head) {
-    struct co* cp = head;
-    while (cp->next) {
-      cp = cp->next;
-    }
-    cp->next = ret;
-  } else {
-    head = ret;
-  }
-  //----------
-  ret->next = head->next;
-  head->next = ret;
-  printf("ret\n");
-  return ret;
-}
-*/
+
 static void co_free(struct co* co) {
-  /*
-  if(!head) return;
-  if(head == co) {
-    struct co* next = head->next;
-    free(head);
-    head = next;
-  }
-  */
-  //if(head) {
-    struct co* cp = head;
-    while (cp->next) {
-      if(cp->next == co){
-        //struct co* next = cp->next->next;
-        cp->next = co->next;
-        //free(cp->next);
-        free(co);
-        tot--;
-        break;
-      }
-      cp = cp->next;
+
+  struct co* cp = head;
+  while (cp->next) {
+    if(cp->next == co){
+      cp->next = co->next;
+      free(co);
+      tot--;
+      break;  
     }
-  //}
+    cp = cp->next;
+  }
 }
 
 
