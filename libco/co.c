@@ -16,7 +16,7 @@
 #include <time.h>
 
 
-#define DEBUG true
+#define DEBUG false
 #define SZ_STACK 16*4096
 //#define NR_CO 16
 
@@ -206,17 +206,18 @@ void co_yield() {
   if(DEBUG) printf("yield\n");
   if(!setjmp(current->buf)){
     current = get_co();
-  }
-  if(current->state == CO_NEW){
-    current->state = CO_RUNNING;
-    uintptr_t temp = (uintptr_t)current->stack + SZ_STACK - 1;
-		temp = temp - MASK;
-		uintptr_t retq = (uintptr_t)Finish;
-		memcpy((char *)temp, &retq, MASK + 1);
-    if(DEBUG) printf("stack_ch\n");
-    stackEX((void *)temp, current->func, (uintptr_t)current->arg);
-  }else{
-    longjmp(current->buf, 1);
+  
+    if(current->state == CO_NEW){
+      current->state = CO_RUNNING;
+      uintptr_t temp = (uintptr_t)current->stack + SZ_STACK - 1;
+		  temp = temp - MASK;
+		  uintptr_t retq = (uintptr_t)Finish;
+		  memcpy((char *)temp, &retq, MASK + 1);
+      if(DEBUG) printf("stack_ch\n");
+      stackEX((void *)temp, current->func, (uintptr_t)current->arg);
+    }else{
+      longjmp(current->buf, 1);
+    }
   }
 }
 
