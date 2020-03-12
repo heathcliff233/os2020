@@ -27,10 +27,10 @@ enum co_status {
 };
 
 #if defined (__i386__)
-  #define SP "%%esp"
+//  #define SP "%%esp"
   #define MASK 3
 #elif defined (__x86_64__)
-  #define SP "%%rsp"
+//  #define SP "%%rsp"
   #define MASK 7
 #endif
 
@@ -43,9 +43,9 @@ enum co_status {
 static inline void stackEX(void *sp, void *entry, uintptr_t arg){
   asm volatile (
     #if defined (__x86_64__)
-      "movq %0, SP; movq %2, %%rdi; jmp *%1" : : "b"((uintptr_t)sp),     "d"(entry), "a"(arg)
+      "movq %0, %%rsp; movq %2, %%rdi; jmp *%1" : : "b"((uintptr_t)sp),     "d"(entry), "a"(arg)
     #else
-      "movl %0, SP; movl %2, 4(%0); jmp *%1" : : "b"((uintptr_t)sp), "d"(entry), "a"(arg)
+      "movl %0, %%esp; movl %2, 4(%0); jmp *%1" : : "b"((uintptr_t)sp), "d"(entry), "a"(arg)
     #endif
   );
 }
