@@ -149,7 +149,7 @@ void Finish()
 	longjmp(current->buf, 1);
 }
 struct co* get_co(){
-  /*
+  
   if(head->next){
     struct co* tmp = head->next;
     while(tmp != NULL && tmp->state==CO_DEAD){
@@ -158,7 +158,9 @@ struct co* get_co(){
     return tmp;
   }
   return NULL;
-  */
+  
+
+  /*
   if(tot > 0)
   { 
     struct co *temp = head;
@@ -176,6 +178,7 @@ struct co* get_co(){
     return temp;
   }
   else return NULL;
+  */
 }
 
 void co_yield() {
