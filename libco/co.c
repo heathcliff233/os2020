@@ -71,7 +71,7 @@ struct co* current = NULL;
 static void co_free(struct co* co);
 
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
-  if(DEBUG) printf("Start co %s\n", *name);
+  if(DEBUG) printf("Start co %s\n", name);
   
   struct co* ret = malloc(sizeof(struct co));
   printf("fuck");
