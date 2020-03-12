@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 
 #define DEBUG false
@@ -160,17 +161,17 @@ struct co* get_co(){
   */
   if(tot > 0)
   { 
-    struct co *temp = Head;
+    struct co *temp = head;
     int Choose = rand() % tot + 1;
     while(Choose > 0)
     {
-      temp = temp->Next;
+      temp = temp->next;
       Choose--;
     }
-    if(temp->Status == CO_DEAD)
+    if(temp->state == CO_DEAD)
     {
-      temp = Head->Next;
-      while(temp != NULL && temp->Status == CO_DEAD)temp = temp->Next; 
+      temp = head->next;
+      while(temp != NULL && temp->state == CO_DEAD)temp = temp->next; 
     }
     return temp;
   }
@@ -209,7 +210,7 @@ void co_yield() {
 		memcpy((char *)temp, &retq, MASK + 1);
     stackEX((void *)temp, current->func, (uintptr_t)current->arg);
   }else{
-    longjmp(current->buf, 1)
+    longjmp(current->buf, 1);
   }
 }
 
