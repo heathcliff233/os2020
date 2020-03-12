@@ -67,7 +67,7 @@ struct co {
 struct co* head = NULL;
 struct co* current = NULL;
 
-static struct co* co_create(const char *name, void (*func)(void *), void *arg);
+//static struct co* co_create(const char *name, void (*func)(void *), void *arg);
 static void co_free(struct co* co);
 
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
