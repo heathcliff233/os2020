@@ -72,7 +72,16 @@ static void co_free(struct co* co);
 
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   if(DEBUG) printf("Start co %s\n", name);
-  current = co_create(name, func, arg);
+  
+  struct co* ret = malloc(sizeof(struct co));
+  ret->state = CO_NEW;
+  strncpy(ret->name, name, sizeof(ret->name));
+  ret->func = func;
+  ret->arg = arg;
+  ret->next = head->next;
+  head->next = ret;
+
+  //current = co_create(name, func, arg);
   /* 
   if(DEBUG) printf("created but no context switch\n");
   if(!setjmp(start_buf)) {
@@ -85,7 +94,8 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   }
   */
   printf("init finished\n");
-  return current;
+  //return current;
+  return ret;
 }
 
 void Finish()
