@@ -84,6 +84,7 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
     if(DEBUG) printf("init finished\n");
   }
   */
+  printf("init finished\n");
   return current;
 }
 
