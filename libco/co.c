@@ -109,18 +109,33 @@ void Add(struct co *temp)
 	tot++;
 }
 
+__attribute__((constructor))static void Initiate()
+{
+  //srand(time(NULL));
+  head = malloc(sizeof(struct co));
+  head->next = NULL;
+  current = co_start("main", NULL, NULL); 
+  current->state = CO_RUNNING; 
+}
+
+__attribute__((destructor))static void End()
+{
+  while(head->next != NULL)co_free(head->next);
+  co_free(head);
+}
+
 struct co *co_start(const char *name, void (*func)(void *), void *arg) 
 {
-  printf("start\n");
+  if(DEBUG) printf("start\n");
 	struct co *thd = malloc(sizeof(struct co)); //Already freed it
-	printf("malloc\n");
+	if(DEBUG) printf("malloc\n");
   thd->name = name;
 	thd->func = func;
 	thd->arg = arg;
 	thd->state = CO_NEW;
-  printf("before add\n");
+  if(DEBUG) printf("before add\n");
 	Add(thd);
-  printf("finish\n");
+  if(DEBUG) printf("finish\n");
   return thd;
 }
 
@@ -243,3 +258,5 @@ static void co_free(struct co* co) {
     }
   //}
 }
+
+
