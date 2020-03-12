@@ -2,7 +2,6 @@
  * @author Bright Hong
  * @date 2020.3.3
  * @brief This is a shared library for coroutine.
- * @remarks 
  */
 
 #include "co.h"
@@ -17,21 +16,20 @@
 
 
 #define DEBUG false
-#define SZ_STACK 16*4096
-//#define NR_CO 16
-
-enum co_status {
-  CO_NEW = 1, // 新创建，还未执行过
-  CO_RUNNING, // 已经执行过
-  CO_WAITING, // 在 co_wait 上等待
-  CO_DEAD,    // 已经结束，但还未释放资源
-};
+#define SZ_STACK 64*1024  //do not change smaller!
 
 #if defined (__i386__)
   #define MASK 3
 #elif defined (__x86_64__)
   #define MASK 7
 #endif
+
+enum co_status {
+  CO_NEW = 1, 
+  CO_RUNNING, 
+  CO_WAITING, 
+  CO_DEAD,    
+};
 
 static inline void stackEX(void *sp, void *entry, uintptr_t arg){
   asm volatile (
@@ -56,13 +54,10 @@ struct co {
 struct co* head = NULL;
 struct co* current = NULL;
 
-
-
 int tot=0;
 static void co_free(struct co* co);
 
-__attribute__((constructor))static void Initiate()
-{
+__attribute__((constructor))static void Initiate(){
   srand(time(NULL));
   head = malloc(sizeof(struct co));
   head->next = NULL;
@@ -70,14 +65,13 @@ __attribute__((constructor))static void Initiate()
   current->state = CO_RUNNING; 
 }
 
-__attribute__((destructor))static void End()
-{
+__attribute__((destructor))static void End(){
   while(head->next != NULL)co_free(head->next);
   co_free(head);
 }
 
-struct co *co_start(const char *name, void (*func)(void *), void *arg) 
-{
+struct co *co_start(const char *name, void (*func)(void *), void *arg){
+
   if(DEBUG) printf("start\n");
 	struct co *thd = malloc(sizeof(struct co)); 
   thd->name = name;
@@ -90,8 +84,8 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg)
   return thd;
 }
 
-void Finish()
-{
+static void Finish(){
+
 	current->state = CO_DEAD;
 	struct co *temp = head;
 	while(temp->next != NULL)temp = temp->next;
@@ -99,7 +93,7 @@ void Finish()
 	longjmp(current->buf, 1);
 }
 
-struct co* get_co(){
+static struct co* get_co(){
 
   if(tot > 0)
   { 
@@ -142,6 +136,7 @@ void co_yield() {
 }
 
 void co_wait(struct co* co) {
+  
   if(DEBUG)printf("wait\n");
   while(co->state != CO_DEAD)co_yield();
   co_free(co);
