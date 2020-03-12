@@ -52,7 +52,7 @@ static inline void stackEX(void *sp, void *entry, uintptr_t arg){
 
 struct co {
   int state;
-  char name[32];
+  const char* name;
   void (*func)(void *);
   void* arg;
   struct co* next;
@@ -71,12 +71,13 @@ struct co* current = NULL;
 static void co_free(struct co* co);
 
 struct co* co_start(const char *name, void (*func)(void *), void *arg) {
-  //if(DEBUG) printf("Start co %s\n", name);
+  if(DEBUG) printf("Start co %s\n", *name);
   
   struct co* ret = malloc(sizeof(struct co));
   printf("fuck");
   ret->state = CO_NEW;
-  strncpy(ret->name, name, sizeof(ret->name));
+  ret->name = name;
+  //strncpy(ret->name, name, sizeof(ret->name));
   ret->func = func;
   ret->arg = arg;
   ret->next = head->next;
