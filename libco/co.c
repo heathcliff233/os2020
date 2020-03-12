@@ -74,6 +74,7 @@ struct co* co_start(const char *name, void (*func)(void *), void *arg) {
   if(DEBUG) printf("Start co %s\n", name);
   
   struct co* ret = malloc(sizeof(struct co));
+  printf("fuck");
   ret->state = CO_NEW;
   strncpy(ret->name, name, sizeof(ret->name));
   ret->func = func;
