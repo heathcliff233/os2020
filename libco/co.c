@@ -31,7 +31,7 @@ enum co_status {
   CO_DEAD,    
 };
 
-static inline void stackEX(void *sp, void *entry, uintptr_t arg){
+static inline void stackEX(void *sp, void *entry, uintptr_t arg) {
   asm volatile (
     #if defined (__x86_64__)
       "movq %0, %%rsp; movq %2, %%rdi; jmp *%1" : : "b"((uintptr_t)sp),     "d"(entry), "a"(arg)
@@ -57,20 +57,27 @@ struct co* current = NULL;
 int tot=0;
 static void co_free(struct co* co);
 
-__attribute__((constructor))static void Initiate(){
+
+__attribute__((constructor))static void Initiate() {
+  
   srand(time(NULL));
   head = malloc(sizeof(struct co));
   head->next = NULL;
   current = co_start("main", NULL, NULL); 
   current->state = CO_RUNNING; 
+
 }
 
-__attribute__((destructor))static void End(){
+
+__attribute__((destructor))static void End() {
+  
   while(head->next != NULL)co_free(head->next);
   co_free(head);
+
 }
 
-struct co *co_start(const char *name, void (*func)(void *), void *arg){
+
+struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 
   if(DEBUG) printf("start\n");
 	struct co *thd = malloc(sizeof(struct co)); 
@@ -82,30 +89,31 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg){
   head->next = thd;
   tot++;
   return thd;
+
 }
 
-static void Finish(){
+
+static void Finish() {
 
 	current->state = CO_DEAD;
 	struct co *temp = head;
 	while(temp->next != NULL)temp = temp->next;
 	current = temp;
 	longjmp(current->buf, 1);
+
 }
+
 
 static struct co* get_co(){
 
-  if(tot > 0)
-  { 
+  if(tot > 0) { 
     struct co *temp = head;
     int Choose = rand() % tot + 1;
-    while(Choose > 0)
-    {
+    while(Choose > 0) {
       temp = temp->next;
       Choose--;
     }
-    if(temp->state == CO_DEAD)
-    {
+    if(temp->state == CO_DEAD) {
       temp = head->next;
       while(temp != NULL && temp->state == CO_DEAD)temp = temp->next; 
     }
@@ -129,10 +137,12 @@ void co_yield() {
 		  memcpy((char *)temp, &retq, MASK + 1);
       if(DEBUG) printf("stack_ch\n");
       stackEX((void *)temp, current->func, (uintptr_t)current->arg);
+    
     }else{
       longjmp(current->buf, 1);
     }
   }
+
 }
 
 void co_wait(struct co* co) {
@@ -155,6 +165,7 @@ static void co_free(struct co* co) {
     }
     cp = cp->next;
   }
+  
 }
 
 
