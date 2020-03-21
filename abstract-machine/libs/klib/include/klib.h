@@ -26,6 +26,11 @@
 #define snprintf my_snprintf
 #define malloc my_malloc
 #define free my_free
+
+#define pthread_mutex_t my_pthread_mutex_t
+#define pthread_mutex_lock my_pthread_mutex_lock
+#define pthread_mutex_unlock my_pthread_mutex_unlock
+
 #endif
 
 #ifdef __cplusplus
@@ -76,6 +81,15 @@ int vsnprintf(char *str, size_t size, const char *format, va_list ap);
 int sscanf(const char *str, const char *format, ...);
 
 void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
+
+// pthread.h
+
+typedef struct spinlock {
+  intptr_t locked;
+} pthread_mutex_t;
+#define PTHREAD_MUTEX_INITIALIZER 0
+void pthread_mutex_lock(pthread_mutex_t* locked);
+void pthread_mutex_unlock(pthread_mutex_t* locked);
 
 // assert.h
 #ifdef NDEBUG
