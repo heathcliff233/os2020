@@ -1,3 +1,4 @@
+/*
 #include "klib.h"
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
@@ -11,9 +12,10 @@ static intptr_t atomic_xchg(volatile pthread_mutex_t* addr,intptr_t newval) {
 }
 
 void pthread_mutex_lock(pthread_mutex_t* lk) {
-  while (atomic_xchg(&lk->locked, 1));
+  while (atomic_xchg(&lk, 1));
 }
 void pthread_mutex_unlock(pthread_mutex_t* lk) {
-  atomic_xchg(&lk->locked, 0);
+  atomic_xchg(&lk, 0);
 }
 #endif
+*/
