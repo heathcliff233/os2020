@@ -115,6 +115,7 @@ static void pmm_init() {
   //intptr_t pmstart = (intptr_t)_heap.start;
   //intptr_t pmsize = ((intptr_t)_heap.end - align(pmstart, PAGE_SIZE));
   free_list = _heap.start;
+  printf("start point %ld",free_list);
   page_t* st = NULL;
   while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
   	st = free_list;
