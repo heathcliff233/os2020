@@ -124,6 +124,7 @@ static void pmm_init() {
     private_list[i] = alloc_new_page();
     private_list[i]->lock = 0;
   }
+  printf("init finished");
 }
 
 MODULE_DEF(pmm) = {
