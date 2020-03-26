@@ -29,10 +29,10 @@ static intptr_t atomic_xchg(volatile mutex_t* addr,intptr_t newval) {
   return result;
 }
 
-void pthread_mutex_lock(mutex_t* lk) {
+void mutex_lock(mutex_t* lk) {
   while (atomic_xchg(lk, 1));
 }
-void pthread_mutex_unlock(mutex_t* lk) {
+void mutex_unlock(mutex_t* lk) {
   atomic_xchg(lk, 0);
 }
 
