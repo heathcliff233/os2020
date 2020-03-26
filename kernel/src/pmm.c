@@ -65,6 +65,7 @@ static page_t* alloc_new_page() {
   free_list = free_list->next;
   free_list->prev = NULL;
   mutex_unlock(&big_lock);
+  printf("finish\n");
 	return ret;
 }
 
