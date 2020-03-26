@@ -120,6 +120,7 @@ static void pmm_init() {
   	free_list = free_list->next;
   }
   int cpu_cnt = _ncpu();
+  printf("alloc for cpu\n");
   for(int i=0; i<cpu_cnt; i++) {
     private_list[i] = alloc_new_page();
     private_list[i]->lock = 0;
