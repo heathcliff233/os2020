@@ -124,6 +124,7 @@ static void pmm_init() {
   for(int i=0; i<cpu_cnt; i++) {
     private_list[i] = alloc_new_page();
     private_list[i]->lock = 0;
+    printf("cpuid %d\n",i);
   }
   printf("init finished");
 }
