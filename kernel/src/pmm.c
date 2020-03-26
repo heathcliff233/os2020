@@ -3,13 +3,22 @@
 
 #define PAGE_SIZE 8192
 #define HDR_SIZE 8
+#define SG_SIZE 4
 
-#define align(_A,_B) (_A=((_A-1)/_B+1)*_B)
+#define align(_A,_B) (((_A-1)/_B+1)*_B)
 
 typedef intptr_t mutex_t;
 #define MUTEX_INITIALIZER 0
 void mutex_lock(mutex_t* locked);
 void mutex_unlock(mutex_t* locked);
+
+static int getb(size_t size) {
+  int ret = 0;
+  while(size < (1<<ret)){
+    ret++;
+  }
+  return ret;
+}
 
 static intptr_t atomic_xchg(volatile mutex_t* addr,intptr_t newval) {
   intptr_t result;
@@ -21,15 +30,16 @@ static intptr_t atomic_xchg(volatile mutex_t* addr,intptr_t newval) {
 }
 
 void pthread_mutex_lock(mutex_t* lk) {
-  while (atomic_xchg(&lk, 1));
+  while (atomic_xchg(lk, 1));
 }
 void pthread_mutex_unlock(mutex_t* lk) {
-  atomic_xchg(&lk, 0);
+  atomic_xchg(lk, 0);
 }
 
 static mutex_t big_lock = MUTEX_INITIALIZER;
 
 typedef struct mem_block {
+  intptr_t sp;
 	size_t size;
 	struct mem_block* next; 
 } mem_head;
@@ -40,33 +50,57 @@ typedef union page {
     size_t size;
     union page* next;
     union page* prev;
-    mem_head* list;
+    mem_head* chart;
   }; 
   uint8_t header[HDR_SIZE], data[PAGE_SIZE - HDR_SIZE];
 } __attribute__((packed)) page_t;
 
-typedef struct Header {
-	struct Header* next;
-	page_t* pg;
-} header_t;
-
 page_t* private_list[8]={NULL};
+page_t* free_list = NULL;
 
-uint16_t pages[1<<15]={};
-
-static intptr_t* alloc_new_page() {
-	return NULL;
+static page_t* alloc_new_page() {
+  mutex_lock(&big_lock);
+  page_t* ret = free_list;
+  free_list = free_list->next;
+  free_list->prev = NULL;
+  mutex_unlock(&big_lock);
+	return ret;
 }
 
-static void* alloc_small() {
-	return NULL;
+static void* alloc_small(size_t size) {
+  int cpu_id = _cpu();
+  mutex_lock(&private_list[cpu_id]->lock);
+  page_t* cur_page = private_list[cpu_id];
+  mem_head* tmp = cur_page->chart;
+  cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
+  cur_page->chart->next->size = size;
+  mutex_unlock(&private_list[cpu_id]->lock);
+	return (void*)cur_page->chart->next->sp;
 }
 
-static void* alloc_big() {
-	return NULL;
-}
 
 static void *kalloc(size_t size) {
+  if(size==0){
+    return NULL;
+  } else {
+    size += SG_SIZE;
+    int cpu_id = _cpu();
+    if(size > private_list[cpu_id]->size) {
+      mutex_lock(&big_lock);
+      page_t* tmp = alloc_new_page();
+      mutex_unlock(&big_lock);
+      if(tmp==NULL) {
+        return NULL;
+      } else {
+        private_list[cpu_id]->next = tmp;
+        private_list[cpu_id] = private_list[cpu_id]->next;
+        private_list[cpu_id]->chart = (mem_head*)((intptr_t)tmp + HDR_SIZE);
+        private_list[cpu_id]->chart->next = NULL;
+        private_list[cpu_id]->chart->size = SG_SIZE;
+      }
+    }
+    alloc_small(size);
+  }
   return NULL;
 }
 
@@ -74,15 +108,22 @@ static void kfree(void *ptr) {
 }
 
 static void pmm_init() {
-  uintptr_t pmstart = (uintptr_t)_heap.start;
-  uintptr_t pmsize = ((uintptr_t)_heap.end - align(pmstart, PAGE_SIZE));
-  //printf("Got %d MiB heap: [%p, %p)\n", pmsize >> 20, _heap.start, _heap.end);
+  //intptr_t pmstart = (intptr_t)_heap.start;
+  //intptr_t pmsize = ((intptr_t)_heap.end - align(pmstart, PAGE_SIZE));
+  free_list = _heap.start;
+  page_t* st = NULL;
+  while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
+  	st = free_list;
+  	free_list->lock = 0;
+  	free_list->prev = st;
+  	free_list->next = (page_t*)((intptr_t)free_list + PAGE_SIZE);
+  	free_list = free_list->next;
+  }
   int cpu_cnt = _ncpu();
   for(int i=0; i<cpu_cnt; i++) {
     private_list[i] = alloc_new_page();
     private_list[i]->lock = 0;
   }
-  for(int i=0; i<pmsize/PAGE_SIZE && i; i++) {}
 }
 
 MODULE_DEF(pmm) = {
