@@ -2,8 +2,8 @@
 //#include <klib.h>
 
 #define PAGE_SIZE 8192
-#define HDR_SIZE 8
-#define SG_SIZE 4
+#define HDR_SIZE 48
+#define SG_SIZE 24
 
 #define align(_A,_B) (((_A-1)/_B+1)*_B)
 
@@ -48,6 +48,7 @@ typedef union page {
   struct {
     mutex_t lock;
     size_t size;
+    intptr_t count;
     union page* next;
     union page* prev;
     mem_head* chart;
@@ -59,15 +60,15 @@ page_t* private_list[8]={NULL};
 page_t* free_list = NULL;
 
 static page_t* alloc_new_page() {
-  printf("allocing new page\n");
+  //printf("allocing new page\n");
   mutex_lock(&big_lock);
   page_t* ret = free_list;
   free_list = free_list->next;
-  printf("%ld\n", free_list);
+  //printf("%ld\n", free_list);
   free_list->prev = NULL;
-  printf("stop\n");
+  //printf("stop\n");
   mutex_unlock(&big_lock);
-  printf("finish\n");
+  //printf("finish\n");
 	return ret;
 }
 
@@ -88,6 +89,7 @@ static void *kalloc(size_t size) {
     return NULL;
   } else {
     size += SG_SIZE;
+    size = size>4096 ? 4096:size;
     int cpu_id = _cpu();
     if(size > private_list[cpu_id]->size) {
       mutex_lock(&big_lock);
