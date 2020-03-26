@@ -59,6 +59,7 @@ page_t* private_list[8]={NULL};
 page_t* free_list = NULL;
 
 static page_t* alloc_new_page() {
+  printf("allocing new page\n");
   mutex_lock(&big_lock);
   page_t* ret = free_list;
   free_list = free_list->next;
