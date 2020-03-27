@@ -3,7 +3,7 @@
 
 #define PAGE_SIZE 8192
 #define HDR_SIZE 48
-#define SG_SIZE 24
+#define SG_SIZE 26
 
 #define align(_A,_B) (((_A-1)/_B+1)*_B)
 
@@ -40,6 +40,7 @@ static mutex_t big_lock = MUTEX_INITIALIZER;
 
 typedef struct mem_block {
   intptr_t sp;
+      bool available;
 	size_t size;
 	struct mem_block* next; 
 } mem_head;
