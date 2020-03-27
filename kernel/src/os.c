@@ -18,7 +18,8 @@ static void os_run() {
       assert((((intptr_t)sg)&(1<<12))==((intptr_t)sg));
     }
   }
-  //while (1) ;
+  printf("succeed!\n");
+  while (1) ;
 }
 
 MODULE_DEF(os) = {
