@@ -5,12 +5,14 @@ static void os_init() {
 }
 
 static void os_run() {
+  /*
   for (const char *s = "Hello World from CPU #*\n"; *s; s++) {
     _putc(*s == '*' ? '0' + _cpu() : *s);
   }
-  assert(pmm->alloc(4096)!=NULL);
+  */
+  //assert(pmm->alloc(4096)!=NULL);
   intptr_t* sg = 0;
-  for(int i=0; i< 100; i++){
+  for(int i=0; i< 10; i++){
     sg = pmm->alloc(4096);
     if(sg==NULL) {
       continue;
