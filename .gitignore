@@ -1,6 +1,7 @@
 .*
 *.[oad]
 !.gitignore
+!.deepsource.toml
 *~
 a.out
 a.out-*
