@@ -2,8 +2,8 @@
 //#include <klib.h>
 
 #define PAGE_SIZE 8192
-#define HDR_SIZE 48
-#define SG_SIZE 26
+#define HDR_SIZE 40
+#define SG_SIZE 34
 
 #define align(_A,_B) (((_A-1)/_B+1)*_B)
 
@@ -40,14 +40,15 @@ static mutex_t big_lock = MUTEX_INITIALIZER;
 
 typedef struct mem_block {
   intptr_t sp;
-      bool available;
+  bool available;
 	size_t size;
+  struct mem_block* prev;
 	struct mem_block* next; 
 } mem_head;
 
 typedef union page {
   struct {
-    mutex_t lock;
+    //mutex_t lock;
     size_t size;
     intptr_t count;
     union page* next;
@@ -75,12 +76,14 @@ static page_t* alloc_new_page() {
 
 static void* alloc_small(size_t size) {
   int cpu_id = _cpu();
-  mutex_lock(&private_list[cpu_id]->lock);
+  //mutex_lock(&private_list[cpu_id]->lock);
   page_t* cur_page = private_list[cpu_id];
   mem_head* tmp = cur_page->chart;
   cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
   cur_page->chart->next->size = size;
-  mutex_unlock(&private_list[cpu_id]->lock);
+  cur_page->chart->next->prev = cur_page->chart;
+  //mutex_unlock(&private_list[cpu_id]->lock);
+  cur_page->count += 1;
 	return (void*)cur_page->chart->next->sp;
 }
 
@@ -122,7 +125,7 @@ static void pmm_init() {
   page_t* st = NULL;
   while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
   	st = free_list;
-  	free_list->lock = 0;
+  	//free_list->lock = 0;
   	free_list->prev = st;
   	free_list->next = (page_t*)((intptr_t)free_list + PAGE_SIZE);
   	free_list = free_list->next;
@@ -133,7 +136,7 @@ static void pmm_init() {
   printf("alloc for cpu\n");
   for(int i=0; i<cpu_cnt; i++) {
     private_list[i] = alloc_new_page();
-    private_list[i]->lock = 0;
+    //private_list[i]->lock = 0;
     printf("cpuid %d\n",i);
   }
   printf("init finished");
