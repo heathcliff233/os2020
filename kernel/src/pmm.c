@@ -107,6 +107,7 @@ static void *kalloc(size_t size) {
         private_list[cpu_id]->chart = (mem_head*)((intptr_t)tmp + HDR_SIZE);
         private_list[cpu_id]->chart->next = NULL;
         private_list[cpu_id]->chart->size = SG_SIZE;
+        private_list[cpu_id]->count = 0;
       }
     }
     alloc_small(size);
@@ -115,6 +116,15 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
+  page_t* hd = (page_t*)((uintptr_t)ptr & (1<<13));
+  hd->count -= 1;
+  if(hd->count == 0) {
+    if(hd->prev == hd) return;
+    hd->prev->next = hd->next;
+    page_t* cp_free_list  = free_list;
+    hd->next = cp_free_list->next;
+    cp_free_list->next = hd;
+  }
 }
 
 static void pmm_init() {
@@ -136,6 +146,7 @@ static void pmm_init() {
   printf("alloc for cpu\n");
   for(int i=0; i<cpu_cnt; i++) {
     private_list[i] = alloc_new_page();
+    private_list[i]->prev = private_list[i];
     //private_list[i]->lock = 0;
     printf("cpuid %d\n",i);
   }
