@@ -11,7 +11,7 @@ static void os_run() {
   }
   */
   printf("os test\n");
-  assert(pmm->alloc(4096)!=NULL);
+  //assert(pmm->alloc(4096)!=NULL);
   printf("first test\n");
   intptr_t* sg = 0;
   for(int i=0; i< 10; i++){
