@@ -3,7 +3,7 @@
 
 #define PAGE_SIZE 8192
 #define HDR_SIZE 40
-#define SG_SIZE 34
+#define SG_SIZE 24
 
 #define align(_A,_B) (((_A-1)/_B+1)*_B)
 
@@ -40,9 +40,9 @@ static mutex_t big_lock = MUTEX_INITIALIZER;
 
 typedef struct mem_block {
   intptr_t sp;
-  bool available;
+  //bool available;
 	size_t size;
-  struct mem_block* prev;
+  //struct mem_block* prev;
 	struct mem_block* next; 
 } mem_head;
 
@@ -81,7 +81,7 @@ static void* alloc_small(size_t size) {
   mem_head* tmp = cur_page->chart;
   cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
   cur_page->chart->next->size = size;
-  cur_page->chart->next->prev = cur_page->chart;
+  //cur_page->chart->next->prev = cur_page->chart;
   //mutex_unlock(&private_list[cpu_id]->lock);
   cur_page->count += 1;
 	return (void*)cur_page->chart->next->sp;
