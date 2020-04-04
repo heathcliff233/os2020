@@ -97,9 +97,9 @@ static void *kalloc(size_t size) {
     size = size>4096 ? 4096:size;
     int cpu_id = _cpu();
     if(size > private_list[cpu_id]->size) {
-      mutex_lock(&big_lock);
+      //mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
-      mutex_unlock(&big_lock);
+      //mutex_unlock(&big_lock);
       printf("ublock\n");
       if(tmp==NULL) {
         return NULL;
