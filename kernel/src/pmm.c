@@ -11,7 +11,7 @@ typedef intptr_t mutex_t;
 #define MUTEX_INITIALIZER 0
 void mutex_lock(mutex_t* locked);
 void mutex_unlock(mutex_t* locked);
-
+/*
 static int getb(size_t size) {
   int ret = 0;
   while(size < (1<<ret)){
@@ -19,7 +19,7 @@ static int getb(size_t size) {
   }
   return ret;
 }
-
+*/
 static intptr_t atomic_xchg(volatile mutex_t* addr,intptr_t newval) {
   intptr_t result;
   asm volatile ("lock xchg %0, %1":
@@ -73,7 +73,7 @@ static page_t* alloc_new_page() {
   //printf("finish\n");
 	return ret;
 }
-
+/*
 static void* alloc_small(size_t size) {
   int cpu_id = _cpu();
   //mutex_lock(&private_list[cpu_id]->lock);
@@ -86,9 +86,11 @@ static void* alloc_small(size_t size) {
   cur_page->count += 1;
 	return (void*)cur_page->chart->next->sp;
 }
+*/
 
 
 static void *kalloc(size_t size) {
+  /*
   if(size==0){
     return NULL;
   } else {
@@ -113,9 +115,12 @@ static void *kalloc(size_t size) {
     alloc_small(size);
   }
   return NULL;
+  */
+ return (void*)(align((uintptr_t)_heap.start,4096));
 }
 
 static void kfree(void *ptr) {
+  /*
   page_t* hd = (page_t*)((uintptr_t)ptr & (1<<13));
   hd->count -= 1;
   if(hd->count < 100) {
@@ -127,6 +132,7 @@ static void kfree(void *ptr) {
     cp_free_list->next = hd;
     mutex_unlock(&big_lock);
   }
+  */
 }
 
 static void pmm_init() {
