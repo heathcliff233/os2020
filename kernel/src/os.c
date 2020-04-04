@@ -10,6 +10,7 @@ static void os_run() {
     _putc(*s == '*' ? '0' + _cpu() : *s);
   }
   */
+  printf("os test\n");
   assert(pmm->alloc(4096)!=NULL);
   printf("first test\n");
   intptr_t* sg = 0;
