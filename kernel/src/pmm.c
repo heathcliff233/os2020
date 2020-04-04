@@ -89,7 +89,7 @@ static void* alloc_small(size_t size) {
 
 
 static void *kalloc(size_t size) {
-  printf("begin alloc \n");
+  //printf("begin alloc \n");
   if(size==0){
     return NULL;
   } else {
@@ -111,7 +111,7 @@ static void *kalloc(size_t size) {
         private_list[cpu_id]->count = 0;
       }
     }
-    alloc_small(size);
+    return alloc_small(size);
   }
   return NULL;
 }
