@@ -120,10 +120,12 @@ static void kfree(void *ptr) {
   hd->count -= 1;
   if(hd->count < 100) {
     if(hd->prev == hd) return;
+    mutex_lock(&big_lock);
     hd->prev->next = hd->next;
     page_t* cp_free_list  = free_list;
     hd->next = cp_free_list->next;
     cp_free_list->next = hd;
+    mutex_unlock(&big_lock);
   }
 }
 
