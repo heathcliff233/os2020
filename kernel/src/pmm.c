@@ -89,6 +89,7 @@ static void* alloc_small(size_t size) {
 
 
 static void *kalloc(size_t size) {
+  printf("begin alloc \n");
   if(size==0){
     return NULL;
   } else {
@@ -145,14 +146,14 @@ static void pmm_init() {
   }
   free_list = _heap.start;
   int cpu_cnt = _ncpu();
-  printf("alloc for cpu\n");
+  //printf("alloc for cpu\n");
   for(int i=0; i<cpu_cnt; i++) {
     private_list[i] = alloc_new_page();
     private_list[i]->prev = private_list[i];
     //private_list[i]->lock = 0;
     printf("cpuid %d\n",i);
   }
-  printf("init finished");
+  printf("init finished\n");
 }
 
 MODULE_DEF(pmm) = {
