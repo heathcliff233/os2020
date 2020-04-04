@@ -100,6 +100,7 @@ static void *kalloc(size_t size) {
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
       mutex_unlock(&big_lock);
+      printf("ublock\n");
       if(tmp==NULL) {
         return NULL;
       } else {
