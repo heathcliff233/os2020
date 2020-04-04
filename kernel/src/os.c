@@ -15,6 +15,7 @@ static void os_run() {
   intptr_t* sg = 0;
   for(int i=0; i< 10; i++){
     sg = pmm->alloc(4096);
+    pmm->free(sg);
     if(sg==NULL) {
       continue;
     } else {
