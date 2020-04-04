@@ -118,7 +118,7 @@ static void *kalloc(size_t size) {
 static void kfree(void *ptr) {
   page_t* hd = (page_t*)((uintptr_t)ptr & (1<<13));
   hd->count -= 1;
-  if(hd->count < 10) {
+  if(hd->count < 100) {
     if(hd->prev == hd) return;
     hd->prev->next = hd->next;
     page_t* cp_free_list  = free_list;
