@@ -106,7 +106,7 @@ static void* alloc_small(size_t size) {
 
 static void *kalloc(size_t size) {
   //printf("begin alloc \n");
-  if(size==0){
+  if(size > 128){
     return NULL;
   } else {
     size_t tot = size + SG_SIZE;
