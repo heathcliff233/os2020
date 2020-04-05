@@ -106,7 +106,7 @@ static void* alloc_small(size_t size) {
 
 static void *kalloc(size_t size) {
   //printf("begin alloc \n");
-  if(size > 128){
+  if(size == 0){
     return NULL;
   } else {
     size_t tot = size + SG_SIZE;
@@ -122,6 +122,7 @@ static void *kalloc(size_t size) {
     printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
     */
     if(used > PAGE_SIZE) {
+      return NULL;
       //printf("lock\n");
       //mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
