@@ -102,12 +102,11 @@ static void *kalloc(size_t size) {
     page_t* cur = (page_t*)private_list[cpu_id];
     //size_t rem = ((uintptr_t)cur)+PAGE_SIZE-((uintptr_t)cur->chart+cur->chart->size);
     size_t used = align((intptr_t)(cur->chart),getb(size))+size+SG_SIZE-(intptr_t)cur;
-    printf("decide page alloc\n");
     if(used > PAGE_SIZE) {
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
       mutex_unlock(&big_lock);
-      //printf("ublock\n");
+      printf("unlock\n");
       if(tmp==NULL) {
         return NULL;
       } else {
