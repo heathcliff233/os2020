@@ -134,8 +134,11 @@ static void kfree(void *ptr) {
     if(hd->prev == hd) return;
     //mutex_lock(&big_lock);
     hd->prev->next = hd->next;
-    page_t* cp_free_list  = free_list;
-    hd->next = cp_free_list;
+    //page_t* cp_free_list  = free_list;
+    //hd->next = cp_free_list;
+    hd->next = free_list;
+    free_list->prev = hd;
+    hd->prev = NULL;
     free_list = hd;
     //mutex_unlock(&big_lock);
   }
@@ -145,7 +148,8 @@ static void kfree(void *ptr) {
 static void pmm_init() {
   //intptr_t pmstart = (intptr_t)_heap.start;
   //intptr_t pmsize = ((intptr_t)_heap.end - align(pmstart, PAGE_SIZE));
-  free_list = (page_t*)(align(((intptr_t)_heap.start),4096)); //& 1<<13)+(1<<13));
+  free_list = (page_t*)(align(((intptr_t)_heap.start),4096));
+  page_t* cp = free_list;
   printf("start point %ld\n",free_list);
   page_t* st = NULL;
   while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
@@ -156,7 +160,7 @@ static void pmm_init() {
   	free_list = free_list->next;
     //printf("pgpoint %ld\n",free_list);
   }
-  free_list = _heap.start;
+  free_list = cp;
   int cpu_cnt = _ncpu();
   //printf("alloc for cpu\n");
   for(int i=0; i<cpu_cnt; i++) {
