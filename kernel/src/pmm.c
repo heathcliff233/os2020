@@ -154,7 +154,7 @@ static void pmm_init() {
   	free_list->prev = st;
   	free_list->next = (page_t*)((intptr_t)free_list + PAGE_SIZE);
   	free_list = free_list->next;
-    //printf("pgpoint %ld\n",free_list);
+    printf("pgpoint %ld\n",free_list);
   }
   free_list = _heap.start;
   int cpu_cnt = _ncpu();
@@ -165,7 +165,7 @@ static void pmm_init() {
     //private_list[i]->lock = 0;
     //printf("cpuid %d\n",i);
   }
-  printf("init finished\n");
+  //printf("init finished\n");
 }
 
 MODULE_DEF(pmm) = {
