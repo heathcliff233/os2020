@@ -123,7 +123,7 @@ static void kfree(void *ptr) {
   page_t* hd = (page_t*)((uintptr_t)ptr & (1<<13));
   mutex_lock(&big_lock);
   hd->count -= 1;
-  if(hd->count == 0) {
+  if(hd->count < 10) {
     if(hd->prev == hd) return;
     //mutex_lock(&big_lock);
     hd->prev->next = hd->next;
