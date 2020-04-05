@@ -35,7 +35,7 @@ static void os_run() {
   //printf("ptr %ld\n",sg);
   printf("total miss %d\n", count);
   printf("succeed!\n");
-  //while (1) ;
+  while (1) ;
 }
 
 MODULE_DEF(os) = {
