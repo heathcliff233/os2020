@@ -79,12 +79,13 @@ static void* alloc_small(size_t size) {
   //mutex_lock(&private_list[cpu_id]->lock);
   page_t* cur_page = private_list[cpu_id];
   mem_head* tmp = cur_page->chart;
-  cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
+  //cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
+  cur_page->chart->next = (mem_head*)align(((uintptr_t)tmp+tmp->size), getb(size));
   cur_page->chart->next->size = size;
   //cur_page->chart->next->prev = cur_page->chart;
   //mutex_unlock(&private_list[cpu_id]->lock);
   cur_page->count += 1;
-	return (void*)cur_page->chart->next->sp;
+	return (void*)cur_page->chart->next;
 }
 
 
@@ -112,7 +113,7 @@ static void *kalloc(size_t size) {
         private_list[cpu_id]->count = 0;
       }
     }
-    printf("begin small alloc \n");
+    //printf("begin small alloc \n");
     return alloc_small(size);
   }
   return NULL;
@@ -121,7 +122,7 @@ static void *kalloc(size_t size) {
 static void kfree(void *ptr) {
   page_t* hd = (page_t*)((uintptr_t)ptr & (1<<13));
   hd->count -= 1;
-  if(hd->count < 100) {
+  if(hd->count == 0) {
     if(hd->prev == hd) return;
     mutex_lock(&big_lock);
     hd->prev->next = hd->next;
@@ -153,9 +154,9 @@ static void pmm_init() {
     private_list[i] = alloc_new_page();
     private_list[i]->prev = private_list[i];
     //private_list[i]->lock = 0;
-    printf("cpuid %d\n",i);
+    //printf("cpuid %d\n",i);
   }
-  printf("init finished\n");
+  //printf("init finished\n");
 }
 
 MODULE_DEF(pmm) = {
