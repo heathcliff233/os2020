@@ -20,7 +20,7 @@ static void os_run() {
     pmm->alloc(4096);
     //printf("to free\n");
     //pmm->free(sg);
-    printf("free success\n");
+    //printf("free success\n");
   }
   
   //sg = pmm->alloc(10);
