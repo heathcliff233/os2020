@@ -11,6 +11,7 @@ typedef intptr_t mutex_t;
 #define MUTEX_INITIALIZER 0
 void mutex_lock(mutex_t* locked);
 void mutex_unlock(mutex_t* locked);
+int num_avai_page;
 
 static int getb(size_t size) {
   int ret = 0;
@@ -64,6 +65,7 @@ page_t* free_list = NULL;
 static page_t* alloc_new_page() {
   //printf("allocing new page\n");
   page_t* ret = NULL;
+  if(num_avai_page < 8) return ret;
   mutex_lock(&big_lock);
   if(free_list->next != NULL){
     ret = free_list;
@@ -168,6 +170,7 @@ static void kfree(void *ptr) {
 }
 
 static void pmm_init() {
+  num_avai_page = 0;
   //intptr_t pmstart = (intptr_t)_heap.start;
   //intptr_t pmsize = ((intptr_t)_heap.end - align(pmstart, PAGE_SIZE));
   free_list = (page_t*)(align(((intptr_t)_heap.start),4096));
@@ -175,7 +178,8 @@ static void pmm_init() {
   printf("start point %ld\n",free_list);
   page_t* st = NULL;
   while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
-  	st = free_list;
+  	num_avai_page++;
+    st = free_list;
   	//free_list->lock = 0;
   	free_list->prev = st;
   	free_list->next = (page_t*)((intptr_t)free_list + PAGE_SIZE);
