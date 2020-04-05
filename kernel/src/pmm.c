@@ -99,7 +99,7 @@ static void* alloc_small(size_t size) {
 }
 
 static void *kalloc(size_t size) {
-  //printf("begin alloc \n");
+  printf("begin alloc \n");
   if(size==0){
     return NULL;
   } else {
@@ -110,7 +110,7 @@ static void *kalloc(size_t size) {
     size_t used = align((intptr_t)(cur->chart),getb(size))+size+SG_SIZE-(intptr_t)cur;
     //printf("used %ld\n",used);
     //printf("test\n");
-    //printf("page ptr %ld\n",(intptr_t)cur);
+    printf("page ptr %ld\n",(intptr_t)cur);
     //printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
     if(used > PAGE_SIZE) {
       mutex_lock(&big_lock);
@@ -128,7 +128,7 @@ static void *kalloc(size_t size) {
         private_list[cpu_id]->count = 0;
       }
     }
-    //printf("begin small alloc \n");
+    printf("begin small alloc \n");
     return alloc_small(size);
   }
   return NULL;
