@@ -62,7 +62,7 @@ page_t* private_list[8]={NULL};
 page_t* free_list = NULL;
 
 static page_t* alloc_new_page() {
-  printf("allocing new page\n");
+  //printf("allocing new page\n");
   mutex_lock(&big_lock);
   page_t* ret = free_list;
   if(ret->next != NULL){
@@ -91,7 +91,6 @@ static void* alloc_small(size_t size) {
   cur_page->count += 1;
 	return (void*)cur_page->chart->next;
 }
-
 
 static void *kalloc(size_t size) {
   //printf("begin alloc \n");
@@ -126,7 +125,7 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-  printf("free\n");
+  //printf("free\n");
   page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
   mutex_lock(&big_lock);
   hd->count -= 1;
@@ -146,7 +145,7 @@ static void pmm_init() {
   //intptr_t pmstart = (intptr_t)_heap.start;
   //intptr_t pmsize = ((intptr_t)_heap.end - align(pmstart, PAGE_SIZE));
   free_list = _heap.start;
-  printf("start point %ld\n",free_list);
+  //printf("start point %ld\n",free_list);
   page_t* st = NULL;
   while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
   	st = free_list;
@@ -154,7 +153,7 @@ static void pmm_init() {
   	free_list->prev = st;
   	free_list->next = (page_t*)((intptr_t)free_list + PAGE_SIZE);
   	free_list = free_list->next;
-    printf("pgpoint %ld\n",free_list);
+    //printf("pgpoint %ld\n",free_list);
   }
   free_list = _heap.start;
   int cpu_cnt = _ncpu();
