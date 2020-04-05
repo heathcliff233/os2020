@@ -74,6 +74,7 @@ static page_t* alloc_new_page() {
     free_list->prev = NULL;
     //printf("stop\n");
   }
+  num_avai_page--;
   mutex_unlock(&big_lock);
   ret->chart = (mem_head*)((intptr_t)ret + HDR_SIZE); 
   ret->chart->next = NULL;
@@ -163,6 +164,7 @@ static void kfree(void *ptr) {
       hd->prev = NULL;
       free_list = hd;
       //mutex_unlock(&big_lock);
+      num_avai_page++;
     }
   }
   mutex_unlock(&big_lock);
