@@ -2,7 +2,7 @@
 //#include <klib.h>
 
 #define PAGE_SIZE 8192+512
-#define HDR_SIZE 40
+#define HDR_SIZE 32
 #define SG_SIZE 24
 
 #define align(_A,_B) (((_A-1)/_B+1)*_B)
@@ -50,7 +50,7 @@ typedef struct mem_block {
 typedef union page {
   struct {
     //mutex_t lock;
-    size_t size;
+    //size_t size;
     intptr_t count;
     union page* next;
     union page* prev;
