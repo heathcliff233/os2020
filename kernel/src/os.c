@@ -17,13 +17,13 @@ static void os_run() {
   
   for(int i=0; i< 10; i++){
     sg = pmm->alloc(10);
+    _halt(0);
     pmm->free(sg);
   }
   
   //sg = pmm->alloc(10);
   //printf("ptr %ld\n",sg);
   //printf("succeed!\n");
-  _halt(0);
   while (1) ;
 }
 
