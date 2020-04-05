@@ -119,7 +119,6 @@ static void *kalloc(size_t size) {
     printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
     */
     if(used > PAGE_SIZE) {
-      return NULL;
       //printf("lock\n");
       //mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
@@ -143,7 +142,7 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-  /*
+  
   //printf("free\n");
   //printf("feed %ld\n",(intptr_t)ptr);
   //page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
@@ -170,7 +169,7 @@ static void kfree(void *ptr) {
   }
   mutex_unlock(&big_lock);
   //printf("finish free\n");
-  */
+  
 }
 
 static void pmm_init() {
