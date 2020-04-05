@@ -63,15 +63,14 @@ page_t* free_list = NULL;
 
 static page_t* alloc_new_page() {
   //printf("allocing new page\n");
+  page_t* ret = NULL;
   mutex_lock(&big_lock);
-  page_t* ret = free_list;
-  if(ret->next != NULL){
+  if(free_list->next != NULL){
+    ret = free_list;
     free_list = free_list->next;
     //printf("%ld\n", free_list);
     free_list->prev = NULL;
     //printf("stop\n");
-  } else {
-    ret = NULL;
   }
   mutex_unlock(&big_lock);
   //printf("finish\n");
@@ -98,7 +97,6 @@ static void *kalloc(size_t size) {
     return NULL;
   } else {
     size += SG_SIZE;
-    //size = size>4096 ? 4096:size;
     int cpu_id = _cpu();
     page_t* cur = (page_t*)private_list[cpu_id];
     size_t rem = ((uintptr_t)cur)+PAGE_SIZE-((uintptr_t)cur->chart+cur->chart->size);
@@ -144,7 +142,7 @@ static void kfree(void *ptr) {
 static void pmm_init() {
   //intptr_t pmstart = (intptr_t)_heap.start;
   //intptr_t pmsize = ((intptr_t)_heap.end - align(pmstart, PAGE_SIZE));
-  free_list = _heap.start;
+  free_list = (page_t*)(((intptr_t)_heap.start & 1<<13)+(1<<13));
   //printf("start point %ld\n",free_list);
   page_t* st = NULL;
   while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
