@@ -106,10 +106,10 @@ static void *kalloc(size_t size) {
     page_t* cur = (page_t*)private_list[cpu_id];
     //size_t rem = ((uintptr_t)cur)+PAGE_SIZE-((uintptr_t)cur->chart+cur->chart->size);
     size_t used = align((intptr_t)(cur->chart),getb(size))+size+SG_SIZE-(intptr_t)cur;
-    //printf("used %ld\n",used);
+    printf("used %ld\n",used);
     //printf("test\n");
-    printf("page ptr %ld\n",(intptr_t)cur);
-    printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
+    //printf("page ptr %ld\n",(intptr_t)cur);
+    //printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
     if(used > PAGE_SIZE) {
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
@@ -126,7 +126,7 @@ static void *kalloc(size_t size) {
         private_list[cpu_id]->count = 0;
       }
     }
-    //printf("begin small alloc \n");
+    printf("begin small alloc \n");
     return alloc_small(size);
   }
   return NULL;
