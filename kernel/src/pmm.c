@@ -139,9 +139,10 @@ static void kfree(void *ptr) {
   printf("feed %ld\n",(intptr_t)ptr);
   //page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
   page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
-  printf("free count %d\n",hd->count);
+  
   mutex_lock(&big_lock);
   hd->count -= 1;
+  printf("free count %d\n",hd->count);
   if(hd->count == 0) {
     if(hd->prev == hd) return;
     //mutex_lock(&big_lock);
