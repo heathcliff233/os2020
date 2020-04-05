@@ -154,7 +154,7 @@ static void pmm_init() {
   	free_list->prev = st;
   	free_list->next = (page_t*)((intptr_t)free_list + PAGE_SIZE);
   	free_list = free_list->next;
-    printf("pgpoint %ld\n",free_list);
+    //printf("pgpoint %ld\n",free_list);
   }
   free_list = _heap.start;
   int cpu_cnt = _ncpu();
