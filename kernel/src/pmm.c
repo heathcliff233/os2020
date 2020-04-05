@@ -93,13 +93,9 @@ static void* alloc_small(size_t size) {
   //cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
   cur_page->chart->next = (mem_head*)align(((intptr_t)tmp+tmp->size), getb(size));
   cur_page->chart->next->size = size;
-  
-  //cur_page->chart->next->hd_sp = (intptr_t)cur_page;
-  
+  cur_page->chart->next->hd_sp = (intptr_t)cur_page;
   //printf("page head %ld\n",cur_page->chart->hd_sp);
-  
-  //cur_page->count += 1;
-  
+  cur_page->count += 1;
   //printf("alloc num %d\n",cur_page->count);
   cur_page->chart = cur_page->chart->next;
 	return (void*)((intptr_t)(cur_page->chart));
@@ -114,7 +110,7 @@ static void *kalloc(size_t size) {
     //size += SG_SIZE;
     int cpu_id = _cpu();
     page_t* cur = (page_t*)private_list[cpu_id];
-    size_t used = align((intptr_t)(cur->chart),getb(size))+tot-(intptr_t)cur;
+    size_t used = align((intptr_t)(cur->chart)+cur->chart->size,getb(size))+tot-(intptr_t)cur;
     /*
     printf("align %d",getb(size));
     printf("current %ld",align((intptr_t)(cur->chart),getb(tot)));
