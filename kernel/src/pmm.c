@@ -180,7 +180,7 @@ static void pmm_init() {
     //private_list[i]->lock = 0;
     //printf("cpuid %d\n",i);
   }
-  printf("init finished\n");
+  //printf("init finished\n");
 }
 
 MODULE_DEF(pmm) = {
