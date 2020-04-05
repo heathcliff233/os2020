@@ -134,12 +134,12 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-  //printf("free\n");
+  printf("free\n");
   //page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
   page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
   mutex_lock(&big_lock);
   hd->count -= 1;
-  if(hd->count < 10) {
+  if(hd->count == 0) {
     if(hd->prev == hd) return;
     //mutex_lock(&big_lock);
     hd->prev->next = hd->next;
@@ -152,6 +152,7 @@ static void kfree(void *ptr) {
     //mutex_unlock(&big_lock);
   }
   mutex_lock(&big_lock);
+  printf("finish free\n");
 }
 
 static void pmm_init() {
