@@ -135,6 +135,7 @@ static void *kalloc(size_t size) {
 
 static void kfree(void *ptr) {
   printf("free\n");
+  printf("feed %ld\n",(intptr_t)ptr);
   //page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
   page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
   printf("free count %ld\n",(intptr_t)hd);
