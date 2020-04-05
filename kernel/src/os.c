@@ -13,11 +13,12 @@ static void os_run() {
   //printf("os test\n");
   //assert(pmm->alloc(4096)!=NULL);
   //printf("first test\n");
-  //void* sg = 0;
+  void* sg = 0;
   //os_init();
   
   for(int i=0; i< 1000; i++){
-    pmm->alloc(4096);
+    sg = pmm->alloc(4096);
+    assert(((intptr_t)sg)/4096*4096==(intptr_t)sg);
     //printf("to free\n");
     //pmm->free(sg);
     //printf("free success\n");
