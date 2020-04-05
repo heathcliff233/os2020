@@ -22,7 +22,8 @@ static void os_run() {
   
   //sg = pmm->alloc(10);
   //printf("ptr %ld\n",sg);
-  printf("succeed!\n");
+  //printf("succeed!\n");
+  _halt(0);
   while (1) ;
 }
 
