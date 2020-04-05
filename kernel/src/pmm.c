@@ -1,7 +1,7 @@
 #include <common.h>
 //#include <klib.h>
 
-#define PAGE_SIZE 8192
+#define PAGE_SIZE 8192+512
 #define HDR_SIZE 40
 #define SG_SIZE 16
 
@@ -95,7 +95,7 @@ static void *kalloc(size_t size) {
     return NULL;
   } else {
     size += SG_SIZE;
-    size = size>4096 ? 4096:size;
+    //size = size>4096 ? 4096:size;
     int cpu_id = _cpu();
     if(size > private_list[cpu_id]->size) {
       mutex_lock(&big_lock);
@@ -120,10 +120,10 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-  page_t* hd = (page_t*)((uintptr_t)ptr & (1<<13));
+  page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
   mutex_lock(&big_lock);
   hd->count -= 1;
-  if(hd->count < 10) {
+  if(hd->count == 0) {
     if(hd->prev == hd) return;
     //mutex_lock(&big_lock);
     hd->prev->next = hd->next;
