@@ -95,7 +95,8 @@ static void* alloc_small(size_t size) {
   //mutex_unlock(&private_list[cpu_id]->lock);
   cur_page->count += 1;
   //printf("alloc num %d\n",cur_page->count);
-	return (void*)cur_page->chart->next;
+  cur_page->chart = cur_page->chart->next;
+	return (void*)cur_page->chart;
 }
 
 static void *kalloc(size_t size) {
@@ -131,7 +132,7 @@ static void *kalloc(size_t size) {
         private_list[cpu_id]->count = 0;
       }
     }
-    printf("begin small alloc \n");
+    //printf("begin small alloc \n");
     return alloc_small(size);
   }
   return NULL;
