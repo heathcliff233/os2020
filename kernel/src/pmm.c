@@ -3,7 +3,7 @@
 
 #define PAGE_SIZE 8192+512
 #define HDR_SIZE 40
-#define SG_SIZE 16
+#define SG_SIZE 24
 
 #define align(_A,_B) (((_A-1)/_B+1)*_B)
 
@@ -39,7 +39,7 @@ void mutex_unlock(mutex_t* lk) {
 static mutex_t big_lock = MUTEX_INITIALIZER;
 
 typedef struct mem_block {
-  //intptr_t sp;
+  intptr_t hd_sp;
   //bool available;
 	size_t size;
   //struct mem_block* prev;
@@ -85,6 +85,7 @@ static void* alloc_small(size_t size) {
   //cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
   cur_page->chart->next = (mem_head*)align(((uintptr_t)tmp+tmp->size), getb(size));
   cur_page->chart->next->size = size;
+  cur_page->chart->hd_sp = (intptr_t)cur_page;
   //cur_page->chart->next->prev = cur_page->chart;
   //mutex_unlock(&private_list[cpu_id]->lock);
   cur_page->count += 1;
@@ -99,8 +100,9 @@ static void *kalloc(size_t size) {
     size += SG_SIZE;
     int cpu_id = _cpu();
     page_t* cur = (page_t*)private_list[cpu_id];
-    size_t rem = ((uintptr_t)cur)+PAGE_SIZE-((uintptr_t)cur->chart+cur->chart->size);
-    if(size > rem) {
+    //size_t rem = ((uintptr_t)cur)+PAGE_SIZE-((uintptr_t)cur->chart+cur->chart->size);
+    size_t used = align((intptr_t)(cur->chart),getb(size))+size+SG_SIZE-(intptr_t)cur;
+    if(used > PAGE_SIZE) {
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
       mutex_unlock(&big_lock);
@@ -124,7 +126,8 @@ static void *kalloc(size_t size) {
 
 static void kfree(void *ptr) {
   //printf("free\n");
-  page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
+  //page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
+  page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
   mutex_lock(&big_lock);
   hd->count -= 1;
   if(hd->count == 0) {
