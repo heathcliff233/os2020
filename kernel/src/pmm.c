@@ -130,9 +130,11 @@ static void *kalloc(size_t size) {
         private_list[cpu_id]->next = tmp;
         private_list[cpu_id] = private_list[cpu_id]->next;
         private_list[cpu_id]->chart = (mem_head*)((intptr_t)tmp + HDR_SIZE);
+        /*
         private_list[cpu_id]->chart->next = NULL;
         private_list[cpu_id]->chart->size = SG_SIZE;
         private_list[cpu_id]->count = 0;
+        */
       }
     }
     //printf("begin small alloc \n");
