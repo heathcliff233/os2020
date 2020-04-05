@@ -3,7 +3,7 @@
 
 #define PAGE_SIZE 8192
 #define HDR_SIZE 40
-#define SG_SIZE 24
+#define SG_SIZE 16
 
 #define align(_A,_B) (((_A-1)/_B+1)*_B)
 
@@ -39,7 +39,7 @@ void mutex_unlock(mutex_t* lk) {
 static mutex_t big_lock = MUTEX_INITIALIZER;
 
 typedef struct mem_block {
-  intptr_t sp;
+  //intptr_t sp;
   //bool available;
 	size_t size;
   //struct mem_block* prev;
@@ -121,16 +121,18 @@ static void *kalloc(size_t size) {
 
 static void kfree(void *ptr) {
   page_t* hd = (page_t*)((uintptr_t)ptr & (1<<13));
+  mutex_lock(&big_lock);
   hd->count -= 1;
   if(hd->count == 0) {
     if(hd->prev == hd) return;
-    mutex_lock(&big_lock);
+    //mutex_lock(&big_lock);
     hd->prev->next = hd->next;
     page_t* cp_free_list  = free_list;
-    hd->next = cp_free_list->next;
-    cp_free_list->next = hd;
-    mutex_unlock(&big_lock);
+    hd->next = cp_free_list;
+    free_list = hd;
+    //mutex_unlock(&big_lock);
   }
+  mutex_lock(&big_lock);
 }
 
 static void pmm_init() {
