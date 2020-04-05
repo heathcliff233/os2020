@@ -90,7 +90,7 @@ static void* alloc_small(size_t size) {
   cur_page->chart->next = (mem_head*)align(((uintptr_t)tmp+tmp->size), getb(size));
   cur_page->chart->next->size = size;
   cur_page->chart->hd_sp = (intptr_t)cur_page;
-  printf("page head %ld\n",(intptr_t)cur_page);
+  printf("page head %ld\n",cur_page->chart->hd_sp);
   //cur_page->chart->next->prev = cur_page->chart;
   //mutex_unlock(&private_list[cpu_id]->lock);
   cur_page->count += 1;
