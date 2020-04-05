@@ -18,6 +18,7 @@ static void os_run() {
   
   for(int i=0; i< 10; i++){
     sg = pmm->alloc(4096);
+    printf("now NO %d\n",i);
     if (((intptr_t)sg)/4096*4096!=(intptr_t)sg) printf("NO %d ptr %ld",i, (intptr_t)sg);
     //printf("to free\n");
     //pmm->free(sg);
