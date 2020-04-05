@@ -16,7 +16,7 @@ static void os_run() {
   intptr_t* sg = 0;
   //os_init();
   
-  for(int i=0; i< 10; i++){
+  for(int i=0; i< 10000; i++){
     sg = pmm->alloc(10);
     _halt(0);
     pmm->free(sg);
@@ -24,7 +24,7 @@ static void os_run() {
   
   //sg = pmm->alloc(10);
   //printf("ptr %ld\n",sg);
-  //printf("succeed!\n");
+  printf("succeed!\n");
   while (1) ;
 }
 
