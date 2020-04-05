@@ -105,7 +105,7 @@ static void *kalloc(size_t size) {
     //printf("used %ld\n",used);
     printf("test\n");
     printf("page ptr %ld\n",(intptr_t)cur);
-    //printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
+    printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
     if(used > PAGE_SIZE) {
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
