@@ -18,7 +18,7 @@ static void os_run() {
   
   for(int i=0; i< 10; i++){
     sg = pmm->alloc(10);
-    
+    printf("to free\n");
     pmm->free(sg);
   }
   
