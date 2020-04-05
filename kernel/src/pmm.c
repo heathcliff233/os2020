@@ -14,7 +14,7 @@ void mutex_unlock(mutex_t* locked);
 
 static int getb(size_t size) {
   int ret = 0;
-  while(size < (1<<ret)){
+  while(size > (1<<ret)){
     ret++;
   }
   return (1<<ret);
