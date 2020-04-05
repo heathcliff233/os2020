@@ -73,6 +73,10 @@ static page_t* alloc_new_page() {
     //printf("stop\n");
   }
   mutex_unlock(&big_lock);
+  ret->chart = (mem_head*)((intptr_t)ret + HDR_SIZE); 
+  ret->chart->next = NULL;
+  ret->chart->size = SG_SIZE;
+  ret->count = 0;
   //printf("finish\n");
 	return ret;
 }
@@ -116,9 +120,9 @@ static void *kalloc(size_t size) {
       } else {
         private_list[cpu_id]->next = tmp;
         private_list[cpu_id] = private_list[cpu_id]->next;
-        private_list[cpu_id]->chart = (mem_head*)((intptr_t)tmp + HDR_SIZE);
-        private_list[cpu_id]->chart->next = NULL;
-        private_list[cpu_id]->chart->size = SG_SIZE;
+        //private_list[cpu_id]->chart = (mem_head*)((intptr_t)tmp + HDR_SIZE);
+        //private_list[cpu_id]->chart->next = NULL;
+        //private_list[cpu_id]->chart->size = SG_SIZE;
         private_list[cpu_id]->count = 0;
       }
     }
