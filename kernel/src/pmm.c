@@ -101,11 +101,13 @@ static void *kalloc(size_t size) {
     size += SG_SIZE;
     //size = size>4096 ? 4096:size;
     int cpu_id = _cpu();
-    if(size > private_list[cpu_id]->size) {
+    page_t* cur = (page_t*)private_list[cpu_id];
+    size_t rem = ((uintptr_t)cur)+PAGE_SIZE-((uintptr_t)cur->chart+cur->chart->size);
+    if(size > rem) {
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
       mutex_unlock(&big_lock);
-      printf("ublock\n");
+      //printf("ublock\n");
       if(tmp==NULL) {
         return NULL;
       } else {
