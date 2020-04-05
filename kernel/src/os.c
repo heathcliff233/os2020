@@ -19,7 +19,7 @@ static void os_run() {
   
   for(int i=0; i< 100000; i++){
     //printf("now NO %d\n",i);
-    sg = pmm->alloc(409);
+    sg = pmm->alloc(4096);
     
     if(sg==NULL) count++;
     sg = pmm->alloc(132);
