@@ -62,7 +62,7 @@ page_t* private_list[8]={NULL};
 page_t* free_list = NULL;
 
 static page_t* alloc_new_page() {
-  //printf("allocing new page\n");
+  printf("allocing new page\n");
   mutex_lock(&big_lock);
   page_t* ret = free_list;
   if(ret->next != NULL){
@@ -94,7 +94,7 @@ static void* alloc_small(size_t size) {
 
 
 static void *kalloc(size_t size) {
-  //printf("begin alloc \n");
+  printf("begin alloc \n");
   if(size==0){
     return NULL;
   } else {
@@ -126,6 +126,7 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
+  printf("free\n");
   page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
   mutex_lock(&big_lock);
   hd->count -= 1;
