@@ -109,13 +109,13 @@ static void *kalloc(size_t size) {
     int cpu_id = _cpu();
     page_t* cur = (page_t*)private_list[cpu_id];
     size_t used = align((intptr_t)(cur->chart),getb(size))+tot-(intptr_t)cur;
-    /*
+    
     printf("align %d",getb(size));
     printf("current %ld",align((intptr_t)(cur->chart),getb(tot)));
     printf("used %ld\n",used);
     printf("page ptr %ld\n",(intptr_t)cur);
     printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
-    */
+    
     if(used > PAGE_SIZE) {
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
