@@ -155,7 +155,7 @@ static void kfree(void *ptr) {
     free_list = hd;
     //mutex_unlock(&big_lock);
   }
-  mutex_lock(&big_lock);
+  mutex_unlock(&big_lock);
   printf("finish free\n");
 }
 
