@@ -24,6 +24,8 @@ static void os_run() {
     if(sg==NULL) count++;
     sg = pmm->alloc(132);
     if(sg==NULL) count++;
+    sg = pmm->alloc(532);
+    if(sg==NULL) count++;
     //printf("NO %d alloc succ\n",i);
     //if (((intptr_t)sg)/4096*4096!=(intptr_t)sg) printf("NO %d ptr %ld",i, (intptr_t)sg);
     //printf("to free\n");
