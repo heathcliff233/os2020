@@ -62,13 +62,13 @@ page_t* private_list[8]={NULL};
 page_t* free_list = NULL;
 
 static page_t* alloc_new_page() {
-  //printf("allocing new page\n");
+  printf("allocing new page\n");
   page_t* ret = NULL;
   mutex_lock(&big_lock);
   if(free_list->next != NULL){
     ret = free_list;
     free_list = free_list->next;
-    //printf("%ld\n", free_list);
+    printf("%ld\n", free_list);
     free_list->prev = NULL;
     //printf("stop\n");
   }
@@ -77,7 +77,7 @@ static page_t* alloc_new_page() {
   ret->chart->next = NULL;
   ret->chart->size = SG_SIZE;
   ret->count = 0;
-  //printf("finish\n");
+  printf("finish\n");
 	return ret;
 }
 
@@ -109,13 +109,13 @@ static void *kalloc(size_t size) {
     int cpu_id = _cpu();
     page_t* cur = (page_t*)private_list[cpu_id];
     size_t used = align((intptr_t)(cur->chart),getb(size))+tot-(intptr_t)cur;
-    
+    /*
     printf("align %d",getb(size));
     printf("current %ld",align((intptr_t)(cur->chart),getb(tot)));
     printf("used %ld\n",used);
     printf("page ptr %ld\n",(intptr_t)cur);
     printf("memblock ptr %ld\n",(intptr_t)(cur->chart));
-    
+    */
     if(used > PAGE_SIZE) {
       printf("lock\n");
       mutex_lock(&big_lock);
