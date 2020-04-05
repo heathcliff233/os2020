@@ -17,7 +17,7 @@ static void os_run() {
   int count = 0;
   //os_init();
   
-  for(int i=0; i< 1000; i++){
+  for(int i=0; i< 100000; i++){
     //printf("now NO %d\n",i);
     sg = pmm->alloc(4096);
     
