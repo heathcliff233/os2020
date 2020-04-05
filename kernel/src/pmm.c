@@ -103,11 +103,12 @@ static void *kalloc(size_t size) {
   if(size==0){
     return NULL;
   } else {
-    size += SG_SIZE;
+    size_t tot = size + SG_SIZE;
+    //size += SG_SIZE;
     int cpu_id = _cpu();
     page_t* cur = (page_t*)private_list[cpu_id];
     //size_t rem = ((uintptr_t)cur)+PAGE_SIZE-((uintptr_t)cur->chart+cur->chart->size);
-    size_t used = align((intptr_t)(cur->chart),getb(size))+size-(intptr_t)cur;
+    size_t used = align((intptr_t)(cur->chart),getb(tot))+size-(intptr_t)cur;
     printf("used %ld\n",used);
     //printf("test\n");
     printf("page ptr %ld\n",(intptr_t)cur);
