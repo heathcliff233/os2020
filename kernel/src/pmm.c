@@ -17,7 +17,7 @@ static int getb(size_t size) {
   while(size < (1<<ret)){
     ret++;
   }
-  return ret;
+  return (1<<ret);
 }
 
 static intptr_t atomic_xchg(volatile mutex_t* addr,intptr_t newval) {
