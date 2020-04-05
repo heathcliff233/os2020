@@ -93,6 +93,7 @@ static void* alloc_small(size_t size) {
   //cur_page->chart->next->prev = cur_page->chart;
   //mutex_unlock(&private_list[cpu_id]->lock);
   cur_page->count += 1;
+  printf("alloc num %d\n",cur_page->count);
 	return (void*)cur_page->chart->next;
 }
 
