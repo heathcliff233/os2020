@@ -144,6 +144,7 @@ static void kfree(void *ptr) {
   hd->count -= 1;
   printf("free count %d\n",hd->count);
   if(hd->count == 0) {
+    printf("free page\n");
     if(hd->prev == hd) return;
     //mutex_lock(&big_lock);
     hd->prev->next = hd->next;
