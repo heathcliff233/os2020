@@ -65,10 +65,12 @@ static page_t* alloc_new_page() {
   //printf("allocing new page\n");
   mutex_lock(&big_lock);
   page_t* ret = free_list;
-  free_list = free_list->next;
-  //printf("%ld\n", free_list);
-  free_list->prev = NULL;
-  //printf("stop\n");
+  if(ret != NULL){
+    free_list = free_list->next;
+    //printf("%ld\n", free_list);
+    free_list->prev = NULL;
+    //printf("stop\n");
+  }
   mutex_unlock(&big_lock);
   //printf("finish\n");
 	return ret;
