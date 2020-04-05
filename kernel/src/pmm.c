@@ -145,7 +145,7 @@ static void kfree(void *ptr) {
 static void pmm_init() {
   //intptr_t pmstart = (intptr_t)_heap.start;
   //intptr_t pmsize = ((intptr_t)_heap.end - align(pmstart, PAGE_SIZE));
-  free_list = (page_t*)(((intptr_t)_heap.start)); //& 1<<13)+(1<<13));
+  free_list = (page_t*)(align(((intptr_t)_heap.start),4096)); //& 1<<13)+(1<<13));
   printf("start point %ld\n",free_list);
   page_t* st = NULL;
   while((intptr_t)free_list < (intptr_t)_heap.end - PAGE_SIZE) {
