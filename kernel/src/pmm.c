@@ -101,7 +101,7 @@ static void* alloc_small(size_t size) {
   cur_page->count += 1;
   //printf("alloc num %d\n",cur_page->count);
   cur_page->chart = cur_page->chart->next;
-	return (void*)cur_page->chart;
+	return (void*)((intptr_t)(cur_page->chart));
 }
 
 static void *kalloc(size_t size) {
@@ -139,7 +139,7 @@ static void *kalloc(size_t size) {
       }
     }
     //printf("begin small alloc \n");
-    alloc_small(size);
+    return alloc_small(size);
   }
   return NULL;
 }
