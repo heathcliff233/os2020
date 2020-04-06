@@ -27,7 +27,7 @@ static void os_run() {
   //void* tst = (void*)malloc(1000*sizeof(void));
   //tst = malloc(10*sizeof(intptr_t));
   int j=0;
-  int k=0;
+  //int k=0;
   for(int i=0; i<2; i++){
     
     for(j=0; j<1000; j++){
@@ -35,6 +35,8 @@ static void os_run() {
       tst[j] = pmm->alloc(4096);
       //printf("finish alloc for %d time",j);
     }
+    printf("%ld\n",(intptr_t)tst[0]);
+    /*
     for(k=0; k<1000; k++){
       if(tst[k]==NULL){
         count++;
@@ -42,6 +44,7 @@ static void os_run() {
       }
       pmm->free(tst[k]);
     }
+    */
     
     /*
     sg1 = pmm->alloc(4096);
