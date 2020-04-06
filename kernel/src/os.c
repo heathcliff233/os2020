@@ -26,14 +26,15 @@ static void os_run() {
   void* tst[1000]; // = {};
   //void* tst = (void*)malloc(1000*sizeof(void));
   //tst = malloc(10*sizeof(intptr_t));
-  
+  int j=0;
+  int k=0;
   for(int i=0; i<1; i++){
     
-    for(int j=0; j<100; j++){
+    for(j=0; j<100; j++){
       tst[j] = pmm->alloc(4096);
       //printf("finish alloc for %d time",j);
     }
-    for(int k=0; k<10; k++){
+    for(k=0; k<10; k++){
       if(tst[k]==NULL){
         count++;
         continue;
