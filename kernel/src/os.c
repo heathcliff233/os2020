@@ -31,6 +31,7 @@ static void os_run() {
   for(int i=0; i<2; i++){
     
     for(j=0; j<1000; j++){
+      tst[j] = NULL;
       tst[j] = pmm->alloc(4096);
       //printf("finish alloc for %d time",j);
     }
