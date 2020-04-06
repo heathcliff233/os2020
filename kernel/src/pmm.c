@@ -155,7 +155,7 @@ static void kfree(void *ptr) {
   //printf("free count %d\n",hd->count);
   if(hd->count == 0) {
     
-    if(hd->prev != hd){
+    //if(hd->prev != hd){
       //mutex_lock(&big_lock);
       //printf("free page\n");
       hd->prev->next = hd->next;
@@ -168,7 +168,7 @@ static void kfree(void *ptr) {
       free_list = hd;
       //mutex_unlock(&big_lock);
       num_avai_page++;
-    }
+    //}
   }
   mutex_unlock(&big_lock);
   //printf("finish free\n");
