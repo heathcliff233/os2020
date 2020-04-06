@@ -161,7 +161,7 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-  /*
+  
   
   //printf("free\n");
   //printf("feed %ld\n",(intptr_t)ptr);
@@ -194,7 +194,7 @@ static void kfree(void *ptr) {
   }
   mutex_unlock(&big_lock);
   //printf("finish free\n");
-  */
+  
 }
 
 static void pmm_init() {
