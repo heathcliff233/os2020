@@ -23,12 +23,12 @@ static void os_run() {
   */
   int count = 0;
   //os_init();
-  void* tst[10] = {0,0,0,0,0,0,0,0,0,0};
+  void* tst[1000] = {};
   //tst = malloc(10*sizeof(intptr_t));
   
   for(int i=0; i<300; i++){
     
-    for(int j=0; j<10; j++){
+    for(int j=0; j<1000; j++){
       tst[j] = pmm->alloc(4096);
       //printf("finish alloc for %d time",j);
     }
