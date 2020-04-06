@@ -16,7 +16,7 @@ static void os_run() {
   //void* sg = 0;
   int count = 0;
   //os_init();
-  void* tst[10] = {0,0,0,0,0,0,0,0,0,0};
+  intptr_t* tst[10] = {0,0,0,0,0,0,0,0,0,0};
   //tst = malloc(10*sizeof(intptr_t));
   
   for(int i=0; i< 10; i++){
