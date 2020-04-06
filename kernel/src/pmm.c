@@ -129,6 +129,7 @@ static void *kalloc(size_t size) {
         return NULL;
       } else {
         private_list[cpu_id]->next = tmp;
+        tmp->prev = private_list[cpu_id];
         private_list[cpu_id] = private_list[cpu_id]->next;
         private_list[cpu_id]->chart = (mem_head*)((intptr_t)tmp + HDR_SIZE);
         /*
