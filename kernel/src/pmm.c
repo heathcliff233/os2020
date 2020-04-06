@@ -98,6 +98,7 @@ static void* alloc_small(size_t size) {
   cur_page->count += 1;
   //printf("alloc num %d\n",cur_page->count);
   cur_page->chart = cur_page->chart->next;
+  printf("return ptr %ld\n",(intptr_t)cur_page->chart);
 	return (void*)((intptr_t)(cur_page->chart));
 }
 
