@@ -27,7 +27,7 @@ static void os_run() {
   //void* tst = (void*)malloc(1000*sizeof(void));
   //tst = malloc(10*sizeof(intptr_t));
   
-  for(int i=0; i<3; i++){
+  for(int i=0; i<1; i++){
     
     for(int j=0; j<100; j++){
       tst[j] = pmm->alloc(4096);
