@@ -165,9 +165,10 @@ static void kfree(void *ptr) {
   //printf("free\n");
   //printf("feed %ld\n",(intptr_t)ptr);
   //page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
-  page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
+  
   
   mutex_lock(&big_lock);
+  page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
   hd->count -= 1;
   //printf("remaining count %d\n",hd->count);
   //printf("free count %d\n",hd->count);
