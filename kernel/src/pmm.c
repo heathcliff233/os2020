@@ -94,11 +94,11 @@ static void* alloc_small(size_t size) {
   cur_page->chart->next = (mem_head*)align(((intptr_t)tmp+tmp->size), getb(size));
   cur_page->chart->next->size = size;
   cur_page->chart->next->hd_sp = (intptr_t)cur_page;
-  printf("page head %ld\n",(intptr_t)cur_page);
+  //printf("page head %ld\n",(intptr_t)cur_page);
   cur_page->count += 1;
   //printf("alloc num %d\n",cur_page->count);
   cur_page->chart = cur_page->chart->next;
-  printf("return ptr %ld\n",(intptr_t)cur_page->chart);
+  //printf("return ptr %ld\n",(intptr_t)cur_page->chart);
 	return (void*)((intptr_t)(cur_page->chart));
 }
 
@@ -147,13 +147,13 @@ static void *kalloc(size_t size) {
 static void kfree(void *ptr) {
   
   //printf("free\n");
-  printf("feed %ld\n",(intptr_t)ptr);
+  //printf("feed %ld\n",(intptr_t)ptr);
   //page_t* hd = (page_t*)(((uintptr_t)ptr-(uintptr_t)_heap.start)/PAGE_SIZE*PAGE_SIZE+(uintptr_t)_heap.start);
   page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
   
   mutex_lock(&big_lock);
   hd->count -= 1;
-  printf("remaining count %d\n",hd->count);
+  //printf("remaining count %d\n",hd->count);
   //printf("free count %d\n",hd->count);
   if(hd->count == 0) {
     
@@ -161,7 +161,7 @@ static void kfree(void *ptr) {
       //mutex_lock(&big_lock);
       
       hd->prev->next = hd->next;
-      printf("free page\n");
+      //printf("free page\n");
       if(hd->next != NULL) hd->next->prev = hd->prev;
       //page_t* cp_free_list  = free_list;
       //hd->next = cp_free_list;
@@ -171,7 +171,7 @@ static void kfree(void *ptr) {
       free_list = hd;
       //mutex_unlock(&big_lock);
       num_avai_page++;
-      printf("num page available %d\n",num_avai_page);
+      //printf("num page available %d\n",num_avai_page);
     //}
   }
   mutex_unlock(&big_lock);
