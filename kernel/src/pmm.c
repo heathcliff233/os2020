@@ -68,7 +68,7 @@ static page_t* alloc_new_page() {
   
   
   //assert(free_list->next != NULL);
-  mutex_lock(&big_lock);
+  //! mutex_lock(&big_lock);
   if(num_avai_page > 8) {
   //if(free_list->next != NULL){
     ret = free_list;
@@ -79,14 +79,14 @@ static page_t* alloc_new_page() {
   //}
     num_avai_page--;
   }
-  mutex_unlock(&big_lock);
+  //! mutex_unlock(&big_lock);
   if(ret==NULL) return ret;
-  mutex_lock(&big_lock);
+  //! mutex_lock(&big_lock);
   ret->chart = (mem_head*)((intptr_t)ret + HDR_SIZE); 
   ret->chart->next = NULL;
   ret->chart->size = SG_SIZE;
   ret->count = 0;
-  mutex_unlock(&big_lock);
+  //! mutex_unlock(&big_lock);
   //printf("finish\n");
   
 	return ret;
@@ -129,9 +129,9 @@ static void *kalloc(size_t size) {
     */
     if(used > PAGE_SIZE) {
       //printf("lock\n");
-      //mutex_lock(&big_lock);
+      mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
-      //mutex_unlock(&big_lock);
+      mutex_unlock(&big_lock);
       //printf("unlock\n");
       if(tmp==NULL) {
         return NULL;
@@ -147,6 +147,7 @@ static void *kalloc(size_t size) {
         */
       }
     }
+    
     //printf("begin small alloc \n");
     return alloc_small(size);
     /*
