@@ -23,6 +23,7 @@ static void os_run() {
     
     for(int j=0; j<10; j++){
       tst[j] = pmm->alloc(4096);
+      printf("finish alloc for %d time",j);
     }
     for(int k=0; k<10; k++){
       if(tst[k]==NULL){
