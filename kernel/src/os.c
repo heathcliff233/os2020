@@ -46,12 +46,12 @@ static void os_run() {
     sg6 = pmm->alloc(4096);
 
     printf("finish alloc\n");
-    pmm->free(&sg1);
-    pmm->free(&sg2);
-    pmm->free(&sg3);
-    pmm->free(&sg4);
-    pmm->free(&sg5);
-    pmm->free(&sg6);
+    pmm->free(sg1);
+    pmm->free(sg2);
+    pmm->free(sg3);
+    pmm->free(sg4);
+    pmm->free(sg5);
+    pmm->free(sg6);
     //printf("now NO %d\n",i);
     /*
     sg = pmm->alloc(4096);
