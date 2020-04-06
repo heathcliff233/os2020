@@ -93,6 +93,7 @@ static page_t* alloc_new_page() {
 }
 
 static void* alloc_small(size_t size) {
+  mutex_lock(&big_lock);
   int cpu_id = _cpu();
   page_t* cur_page = private_list[cpu_id];
   mem_head* tmp = cur_page->chart;
@@ -101,7 +102,7 @@ static void* alloc_small(size_t size) {
   cur_page->chart->next->size = size;
   cur_page->chart->next->hd_sp = (intptr_t)cur_page;
   //printf("page head %ld\n",(intptr_t)cur_page);
-  mutex_lock(&big_lock);
+  
   cur_page->count += 1;
   mutex_unlock(&big_lock);
   //printf("alloc num %d\n",cur_page->count);
@@ -147,7 +148,7 @@ static void *kalloc(size_t size) {
         */
       }
     }
-    
+
     //printf("begin small alloc \n");
     return alloc_small(size);
     /*
