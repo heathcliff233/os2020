@@ -80,6 +80,7 @@ static page_t* alloc_new_page() {
     num_avai_page--;
   }
   mutex_unlock(&big_lock);
+  if(ret==NULL) return ret;
   ret->chart = (mem_head*)((intptr_t)ret + HDR_SIZE); 
   ret->chart->next = NULL;
   ret->chart->size = SG_SIZE;
