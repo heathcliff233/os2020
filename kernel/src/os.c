@@ -24,14 +24,14 @@ static void os_run() {
   */
   int count = 0;
   //os_init();
-  void* tst[10000]; // = {};
+  void* tst[100000]; // = {};
   //void* tst = (void*)malloc(1000*sizeof(void));
   //tst = malloc(10*sizeof(intptr_t));
   int j=0;
   int k=0;
-  for(int i=0; i<100; i++){
+  for(int i=0; i<1; i++){
     
-    for(j=0; j<10000; j++){
+    for(j=0; j<100000; j++){
       tst[j] = NULL;
       tst[j] = pmm->alloc(409);
       //if (tst[j]==NULL) count++;
@@ -40,7 +40,7 @@ static void os_run() {
     //printf("cpu %d alloc\n",_cpu());
     //printf("%ld\n",(intptr_t)tst[0]);
     
-    for(k=0; k<10000; k++){
+    for(k=0; k<100000; k++){
       if(tst[k]==NULL){
         count++;
         continue;
@@ -48,10 +48,11 @@ static void os_run() {
       pmm->free(tst[k]);
     }
     //printf("cpu %d free\n",_cpu());
+    /*
     for(k=0; k<10000; k++){
       tst[k] = NULL;
     }
-    
+    */
     /*
     sg1 = pmm->alloc(4096);
     sg2 = pmm->alloc(4096);
