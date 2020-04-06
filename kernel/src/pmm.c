@@ -72,7 +72,7 @@ static page_t* alloc_new_page() {
     ret = free_list;
     free_list = free_list->next;
     //printf("%ld\n", free_list);
-    free_list->prev = NULL;
+    free_list->prev = free_list;
     //printf("stop\n");
   }
   num_avai_page--;
