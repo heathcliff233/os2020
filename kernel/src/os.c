@@ -13,19 +13,21 @@ static void os_run() {
   //printf("os test\n");
   //assert(pmm->alloc(4096)!=NULL);
   //printf("first test\n");
+  /*
   void* sg1 = 0;
   void* sg2 = 0;
   void* sg3 = 0;
   void* sg4 = 0;
   void* sg5 = 0;
   void* sg6 = 0;
+  */
   int count = 0;
   //os_init();
-  //void* tst[10] = {0,0,0,0,0,0,0,0,0,0};
+  void* tst[10] = {0,0,0,0,0,0,0,0,0,0};
   //tst = malloc(10*sizeof(intptr_t));
   
   for(int i=0; i<300; i++){
-    /*
+    
     for(int j=0; j<10; j++){
       tst[j] = pmm->alloc(4096);
       printf("finish alloc for %d time",j);
@@ -37,7 +39,8 @@ static void os_run() {
       }
       pmm->free(tst[k]);
     }
-    */
+    
+    /*
     sg1 = pmm->alloc(4096);
     sg2 = pmm->alloc(4096);
     sg3 = pmm->alloc(4096);
@@ -52,6 +55,7 @@ static void os_run() {
     pmm->free(sg4);
     pmm->free(sg5);
     pmm->free(sg6);
+    */
     //printf("now NO %d\n",i);
     /*
     sg = pmm->alloc(4096);
