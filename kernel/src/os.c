@@ -1,4 +1,5 @@
 #include <common.h>
+int num_avai_page;
 
 static void os_init() {
   pmm->init();
@@ -85,6 +86,7 @@ static void os_run() {
   
   //sg = pmm->alloc(10);
   //printf("ptr %ld\n",sg);
+  printf("avai page %d\n",num_avai_page);
   printf("total miss %d\n", count);
   printf("succeed!\n");
   while (1) ;
