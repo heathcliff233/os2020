@@ -66,9 +66,10 @@ static page_t* alloc_new_page() {
   //printf("allocing new page\n");
   page_t* ret = NULL;
   
-  if(num_avai_page < 8) return ret;
+  
   //assert(free_list->next != NULL);
   mutex_lock(&big_lock);
+  if(num_avai_page > 8) {
   //if(free_list->next != NULL){
     ret = free_list;
     free_list = free_list->next;
@@ -76,7 +77,8 @@ static page_t* alloc_new_page() {
     free_list->prev = free_list;
     //printf("stop\n");
   //}
-  num_avai_page--;
+    num_avai_page--;
+  }
   mutex_unlock(&big_lock);
   ret->chart = (mem_head*)((intptr_t)ret + HDR_SIZE); 
   ret->chart->next = NULL;
