@@ -159,8 +159,9 @@ static void kfree(void *ptr) {
     
     //if(hd->prev != hd){
       //mutex_lock(&big_lock);
-      printf("free page\n");
+      
       hd->prev->next = hd->next;
+      printf("free page\n");
       if(hd->next != NULL) hd->next->prev = hd->prev;
       //page_t* cp_free_list  = free_list;
       //hd->next = cp_free_list;
