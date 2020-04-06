@@ -32,7 +32,7 @@ static void os_run() {
     
     for(j=0; j<1000; j++){
       tst[j] = NULL;
-      tst[j] = pmm->alloc(4096);
+      tst[j] = pmm->alloc(409);
       //if (tst[j]==NULL) count++;
       //printf("finish alloc for %d time",j);
     }
