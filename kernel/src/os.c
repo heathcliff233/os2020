@@ -48,7 +48,9 @@ static void os_run() {
       pmm->free(tst[k]);
     }
     //printf("cpu %d free\n",_cpu());
-    
+    for(k=0; k<10000; k++){
+      tst[k] = NULL;
+    }
     
     /*
     sg1 = pmm->alloc(4096);
