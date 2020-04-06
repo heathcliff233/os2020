@@ -67,6 +67,7 @@ static page_t* alloc_new_page() {
   page_t* ret = NULL;
   
   if(num_avai_page < 8) return ret;
+  assert(free_list->next != NULL);
   mutex_lock(&big_lock);
   if(free_list->next != NULL){
     ret = free_list;
