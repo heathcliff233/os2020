@@ -168,6 +168,7 @@ static void kfree(void *ptr) {
       free_list = hd;
       //mutex_unlock(&big_lock);
       num_avai_page++;
+      printf("num page available %d\n",num_avai_page);
     //}
   }
   mutex_unlock(&big_lock);
