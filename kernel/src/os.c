@@ -44,6 +44,8 @@ static void os_run() {
     sg4 = pmm->alloc(4096);
     sg5 = pmm->alloc(4096);
     sg6 = pmm->alloc(4096);
+
+    printf("finish alloc\n");
     pmm->free(sg1);
     pmm->free(sg2);
     pmm->free(sg3);
