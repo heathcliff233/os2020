@@ -68,6 +68,7 @@ static void os_run() {
     */
     
     printf("NO %d loop succ\n",i);
+    printf("miss %d\n",count);
     //if (((intptr_t)sg)/4096*4096!=(intptr_t)sg) printf("NO %d ptr %ld",i, (intptr_t)sg);
     //printf("to free\n");
     //pmm->free(sg);
