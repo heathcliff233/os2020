@@ -159,7 +159,7 @@ static void kfree(void *ptr) {
     
     //if(hd->prev != hd){
       //mutex_lock(&big_lock);
-      
+      assert(hd->prev != NULL);
       hd->prev->next = hd->next;
       //printf("free page\n");
       if(hd->next != NULL) hd->next->prev = hd->prev;
