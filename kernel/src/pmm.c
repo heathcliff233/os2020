@@ -152,6 +152,7 @@ static void kfree(void *ptr) {
   
   mutex_lock(&big_lock);
   hd->count -= 1;
+  printf("remaining count %d\n",hd->count);
   //printf("free count %d\n",hd->count);
   if(hd->count == 0) {
     
