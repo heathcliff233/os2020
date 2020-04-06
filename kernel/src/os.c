@@ -33,6 +33,7 @@ static void os_run() {
     for(j=0; j<1000; j++){
       tst[j] = NULL;
       tst[j] = pmm->alloc(4096);
+      if (tst[j]==NULL) count++;
       //printf("finish alloc for %d time",j);
     }
     printf("%ld\n",(intptr_t)tst[0]);
@@ -72,8 +73,8 @@ static void os_run() {
     if(sg==NULL) count++;
     */
     
-    printf("cpu %d NO %d loop succ\n",_cpu(),i);
-    printf("miss %d\n",count);
+    //printf("cpu %d NO %d loop succ\n",_cpu(),i);
+    //printf("miss %d\n",count);
     //if (((intptr_t)sg)/4096*4096!=(intptr_t)sg) printf("NO %d ptr %ld",i, (intptr_t)sg);
     //printf("to free\n");
     //pmm->free(sg);
