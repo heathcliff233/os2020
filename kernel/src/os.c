@@ -28,7 +28,7 @@ static void os_run() {
   //tst = malloc(10*sizeof(intptr_t));
   int j=0;
   int k=0;
-  for(int i=0; i<70; i++){
+  for(int i=0; i<1000; i++){
     
     for(j=0; j<10000; j++){
       tst[j] = NULL;
