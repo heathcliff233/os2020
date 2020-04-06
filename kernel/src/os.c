@@ -23,7 +23,8 @@ static void os_run() {
   */
   int count = 0;
   //os_init();
-  void* tst[1000] = {};
+  void* tst[1000]; // = {};
+  //void* tst = (void*)malloc(1000*sizeof(void));
   //tst = malloc(10*sizeof(intptr_t));
   
   for(int i=0; i<300; i++){
