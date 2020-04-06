@@ -28,12 +28,12 @@ static void os_run() {
   //tst = malloc(10*sizeof(intptr_t));
   int j=0;
   int k=0;
-  for(int i=0; i<1; i++){
+  for(int i=0; i<100; i++){
     
     for(j=0; j<1000; j++){
       tst[j] = NULL;
       tst[j] = pmm->alloc(4096);
-      if (tst[j]==NULL) count++;
+      //if (tst[j]==NULL) count++;
       //printf("finish alloc for %d time",j);
     }
     //printf("cpu %d alloc\n",_cpu());
