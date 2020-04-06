@@ -86,7 +86,7 @@ static page_t* alloc_new_page() {
   
 	return ret;
 }
-
+/*
 static void* alloc_small(size_t size) {
   int cpu_id = _cpu();
   page_t* cur_page = private_list[cpu_id];
@@ -102,7 +102,7 @@ static void* alloc_small(size_t size) {
   //printf("return ptr %ld\n",(intptr_t)cur_page->chart);
 	return (void*)((intptr_t)(cur_page->chart));
 }
-
+*/
 static void *kalloc(size_t size) {
   //printf("begin alloc \n");
   if(size == 0){
@@ -141,15 +141,17 @@ static void *kalloc(size_t size) {
       }
     }
     //printf("begin small alloc \n");
-    return alloc_small(size);
-    /*
-    cur->chart->next = (mem_head*)((intptr_t)cur+used-tot);
-    cur->chart = cur->chart->next;
-    cur->chart->hd_sp = (intptr_t)cur;
-    cur->chart->size = size;
-    cur->count += 1;
-    return (void*)((intptr_t)(cur->chart));
-    */
+    //! return alloc_small(size);
+    
+    page_t* cur_page = private_list[cpu_id];
+    mem_head* tmp = cur_page->chart;
+    cur_page->chart->next = (mem_head*)align((intptr_t)tmp+tmp->size,getb(size));
+    cur_page->chart = cur->chart->next;
+    cur_page->chart->hd_sp = (intptr_t)cur;
+    cur_page->chart->size = size;
+    cur_page->count += 1;
+    return (void*)((intptr_t)(cur_page->chart));
+    
   }
   return NULL;
 }
