@@ -36,7 +36,8 @@ static void os_run() {
       if (tst[j]==NULL) count++;
       //printf("finish alloc for %d time",j);
     }
-    printf("%ld\n",(intptr_t)tst[0]);
+    printf("cpu %d alloc\n",_cpu());
+    //printf("%ld\n",(intptr_t)tst[0]);
     
     for(k=0; k<1000; k++){
       if(tst[k]==NULL){
@@ -45,6 +46,7 @@ static void os_run() {
       }
       pmm->free(tst[k]);
     }
+    printf("cpu %d free\n",_cpu());
     
     
     /*
