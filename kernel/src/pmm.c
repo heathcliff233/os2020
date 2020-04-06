@@ -147,7 +147,7 @@ static void *kalloc(size_t size) {
     mem_head* tmp = cur_page->chart;
     cur_page->chart->next = (mem_head*)align((intptr_t)tmp+tmp->size,getb(size));
     cur_page->chart = cur->chart->next;
-    cur_page->chart->hd_sp = (intptr_t)cur;
+    cur_page->chart->hd_sp = (intptr_t)cur_page;
     cur_page->chart->size = size;
     cur_page->count += 1;
     return (void*)((intptr_t)(cur_page->chart));
