@@ -96,7 +96,7 @@ static void* alloc_small(size_t size) {
   mutex_lock(&big_lock);
   int cpu_id = _cpu();
   page_t* cur_page = private_list[cpu_id];
-  assert(cur_page->count > 0);
+  assert(cur_page->count >= 0);
   mem_head* tmp = cur_page->chart;
   //cur_page->chart->next->sp = align((tmp->sp+tmp->size), getb(size));
   cur_page->chart->next = (mem_head*)align(((intptr_t)tmp+tmp->size), getb(size));
