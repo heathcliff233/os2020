@@ -24,7 +24,7 @@ static void os_run() {
   //void* tst[10] = {0,0,0,0,0,0,0,0,0,0};
   //tst = malloc(10*sizeof(intptr_t));
   
-  for(int i=0; i<3; i++){
+  for(int i=0; i<300; i++){
     /*
     for(int j=0; j<10; j++){
       tst[j] = pmm->alloc(4096);
@@ -45,7 +45,7 @@ static void os_run() {
     sg5 = pmm->alloc(4096);
     sg6 = pmm->alloc(4096);
 
-    printf("finish alloc\n");
+    //printf("finish alloc\n");
     pmm->free(sg1);
     pmm->free(sg2);
     pmm->free(sg3);
