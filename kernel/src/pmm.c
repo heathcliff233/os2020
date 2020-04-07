@@ -173,6 +173,7 @@ static void *kalloc(size_t size) {
 
 int buf = 0;
 static void free_page(page_t* pg){
+	printf("start to free page\n");
 	assert(pg->count == 0);
 	if(pg->prev == pg) return;
 	pg->prev->next = pg->next;
