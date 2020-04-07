@@ -77,7 +77,7 @@ static page_t* alloc_new_page() {
     ret = free_list;
     free_list = free_list->next;
     //printf("%ld\n", free_list);
-    free_list->prev = free_list;
+    free_list->prev = NULL;
     //printf("stop\n");
   //}
     num_avai_page--;
@@ -241,7 +241,7 @@ static void free_page(page_t* pg){
     pg->next->prev = pg->prev;
   }
   pg->next = free_list;
-  pg->prev = pg;
+  pg->prev = NULL;
   free_list->prev = pg;
   free_list = pg;
   num_avai_page++;
