@@ -133,7 +133,7 @@ static void *kalloc(size_t size) {
     //page_t* cur = (page_t*)private_list[cpu_id];
     mem_head* cur = private_list[cpu_id]->chart;
     //size_t used = align((intptr_t)(cur->chart)+cur->chart->size,getb(size))+tot-(intptr_t)cur;
-    intptr_t sp = align((intptr_t)(intptr_t)(&cur->start),getb(size));
+    intptr_t sp = align((intptr_t)(&cur->start),getb(size));
     size_t blank = sp - (intptr_t)(&cur->start);
     size_t sz = blank + sp;
     /*
@@ -145,7 +145,7 @@ static void *kalloc(size_t size) {
     */
    
     //if(used > PAGE_SIZE) {
-    if(sz+SG_SIZE) {
+    if(sz+SG_SIZE > (private_list[cpu_id]->size)) {
       //printf("lock\n");
       mutex_lock(&big_lock);
       page_t* tmp = alloc_new_page();
@@ -154,7 +154,7 @@ static void *kalloc(size_t size) {
       if(tmp==NULL) {
         return NULL;
       } else {
-        private_list[cpu_id]->next = tmp;
+        private_list[cpu_id] = tmp;
         cur = private_list[cpu_id]->chart;
         sp = align((intptr_t)(&cur->start),getb(size));
         blank = sp - (intptr_t)(&cur->start);
@@ -270,7 +270,7 @@ static void kfree(void *ptr) {
       p = (mem_head*)((intptr_t)pg + HDR_SIZE);
       while(p) {
         if(p->hd_sp != 0) {
-          freepg = 0;
+          freepg = false;
           break;
         }
         p = p->next;
