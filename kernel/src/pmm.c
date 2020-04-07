@@ -207,6 +207,7 @@ static void kfree(void* ptr) {
   		}
   		mutex_unlock(&big_lock);
   	}
+  	printf("good free\n");
   }
   //printf("remaining count %d\n",hd->count);
   //printf("free count %d\n",hd->count);
@@ -232,7 +233,7 @@ static void kfree(void* ptr) {
   }
   */
   //mutex_unlock(&big_lock);
-  printf("finish free\n");
+  //printf("finish free\n");
   
 }
 
