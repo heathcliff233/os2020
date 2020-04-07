@@ -232,7 +232,7 @@ static void kfree(void* ptr) {
   }
   */
   //mutex_unlock(&big_lock);
-  //printf("finish free\n");
+  printf("finish free\n");
   
 }
 
