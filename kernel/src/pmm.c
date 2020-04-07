@@ -197,7 +197,7 @@ static void kfree(void* ptr) {
   buf++;
   mutex_unlock(&big_lock);
 
-  if(buf > 2048){
+  if(buf > 204){
   	buf = 0;
   	page_t* iter = private_list[_cpu()];
   	while(iter){
