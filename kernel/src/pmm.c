@@ -172,6 +172,7 @@ static void *kalloc(size_t size) {
 }
 
 int buf = 0;
+/*
 static void free_page(page_t* pg){
 	printf("start to free page\n");
 	assert(pg->count == 0);
@@ -183,6 +184,7 @@ static void free_page(page_t* pg){
 	free_list->prev = pg;
 	free_list = free_list->next;
 }
+*/
 static void kfree(void* ptr) {
   
   
@@ -205,7 +207,7 @@ static void kfree(void* ptr) {
   	while(iter){
   		//mutex_lock(&big_lock);
   		if(iter->count == 0){
-  			free_page(iter);
+  			//free_page(iter);
   		}
   		//mutex_unlock(&big_lock);
   	}
