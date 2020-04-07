@@ -171,7 +171,18 @@ static void *kalloc(size_t size) {
   return NULL;
 }
 
-static void kfree(void *ptr) {
+int buf = 0;
+static void free_page(page_t* pg){
+	assert(pg->count == 0);
+	if(pg->prev == pg) return;
+	pg->prev->next = pg->next;
+	if(pg->next != NULL) pg->next->prev = pg->prev;
+	pg->prev = pg;
+	pg->next = free_list;
+	free_list->prev = pg;
+	free_list = free_list->next;
+}
+static void kfree(void* ptr) {
   
   
   //printf("free\n");
@@ -183,8 +194,23 @@ static void kfree(void *ptr) {
   page_t* hd = (page_t*)(((mem_head*)ptr)->hd_sp);
   assert(hd->count > 0);
   hd->count -= 1;
+  buf++;
+  mutex_unlock(&big_lock);
+
+  if(buf > 2048){
+  	buf = 0;
+  	page_t* iter = private_list[_cpu()];
+  	while(iter){
+  		mutex_lock(&big_lock);
+  		if(iter->count == 0){
+  			free_page(iter);
+  		}
+  		mutex_unlock(&big_lock);
+  	}
+  }
   //printf("remaining count %d\n",hd->count);
   //printf("free count %d\n",hd->count);
+  /*
   if(hd->count == 0) {
     
     //if(hd->prev != hd){
@@ -204,7 +230,8 @@ static void kfree(void *ptr) {
       printf("num page available %d\n",num_avai_page);
     //}
   }
-  mutex_unlock(&big_lock);
+  */
+  //mutex_unlock(&big_lock);
   //printf("finish free\n");
   
 }
