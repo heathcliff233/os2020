@@ -196,9 +196,9 @@ static void *kalloc(size_t size) {
   }
   return NULL;
 }
-
+/*
 static void kfree(void *ptr) {
-/*  
+  
   
   //printf("free\n");
   //printf("feed %ld\n",(intptr_t)ptr);
@@ -232,9 +232,60 @@ static void kfree(void *ptr) {
   }
   mutex_unlock(&big_lock);
   //printf("finish free\n");
+
+}
 */
+static void free_page(page_t* pg){
+  pg->prev->next = pg->next;
+  if(pg->next != NULL){
+    pg->next->prev = pg->prev;
+  }
+  pg->next = free_list;
+  pg->prev = pg;
+  free_list->prev = pg;
+  free_list = pg;
+  num_avai_page++;
 }
 
+int buf = 0;
+static void kfree(void *ptr) {
+  intptr_t sp = (intptr_t)ptr;
+  size_t blank = *((size_t*)(sp - sizeof(size_t)));
+  mem_head* cur = (mem_head*)(sp - blank - SG_SIZE);
+  mutex_lock(&big_lock);
+  buf++;
+  if(cur->hd_sp == sp) cur->hd_sp = 0;
+  mutex_unlock(&big_lock);
+  if(buf<1000){
+    return;
+  } else {
+    buf = 0;
+    mutex_lock(&big_lock);
+    page_t* pg = alloc_list->next;
+    page_t* target = NULL;
+    bool freepg = true;
+    mem_head* p = NULL;
+    while(cur){
+      freepg = true;
+      p = (mem_head*)((intptr_t)pg + HDR_SIZE);
+      while(p) {
+        if(p->hd_sp != 0) {
+          freepg = 0;
+          break;
+        }
+        p = p->next;
+      }
+      if(freepg){
+        target = pg;
+        pg = pg->prev;
+        free_page(target);
+      }
+      pg = pg->next;
+
+    }
+    mutex_unlock(&big_lock);
+  }
+}
 
 static void pmm_init() {
   num_avai_page = 0;
