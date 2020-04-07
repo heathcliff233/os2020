@@ -40,7 +40,7 @@ static void os_run() {
     //printf("cpu %d alloc\n",_cpu());
     printf("%ld\n",(intptr_t)tst[0]);
     
-    for(k=0; k<1000; k++){
+    for(k=0; k<100000; k++){
       if(tst[k]==NULL){
         count++;
         continue;
