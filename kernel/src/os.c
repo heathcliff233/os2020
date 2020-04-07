@@ -28,7 +28,7 @@ static void os_run() {
   //void* tst = (void*)malloc(1000*sizeof(void));
   //tst = malloc(10*sizeof(intptr_t));
   int j=0;
-  //int k=0;
+  int k=0;
   for(int i=0; i<1; i++){
     
     for(j=0; j<1000; j++){
@@ -39,7 +39,7 @@ static void os_run() {
     }
     //printf("cpu %d alloc\n",_cpu());
     printf("%ld\n",(intptr_t)tst[0]);
-    /*
+    
     for(k=0; k<1000; k++){
       if(tst[k]==NULL){
         count++;
@@ -47,7 +47,7 @@ static void os_run() {
       }
       pmm->free(tst[k]);
     }
-    */
+    
     //printf("cpu %d free\n",_cpu());
     /*
     for(k=0; k<10000; k++){
