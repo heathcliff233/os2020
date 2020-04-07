@@ -1,7 +1,7 @@
 #include <common.h>
 //#include <klib.h>
 
-#define PAGE_SIZE 8192+512
+#define PAGE_SIZE 8192*16+512
 #define HDR_SIZE 32
 #define SG_SIZE 24
 
