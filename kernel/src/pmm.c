@@ -203,11 +203,11 @@ static void kfree(void* ptr) {
   	buf = 0;
   	page_t* iter = private_list[_cpu()];
   	while(iter){
-  		mutex_lock(&big_lock);
+  		//mutex_lock(&big_lock);
   		if(iter->count == 0){
   			free_page(iter);
   		}
-  		mutex_unlock(&big_lock);
+  		//mutex_unlock(&big_lock);
   	}
   	printf("good free\n");
   }
