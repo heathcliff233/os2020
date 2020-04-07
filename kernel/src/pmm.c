@@ -114,7 +114,7 @@ static void* alloc_small(size_t size) {
 }
 */
 static void *kalloc(size_t size) {
-  //printf("begin alloc \n");
+  printf("begin alloc \n");
   if(size == 0){
     return NULL;
   } else {
@@ -153,7 +153,7 @@ static void *kalloc(size_t size) {
       }
     }
 
-    //printf("begin small alloc \n");
+    printf("begin small alloc \n");
     //! return alloc_small(size);
     
     page_t* cur_page = private_list[cpu_id];
