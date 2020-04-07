@@ -202,6 +202,7 @@ static void kfree(void* ptr) {
 
   if(buf > 2048){
   	printf("big free\n");
+  	/*
   	buf = 0;
   	page_t* iter = private_list[_cpu()];
   	while(iter){
@@ -211,6 +212,7 @@ static void kfree(void* ptr) {
   		}
   		//mutex_unlock(&big_lock);
   	}
+  	*/
   	printf("good free\n");
   }
   //printf("remaining count %d\n",hd->count);
