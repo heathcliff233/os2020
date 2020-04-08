@@ -119,7 +119,7 @@ static void* kalloc(size_t size) {
   cur->bitmap[i] |= (1<<j);
   cur->count += 1;
   mutex_unlock(&big_lock);
-  printf("count %d\n", cur->count);
+  printf("count %d\n i %d j %d\n", cur->count, i, j);
   //if(DEBUG)printf("finish kalloc\n");
   uintptr_t ret =  (((uintptr_t)cur)+((i*32+j)<<bits));
   assert(ret > (uintptr_t)_heap.start);
