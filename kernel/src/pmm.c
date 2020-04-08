@@ -1,5 +1,5 @@
 #include <common.h>
-#define DEBUG true
+#define DEBUG false
 /**
  * @note get bits of the integer
  */
