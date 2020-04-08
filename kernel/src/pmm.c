@@ -133,7 +133,7 @@ static void kfree(void *ptr) {
   printf("start free\n");
   mutex_lock(&big_lock);
   uintptr_t mem_ptr = (uintptr_t)ptr;
-  page_t* pg = (page_t*)(mem_ptr & PAGE_SZ);
+  page_t* pg = (page_t*)(mem_ptr/8192*8192);
   pg->count -= 1;
   assert((mem_ptr - (uintptr_t)pg) < PAGE_SZ);
   uintptr_t num = (mem_ptr - (uintptr_t)pg)/(pg->type);
