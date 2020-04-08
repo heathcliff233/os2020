@@ -37,7 +37,7 @@ static void os_run() {
       assert(((uintptr_t)tst[j])%512 == 0);
       tst[j+1] = NULL;
       tst[j+1] = pmm->alloc(789);
-      assert(((uintptr_t)tst[j])%1024 == 0);
+      //assert(((uintptr_t)tst[j])%1024 == 0);
       //if (tst[j]==NULL) count++;
       //printf("finish alloc for %d time",j);
     }
