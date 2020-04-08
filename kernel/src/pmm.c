@@ -82,6 +82,7 @@ static bool full(page_t* page){
 }
 
 static void* kalloc(size_t size) {
+  if(DEBUG)printf("begin alloc\n");
   assert(size > 0);
   assert(size <= 4096);
   int bits = getb(size);
@@ -112,6 +113,7 @@ static void* kalloc(size_t size) {
     j--;
   }
   assert(j>=0);
+  if(DEBUG)printf("change bitmap\n");
   mutex_lock(&big_lock);
   cur->bitmap[i] |= (1<<j);
   cur->count += 1;
