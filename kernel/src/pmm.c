@@ -38,7 +38,7 @@ static mutex_t big_lock = MUTEX_INITIALIZER;
 #define VOLUME 7*1024
 typedef struct page {
   uint8_t data[VOLUME];
-  int sign;
+  //int sign;
   int cpu_id;
   int type;
   int count;
@@ -62,9 +62,8 @@ static page_t* alloc_page(){
   return ret;
 }
 
-static void init_info(page_t* page, int cpu_id, int type, int sign){
+static void init_info(page_t* page, int cpu_id, int type){
   page->cpu_id = cpu_id;
-  page->sign = sign;
   page->type = type;
   page->count = 0;
   page->next = NULL;
@@ -102,10 +101,10 @@ static void* kalloc(size_t size) {
     if(cur == NULL){
       return NULL;
     }
-    init_info(cur, _cpu(), 1<<bits, 1);
+    init_info(cur, _cpu(), 1<<bits);
   }
   int i=0;
-  mutex_lock(&big_lock);
+  //mutex_lock(&big_lock);
   while(cur->bitmap[i]+1 == 0){
     i++;
   }
@@ -115,7 +114,7 @@ static void* kalloc(size_t size) {
   }
   //assert(j>=0);
   //if(DEBUG)printf("change bitmap\n");
-  //mutex_lock(&big_lock);
+  mutex_lock(&big_lock);
   //assert(j<32);
   cur->bitmap[i] |= (1<<j);
   cur->count += 1;
@@ -136,7 +135,7 @@ static void kfree(void *ptr) {
   if(DEBUG)printf("start free\n");
   uintptr_t mem_ptr = (uintptr_t)ptr;
   page_t* pg = (page_t*)(mem_ptr/8192*8192);
-  assert((mem_ptr - (uintptr_t)pg) < PAGE_SZ);
+  //assert((mem_ptr - (uintptr_t)pg) < PAGE_SZ);
   uintptr_t num = (mem_ptr - (uintptr_t)pg)/(pg->type);
   uintptr_t i = num/32;
   uintptr_t j = num%32;
@@ -153,8 +152,8 @@ static void pmm_init() {
   for(int i=0; i<cpu_num; i++){
     for(int j=1; j<13; j++){
       private_list[i][j] = alloc_page();
-      init_info(private_list[i][j], i, (1<<j), 0);
-      assert(private_list[i][j] != NULL);
+      init_info(private_list[i][j], i, (1<<j));
+      //assert(private_list[i][j] != NULL);
     }
   }
   if(DEBUG) printf("init finished\n");
