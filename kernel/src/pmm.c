@@ -73,7 +73,7 @@ static void init_info(page_t* page, int cpu_id, int type){
 }
 
 static bool full(page_t* page){
-  if(page->count == (VOLUME/(page->type))){
+  if(page->count==256 || page->count == (VOLUME/(page->type))){
     return true;
   }else{
     return false;
