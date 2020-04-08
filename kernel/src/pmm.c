@@ -120,14 +120,16 @@ static void* kalloc(size_t size) {
   cur->count += 1;
   mutex_unlock(&big_lock);
   //if(DEBUG)printf("finish kalloc\n");
-  void* ret =  (void*)(((uintptr_t)cur)+((i*32+j)<<bits));
-  assert((uintptr_t)ret % (1<<bits) == 0);
-  return ret;
+  uintptr_t ret =  (((uintptr_t)cur)+((i*32+j)<<bits));
+  assert(ret > (uintptr_t)_heap.start);
+  assert(ret < (uintptr_t)_heap.end);
+  assert(ret % ((uintptr_t)(1<<bits)) == 0);
+  return (void*)ret;
 
 }
 
 static void kfree(void *ptr) {
-  
+
 }
 
 static void pmm_init() {
