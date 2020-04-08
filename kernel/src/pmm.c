@@ -99,7 +99,7 @@ static void* kalloc(size_t size) {
     }
     init_info(cur, _cpu(), 1<<bits);
   }
-  /*
+  
   if(size==4096){
     mutex_lock(&big_lock);
     cur->bitmap[0] |= 1;
@@ -107,7 +107,7 @@ static void* kalloc(size_t size) {
     mutex_unlock(&big_lock);
     return (void*)((uintptr_t)cur);
   }
-  */
+  
   int i=0;
   int j=0;
   uint32_t sign = 0;
