@@ -31,7 +31,7 @@ static void os_run() {
   int k=0;
   for(int i=0; i<4; i++){
     
-    for(j=0; j<1000; j++){
+    for(j=0; j<10000; j++){
       tst[j] = NULL;
       tst[j] = pmm->alloc(789);
       assert(((uintptr_t)tst[j])%1024 == 0);
@@ -93,7 +93,7 @@ static void os_run() {
   
   //sg = pmm->alloc(10);
   //printf("ptr %ld\n",sg);
-  printf("avai page %d\n",num_avai_page);
+  //printf("avai page %d\n",num_avai_page);
   printf("total miss %d\n", count);
   printf("succeed!\n");
   while (1) ;
