@@ -31,7 +31,7 @@ static void os_run() {
   int k=0;
   for(int i=0; i<4; i++){
     
-    for(j=0; j<10000; j++){
+    for(j=0; j<1000; j++){
       tst[j] = NULL;
       tst[j] = pmm->alloc(4096);
       assert(((uintptr_t)tst[j])%4096 == 0);
@@ -44,7 +44,7 @@ static void os_run() {
     //printf("cpu %d alloc\n",_cpu());
     printf("%ld\n",(intptr_t)tst[0]);
     
-    for(k=0; k<10000; k++){
+    for(k=0; k<1000; k++){
       if(tst[k]==NULL){
         count++;
         continue;
