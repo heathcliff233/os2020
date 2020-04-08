@@ -112,7 +112,7 @@ static void* kalloc(size_t size) {
   int i=0;
   int j=0;
   uint32_t sign = 0;
-  mutex_lock(&(cur->lock));
+  mutex_lock(&cur->lock);
   while(cur->bitmap[i]+1 == 0){
     i++;
   }
@@ -126,7 +126,7 @@ static void* kalloc(size_t size) {
   //assert(j<32);
   cur->bitmap[i] |= (1<<j);
   cur->count += 1;
-  mutex_unlock(&(cur->lock));
+  mutex_unlock(&cur->lock);
   //printf("count %d\n i %d j %d\n", cur->count, i, j);
   //if(DEBUG)printf("finish kalloc\n");
   uintptr_t ret =  (((uintptr_t)cur)+((i*32+j)*(cur->type)));
