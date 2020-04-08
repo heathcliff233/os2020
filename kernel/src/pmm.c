@@ -83,8 +83,8 @@ static bool full(page_t* page){
 
 static void* kalloc(size_t size) {
   if(DEBUG)printf("begin alloc\n");
-  assert(size > 0);
-  assert(size <= 4096);
+  //assert(size > 0);
+  //assert(size <= 4096);
   int bits = getb(size);
   page_t* cur = private_list[_cpu()][bits];
   page_t* prev = cur;
@@ -113,7 +113,7 @@ static void* kalloc(size_t size) {
   while((cur->bitmap[i]&(1<<j))){
     j--;
   }
-  assert(j>=0);
+  //assert(j>=0);
   //if(DEBUG)printf("change bitmap\n");
   //mutex_lock(&big_lock);
   cur->bitmap[i] |= (1<<j);
@@ -121,7 +121,7 @@ static void* kalloc(size_t size) {
   mutex_unlock(&big_lock);
   //if(DEBUG)printf("finish kalloc\n");
   void* ret =  (void*)(((uintptr_t)cur)+((i*32+j)<<bits));
-  assert((uintptr_t)ret % (1<<bits) == 0);
+  //assert((uintptr_t)ret % (1<<bits) == 0);
   return ret;
 
 }
