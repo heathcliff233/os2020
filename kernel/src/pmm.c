@@ -109,9 +109,9 @@ static void* kalloc(size_t size) {
   while(cur->bitmap[i]+1 == 0){
     i++;
   }
-  int j=31;
+  int j=0;
   while((cur->bitmap[i]&(1<<j))){
-    j--;
+    j++;
   }
   //assert(j>=0);
   //if(DEBUG)printf("change bitmap\n");
