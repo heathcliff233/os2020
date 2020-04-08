@@ -33,8 +33,8 @@ static void os_run() {
     
     for(j=0; j<10000; j++){
       tst[j] = NULL;
-      tst[j] = pmm->alloc(789);
-      assert(((uintptr_t)tst[j])%1024 == 0);
+      tst[j] = pmm->alloc(4096);
+      assert(((uintptr_t)tst[j])%4096 == 0);
       //tst[j+1] = NULL;
       //tst[j+1] = pmm->alloc(789);
       //assert(((uintptr_t)tst[j])%1024 == 0);
