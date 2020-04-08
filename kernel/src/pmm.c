@@ -127,7 +127,7 @@ static void* kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-
+  
 }
 
 static void pmm_init() {
