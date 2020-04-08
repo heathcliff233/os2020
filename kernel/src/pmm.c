@@ -94,7 +94,7 @@ static void* kalloc(size_t size) {
     prev = cur;
     cur = cur->next;
     cnt++;
-    if(cnt > 512)return NULL;
+    if(cnt > 2048)return NULL;
   }
   if(cur == NULL){
     cur = alloc_page();
