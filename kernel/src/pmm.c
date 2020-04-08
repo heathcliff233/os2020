@@ -155,7 +155,7 @@ static void pmm_init() {
   heap_ptr = (uintptr_t)_heap.end;
   int cpu_num = _ncpu();
   for(int i=0; i<cpu_num; i++){
-    for(int j=1; j<13; j++){
+    for(int j=0; j<13; j++){
       private_list[i][j] = alloc_page();
       init_info(private_list[i][j], i, (1<<j));
       //assert(private_list[i][j] != NULL);
