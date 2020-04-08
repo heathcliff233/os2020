@@ -29,12 +29,12 @@ static void os_run() {
   //tst = malloc(10*sizeof(intptr_t));
   int j=0;
   int k=0;
-  for(int i=0; i<1; i++){
+  for(int i=0; i<10; i++){
     
     for(j=0; j<10000; j++){
       tst[j] = NULL;
-      tst[j] = pmm->alloc(409);
-      assert(((uintptr_t)tst[j])%512 == 0);
+      tst[j] = pmm->alloc(4096);
+      assert(((uintptr_t)tst[j])%4096 == 0);
       //tst[j+1] = NULL;
       //tst[j+1] = pmm->alloc(789);
       //assert(((uintptr_t)tst[j])%1024 == 0);

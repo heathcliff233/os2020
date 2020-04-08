@@ -73,7 +73,7 @@ static void init_info(page_t* page, int cpu_id, int type){
 }
 
 static bool full(page_t* page){
-  if(page->count==256 || page->count == (VOLUME/(page->type))){
+  if(page->count==128 || page->count == (VOLUME/(page->type))){
     return true;
   }else{
     return false;
@@ -100,7 +100,7 @@ static void* kalloc(size_t size) {
     init_info(cur, _cpu(), 1<<bits);
   }
   
-  if(size==4096){
+  if(size > 2048){
     mutex_lock(&big_lock);
     cur->bitmap[0] |= 1;
     cur->count += 1;
