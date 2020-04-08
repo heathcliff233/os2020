@@ -48,7 +48,7 @@ typedef struct page {
   uint32_t bitmap[128]; //512B
 
 } page_t;
-page_t* private_list[8][13][16];
+page_t* private_list[8][13][32];
 uintptr_t heap_ptr;
 //=============== end of definition =====================
 
