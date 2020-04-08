@@ -1,5 +1,5 @@
 #include <common.h>
-#define DEBUG false
+//#define DEBUG false
 /**
  * @note get bits of the integer
  */
@@ -81,19 +81,15 @@ static bool full(page_t* page){
 }
 
 static void* kalloc(size_t size) {
-  if(DEBUG)printf("begin alloc\n");
+  //if(DEBUG)printf("begin alloc\n");
   //assert(size > 0);
   //assert(size <= 4096);
   int bits = getb(size);
   page_t* cur = private_list[_cpu()][bits];
   page_t* prev = cur;
-  while(cur){
+  while(cur && full(cur)){
     prev = cur;
-    if(full(cur)){
-      cur = cur->next;
-    }else{
-      break;
-    }
+    cur = cur->next;
   }
   if(cur == NULL){
     cur = alloc_page();
@@ -141,7 +137,7 @@ static void* kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-  if(DEBUG)printf("start free\n");
+  //if(DEBUG)printf("start free\n");
   uintptr_t mem_ptr = (uintptr_t)ptr;
   page_t* pg = (page_t*)(mem_ptr/8192*8192);
   //assert((mem_ptr - (uintptr_t)pg) < PAGE_SZ);
@@ -152,7 +148,7 @@ static void kfree(void *ptr) {
   pg->count -= 1;
   pg->bitmap[i] ^= (1<<j);
   mutex_unlock(&big_lock);
-  if(DEBUG)printf("end free\n");
+  //if(DEBUG)printf("end free\n");
 }
 
 static void pmm_init() {
@@ -165,7 +161,7 @@ static void pmm_init() {
       //assert(private_list[i][j] != NULL);
     }
   }
-  if(DEBUG) printf("init finished\n");
+  //if(DEBUG) printf("init finished\n");
 }
 
 MODULE_DEF(pmm) = {
