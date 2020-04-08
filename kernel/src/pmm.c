@@ -130,7 +130,15 @@ static void* kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
-
+  mutex_lock(&big_lock);
+  uintptr_t mem_ptr = (uintptr_t)ptr;
+  page_t* pg = (page_t*)(mem_ptr & PAGE_SZ);
+  pg->count -= 1;
+  uintptr_t num = (mem_ptr - (uintptr_t)pg)/(pg->type);
+  uintptr_t i = num/32;
+  uintptr_t j = num%32;
+  pg->bitmap[i] &= (1<<j);
+  mutex_unlock(&big_lock);
 }
 
 static void pmm_init() {
