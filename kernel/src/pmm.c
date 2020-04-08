@@ -116,6 +116,7 @@ static void* kalloc(size_t size) {
   //assert(j>=0);
   //if(DEBUG)printf("change bitmap\n");
   //mutex_lock(&big_lock);
+  assert(j<32);
   cur->bitmap[i] |= (1<<j);
   cur->count += 1;
   mutex_unlock(&big_lock);
@@ -131,14 +132,14 @@ static void* kalloc(size_t size) {
 
 static void kfree(void *ptr) {
   if(DEBUG)printf("start free\n");
-  mutex_lock(&big_lock);
   uintptr_t mem_ptr = (uintptr_t)ptr;
   page_t* pg = (page_t*)(mem_ptr/8192*8192);
-  pg->count -= 1;
   assert((mem_ptr - (uintptr_t)pg) < PAGE_SZ);
   uintptr_t num = (mem_ptr - (uintptr_t)pg)/(pg->type);
   uintptr_t i = num/32;
   uintptr_t j = num%32;
+  mutex_lock(&big_lock);
+  pg->count -= 1;
   pg->bitmap[i] &= (1<<j);
   mutex_unlock(&big_lock);
   if(DEBUG)printf("end free\n");
