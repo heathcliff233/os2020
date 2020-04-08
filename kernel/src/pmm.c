@@ -116,16 +116,18 @@ static void* kalloc(size_t size) {
   //assert(j>=0);
   //if(DEBUG)printf("change bitmap\n");
   //mutex_lock(&big_lock);
-  assert(j<32);
+  //assert(j<32);
   cur->bitmap[i] |= (1<<j);
   cur->count += 1;
   mutex_unlock(&big_lock);
   //printf("count %d\n i %d j %d\n", cur->count, i, j);
   //if(DEBUG)printf("finish kalloc\n");
   uintptr_t ret =  (((uintptr_t)cur)+((i*32+j)*(cur->type)));
+  /*
   assert(ret > (uintptr_t)_heap.start);
   assert(ret < (uintptr_t)_heap.end);
   assert(ret % ((uintptr_t)(1<<bits)) == 0);
+  */
   return (void*)ret;
 
 }
