@@ -109,7 +109,7 @@ static void* kalloc(size_t size) {
   }
   */
   int i=0;
-  mutex_lock(&big_lock);
+  //mutex_lock(&big_lock);
   while(cur->bitmap[i]+1 == 0){
     i++;
   }
@@ -119,7 +119,7 @@ static void* kalloc(size_t size) {
   }
   //assert(j>=0);
   //if(DEBUG)printf("change bitmap\n");
-  //mutex_lock(&big_lock);
+  mutex_lock(&big_lock);
   //assert(j<32);
   cur->bitmap[i] |= (1<<j);
   cur->count += 1;
