@@ -17,7 +17,7 @@ typedef uintptr_t mutex_t;
 void mutex_lock(mutex_t* locked);
 void mutex_unlock(mutex_t* locked);
 static uintptr_t atomic_xchg(volatile mutex_t* addr, uintptr_t newval) {
-  intptr_t result;
+  uintptr_t result;
   asm volatile ("lock xchg %0, %1":
     			"+m"(*addr), "=a"(result) : 
     			"1"(newval) :
@@ -54,7 +54,7 @@ uintptr_t heap_ptr;
 static page_t* alloc_page(){
   page_t* ret = NULL;
   mutex_lock(&big_lock);
-  if(heap_ptr > (intptr_t)_heap.start+PAGE_SZ){
+  if(heap_ptr > (uintptr_t)_heap.start+PAGE_SZ){
     heap_ptr -= PAGE_SZ;
     ret = (page_t*)heap_ptr;
   }
@@ -121,7 +121,7 @@ static void* kalloc(size_t size) {
   mutex_unlock(&big_lock);
   //if(DEBUG)printf("finish kalloc\n");
   void* ret =  (void*)(((uintptr_t)cur)+((i*32+j)<<bits));
-  assert((intptr_t)ret % (1<<bits) == 0);
+  assert((uintptr_t)ret % (1<<bits) == 0);
   return ret;
 
 }
