@@ -48,7 +48,7 @@ typedef struct page {
   uint32_t bitmap[128]; //512B
 
 } page_t;
-page_t* private_list[8][13];
+page_t* private_list[8][13][4];
 uintptr_t heap_ptr;
 //=============== end of definition =====================
 
@@ -85,11 +85,12 @@ static void* kalloc(size_t size) {
   //if(DEBUG)printf("begin alloc\n");
   //assert(size > 0);
   //assert(size <= 4096);
+  int ran = rand()%4;
   int bits = getb(size);
-  page_t* cur = private_list[_cpu()][bits];
+  page_t* cur = private_list[_cpu()][bits][ran];
   page_t* prev = cur;
   int cnt = 0;
-  while(cur && full(cur) &&cnt<4096){
+  while(cur && full(cur)){
     prev = cur;
     cur = cur->next;
     cnt++;
@@ -161,9 +162,11 @@ static void pmm_init() {
   int cpu_num = _ncpu();
   for(int i=0; i<cpu_num; i++){
     for(int j=0; j<13; j++){
-      private_list[i][j] = alloc_page();
-      init_info(private_list[i][j], i, (1<<j));
-      //assert(private_list[i][j] != NULL);
+      for(int k=0; k<4; k++){
+        private_list[i][j][k] = alloc_page();
+        init_info(private_list[i][j][k], i, (1<<j));
+        //assert(private_list[i][j] != NULL);
+      }
     }
   }
   //if(DEBUG) printf("init finished\n");
