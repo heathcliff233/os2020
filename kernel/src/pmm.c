@@ -1,5 +1,5 @@
 #include <common.h>
-
+#define DEBUG true
 /**
  * @note get bits of the integer
  */
@@ -134,6 +134,7 @@ static void pmm_init() {
       assert(private_list[i][j] != NULL);
     }
   }
+  if(DEBUG) printf("init finished\n");
 }
 
 MODULE_DEF(pmm) = {
