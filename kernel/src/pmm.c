@@ -149,7 +149,7 @@ static void kfree(void *ptr) {
   uintptr_t j = num%32;
   mutex_lock(&big_lock);
   pg->count -= 1;
-  pg->bitmap[i] ^= (1<<j);
+  pg->bitmap[i] &= (~(1<<j));
   mutex_unlock(&big_lock);
   //if(DEBUG)printf("end free\n");
 }
