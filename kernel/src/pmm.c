@@ -121,7 +121,7 @@ static void* kalloc(size_t size) {
   mutex_unlock(&big_lock);
   //if(DEBUG)printf("finish kalloc\n");
   void* ret =  (void*)(((uintptr_t)cur)+((i*32+j)<<bits));
-  //assert((uintptr_t)ret % (1<<bits) == 0);
+  assert((uintptr_t)ret % (1<<bits) == 0);
   return ret;
 
 }
