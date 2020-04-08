@@ -109,12 +109,14 @@ static void* kalloc(size_t size) {
   }
   */
   int i=0;
+  int j=0;
+  uint32_t sign = 0;
   mutex_lock(&big_lock);
   while(cur->bitmap[i]+1 == 0){
     i++;
   }
-  int j=0;
-  while((cur->bitmap[i]&(1<<j))){
+  sign = cur->bitmap[i];
+  while((sign&(1<<j))){
     j++;
   }
   //assert(j>=0);
