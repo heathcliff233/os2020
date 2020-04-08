@@ -131,7 +131,7 @@ static void kfree(void *ptr) {
 }
 
 static void pmm_init() {
-  heap_ptr = ((uintptr_t)_heap.end & PAGE_SZ);
+  heap_ptr = (((uintptr_t)_heap.end) & PAGE_SZ);
   int cpu_num = _ncpu();
   for(int i=0; i<cpu_num; i++){
     for(int j=1; j<13; j++){
