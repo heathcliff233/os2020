@@ -89,7 +89,7 @@ static void* kalloc(size_t size) {
   page_t* cur = private_list[_cpu()][bits];
   page_t* prev = cur;
   int cnt = 0;
-  while(cur && full(cur) &&cnt<8192){
+  while(cur && full(cur) &&cnt<4096){
     prev = cur;
     cur = cur->next;
     cnt++;
