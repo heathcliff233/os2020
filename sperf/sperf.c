@@ -69,6 +69,7 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 }
 
 void parent_proc(int fd){
+	while(1);
 }
 
 
