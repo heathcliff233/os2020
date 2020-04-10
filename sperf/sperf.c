@@ -72,7 +72,7 @@ void parent_proc(int fd){
 	char ch;
 	read(fd, &ch, 1);
 	for(int i=0; i<10; i++){
-		printf("%c", ch);
+		printf("shit %c", ch);
 	}
 	//while(1);
 }
