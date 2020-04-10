@@ -28,7 +28,7 @@ int main(int argc, char* argv[], char* envp[]) {
  	assert(pid_cp != -1);
 
  	if(pid_cp == 0){
- 		close(pipefd[0]);
+ 		//close(pipefd[0]);
  		child_proc(pipefd[1], argc, argv, envp);
  		assert(0);
 
