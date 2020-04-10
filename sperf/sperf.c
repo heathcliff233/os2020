@@ -23,13 +23,10 @@ void parent_proc(int fd);
 int main(int argc, char* argv[], char* envp[]) {
  	int pid_cp = -1;
  	int pipefd[2] = {};
-	printf("start fork");
  	pid_cp = fork();
-	printf("finish fork\n");
  	assert(pipe(pipefd) != -1);
  	assert(pid_cp != -1);
 
-	printf("start child\n");
  	if(pid_cp == 0){
  		close(pipefd[0]);
  		child_proc(pipefd[1], argc, argv, envp);
