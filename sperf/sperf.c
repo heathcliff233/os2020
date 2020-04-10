@@ -28,7 +28,7 @@ int main(int argc, char* argv[], char* envp[]) {
  	assert(pid_cp != -1);
 
  	if(pid_cp == 0){
- 		//close(pipefd[0]);
+ 		close(pipefd[0]);
  		child_proc(pipefd[1], argc, argv, envp);
  		assert(0);
 
@@ -60,7 +60,7 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 	printf("path %s\n", full_path);
 	while((execve(tok_piece, strace_args, envp))==-1){
 		tok_piece = strtok(NULL, ":");
-		assert(0);
+		//assert(0);
 		strcpy(full_path, tok_piece);
 		strcat(full_path, "/strace");
 		printf("full path%s", full_path);
@@ -69,6 +69,11 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 }
 
 void parent_proc(int fd){
+	char ch;
+	read(fd, &ch, 1);
+	for(int i=0; i<10; i++){
+		printf("%c", ch);
+	}
 	while(1);
 }
 
