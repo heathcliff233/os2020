@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <unistd.h>
 /*
 int main(int argc, char* argv[]){
  	char *exec_argv[] = { "strace", "ls", NULL, };
@@ -71,6 +72,7 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 
 void parent_proc(int fd){
 	char ch;
+	sleep(5);
 	read(fd, &ch, 1);
 	for(int i=0; i<1000; i++){
 		printf("%c", ch);
