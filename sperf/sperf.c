@@ -71,9 +71,10 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 void parent_proc(int fd){
 	char ch;
 	read(fd, &ch, 1);
-	for(int i=0; i<10; i++){
-		printf("shit %c", ch);
+	for(int i=0; i<1000; i++){
+		printf("%c", ch);
 	}
+	printf("\n");
 	//while(1);
 }
 
