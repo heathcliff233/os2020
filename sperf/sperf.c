@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-
+/*
 int main(int argc, char* argv[]){
  	char *exec_argv[] = { "strace", "ls", NULL, };
  	char *exec_envp[] = { "PATH=/bin", NULL, };
@@ -17,8 +17,8 @@ int main(int argc, char* argv[]){
  	perror(argv[0]);
  	exit(EXIT_FAILURE);
 }
+*/
 
-/*
 void child_proc(int fd, int argc, char* argv[], char* envp[]);
 void parent_proc(int fd);
 
@@ -60,7 +60,10 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 	strcpy(full_path, tok_piece);
 	strcat(full_path, "/strace");
 	printf("path %s\n", full_path);
-	while((execve(tok_piece, strace_args, envp))==-1){
+
+	char* shitpath = "/usr/bin/strace";
+	while((execve(shitpath, strace_args, envp))==-1){
+	//while((execve(tok_piece, strace_args, envp))==-1){
 		tok_piece = strtok(NULL, ":");
 		//assert(0);
 		memset(full_path, '\0', 100);
@@ -82,7 +85,7 @@ void parent_proc(int fd){
 	//while(1);
 }
 
-*/
+
 
 
 
