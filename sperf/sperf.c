@@ -60,8 +60,9 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 	strcpy(full_path, tok_piece);
 	strcat(full_path, "/strace");
 	printf("path %s\n", full_path);
-
+	
 	char* shitpath = "/usr/bin/strace";
+	/*
 	while((execve(shitpath, strace_args, envp))==-1){
 	//while((execve(tok_piece, strace_args, envp))==-1){
 		tok_piece = strtok(NULL, ":");
@@ -71,6 +72,8 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 		strcat(full_path, "/strace");
 		printf("full path%s", full_path);
 	}
+	*/
+	execve(shitpath, strace_args, envp);
 	assert(0);
 }
 
