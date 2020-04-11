@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
 /*
 int main(int argc, char* argv[]){
  	char *exec_argv[] = { "strace", "ls", NULL, };
@@ -25,8 +26,8 @@ void parent_proc(int fd);
 int main(int argc, char* argv[], char* envp[]) {
  	int pid_cp = -1;
  	int pipefd[2] = {};
- 	pid_cp = fork();
  	assert(pipe(pipefd) != -1);
+	pid_cp = fork();
  	assert(pid_cp != -1);
 
  	if(pid_cp == 0){
@@ -61,10 +62,7 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 	strcat(full_path, "/strace");
 	printf("path %s\n", full_path);
 	
-	char* shitpath = "/usr/bin/strace";
-	/*
-	while((execve(shitpath, strace_args, envp))==-1){
-	//while((execve(tok_piece, strace_args, envp))==-1){
+	while((execve(tok_piece, strace_args, envp))==-1){
 		tok_piece = strtok(NULL, ":");
 		//assert(0);
 		memset(full_path, '\0', 100);
@@ -72,11 +70,26 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 		strcat(full_path, "/strace");
 		printf("full path%s", full_path);
 	}
-	*/
-	execve(shitpath, strace_args, envp);
 	assert(0);
 }
-
+/*
+static int readl(int fd, char* line){
+	char ch;
+	int ptr = 0;
+	while(read(fd, &ch, 1) > 0){
+		line[ptr] = ch;
+		if(ch == '\n'){
+			line[ptr] = '\0';
+			return 1;
+		} else if(ch == EOF){
+			line[ptr] = '\0';
+			return 0;
+		}
+		ptr++;
+	}
+	return -1;
+}
+*/
 void parent_proc(int fd){
 	char ch;
 	sleep(5);
