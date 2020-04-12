@@ -139,6 +139,7 @@ void parent_proc(int fd){
 			sscanf(line, "%*[<]<%lf>", &(call_list[i].time));
 			call_list[i].name[0] = 0;
 		}
+		printf("%s \n", call_list[i].name);
 		qsort(call_list, i+1, sizeof(sys_t), compare_list);
 		if(time(NULL) > next_frame){
 			next_frame += 1;
