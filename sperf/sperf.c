@@ -143,7 +143,7 @@ void parent_proc(int fd){
 		//printf("shit %s \n", call_list[i].name);
 */
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
-		printf("scanned %s %f\n", call_name, ex_time);
+		//printf("scanned %s %f\n", call_name, ex_time);
 		for(int t=0; t<len; t++){
 			if(strcmp(call_name, call_list[t].name)==0){
 				ptr = t;
@@ -152,7 +152,7 @@ void parent_proc(int fd){
 		}
 		if(ptr == -1){
 			strcpy(call_list[len].name, call_name);
-			//printf("found %s %f\n", call_list[len].name, call_list[len].time);
+			printf("found %s %f\n", call_list[len].name, call_list[len].time);
 			call_list[len].time = ex_time;
 			len++;
 		} else {
