@@ -151,7 +151,7 @@ void parent_proc(int fd){
 			fflush(stdout);
 		}
 	}
-	for(int j=0; j<5; j++){
+	for(int j=0; j<i; j++){
 		printf("%s time %d\n",call_list[i].name,(int)(call_list[i].time));
 	}
 	for(int k=0; k<80; k++){
