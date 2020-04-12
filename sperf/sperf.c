@@ -70,6 +70,7 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]){
 		//perror("shit not this");
 		//tok_piece = strtok(NULL, ":");
 		//assert(0);
+		printf("path %s\n", full_path);
 		memset(full_path, '\0', 100);
 		//strcpy(full_path, tok_piece);
 		strcpy(full_path, strtok(NULL, ":"));
