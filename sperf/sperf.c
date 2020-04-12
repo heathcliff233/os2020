@@ -92,7 +92,6 @@ int compare_list(const void* p1, const void* p2){
 }
 
 void parent_proc(int fd){
-	printf("in father proc\n");	
 	char line[1024] = "";
 	int wstatus = 0;
 	time_t next_frame = time(NULL);
@@ -123,7 +122,7 @@ void parent_proc(int fd){
 		if(time(NULL) > next_frame){
 			next_frame += 1;
 			for(int j=0; j<5; j++){
-				printf("%s time %d\n",call_list[i].name,(int)(call_list[i].time));
+				printf("%s time %f\n",call_list[j].name,call_list[j].time);
 			}
 			for(int k=0; k<80; k++){
 				printf("%c",'\0');
