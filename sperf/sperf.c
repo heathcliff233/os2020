@@ -99,7 +99,8 @@ void parent_proc(int fd){
 	int i = 0;
 	int len = 0;
 	int ptr = -1;
-	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
+	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
+    while(readl(fd, line) >= 0){
 		if(time(NULL) > next_frame){
 			next_frame = time(NULL)+1;
 			//printf("\033[2J\033[1;1H");
