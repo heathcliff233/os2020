@@ -76,7 +76,7 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]){
 	}
 	assert(0);
 }
-/*
+
 static int readl(int fd, char* line){
 	char ch;
 	int ptr = 0;
@@ -84,6 +84,7 @@ static int readl(int fd, char* line){
 		line[ptr] = ch;
 		if(ch == '\n'){
 			line[ptr] = '\0';
+			printf("line\n");
 			return 1;
 		} else if(ch == EOF){
 			line[ptr] = '\0';
@@ -93,7 +94,7 @@ static int readl(int fd, char* line){
 	}
 	return -1;
 }
-*//**//**//**//**//**//**//**/
+
 typedef struct syscallStruct{
 	char name[50];
 	double time;
@@ -121,7 +122,7 @@ void parent_proc(int fd){
 	sys_t call_list[1000];
 
 	int i = 0;
-	while(waitpid(-1, &wstatus, WNOHANG) == 0){// && readl(fd, line) >= 0){
+	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
 		printf("fuck it \n");
 		if(call_list[i].name[0] == 0){
 			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, &(call_list[i].time));
