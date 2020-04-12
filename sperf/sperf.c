@@ -151,6 +151,7 @@ void parent_proc(int fd){
 		}
 		if(ptr == -1){
 			strcpy(call_list[len].name, call_name);
+			printf("found %s\n", call_list[len].name);
 			call_list[len].time = ex_time;
 			len++;
 		} else {
