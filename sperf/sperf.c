@@ -98,7 +98,7 @@ void parent_proc(int fd){
 	sys_t call_list[1000];
 	char call_name[50] = "";
 	double ex_time;
-	double tot_time;
+	double tot_time = 0;
 
 	int i = 0;
 	int len = 0;
