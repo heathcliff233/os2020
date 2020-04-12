@@ -55,21 +55,22 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]){
 		strace_args[i+1] = argv[i];
 	}
 
-	char* avai_path_cp;
-	avai_path_cp = getenv("PATH");
+	char* avai_path_cp = getenv("PATH");
 	char avai_path[512];
 	strcpy(avai_path, avai_path_cp);
 	char full_path[100];
+	memset(full_path, '\0', 100);
 	char* tok_piece = strtok(avai_path, ":");
 	strcpy(full_path, tok_piece);
 	strcat(full_path, "/strace");
 	printf("path %s\n", full_path);
 	
 	while((execve(tok_piece, strace_args, envp))==-1){
-		tok_piece = strtok(NULL, ":");
+		//tok_piece = strtok(NULL, ":");
 		//assert(0);
 		memset(full_path, '\0', 100);
-		strcpy(full_path, tok_piece);
+		//strcpy(full_path, tok_piece);
+		strcpy(full_path, strtok(NULL, ":"));
 		strcat(full_path, "/strace");
 		printf("full path%s", full_path);
 	}
