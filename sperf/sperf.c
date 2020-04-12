@@ -133,7 +133,7 @@ void parent_proc(int fd){
 		if(call_list[i].name[0] == 0){
 			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, &(call_list[i].time));
 			//strcpy(call_list[i].name, call_name);
-			printf("get name %s\n", call_list[i].name);
+			//printf("get name %s\n", call_list[i].name);
 		} else {
 			i++;
 			sscanf(line, "%*[<]<%lf>", &(call_list[i].time));
