@@ -45,8 +45,8 @@ int main(int argc, char* argv[], char* envp[]) {
 }
 
 void child_proc(int* fd, int argc, char* argv[], char* envp[]){
-	int ig = open("/dev/null", 0);
-	dup2(ig, 1);
+	//int ig = open("/dev/null", 0);
+	//dup2(ig, 1);
 	//dup2(fd[1], 2);
 
 	char** strace_args = malloc(sizeof(char*)*(argc+2));
