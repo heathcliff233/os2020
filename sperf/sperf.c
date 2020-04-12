@@ -174,7 +174,7 @@ void parent_proc(int fd){
 	}
 	printf("lastttttttttt\n name %s\n", call_list[i].name);
 	
-	for(int j=0; j<len; j++){
+	for(int j=0; j<5; j++){
 		printf("%s time %f\n",call_list[j].name,call_list[j].time);
 	}
 	
