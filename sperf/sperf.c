@@ -54,8 +54,10 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 		strace_args[i+1] = argv[i];
 	}
 
-	char* avai_path;
-	avai_path = getenv("PATH");
+	char* avai_path_cp;
+	avai_path_cp = getenv("PATH");
+	char avai_path[512];
+	strcpy(avai_path, avai_path_cp);
 	char full_path[100];
 	char* tok_piece = strtok(avai_path, ":");
 	strcpy(full_path, tok_piece);
@@ -72,7 +74,7 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 	}
 	assert(0);
 }
-/*
+
 static int readl(int fd, char* line){
 	char ch;
 	int ptr = 0;
@@ -89,8 +91,18 @@ static int readl(int fd, char* line){
 	}
 	return -1;
 }
-*/
+
+typedef struct syscallStruct{
+	char name[50];
+	double time;
+} sys_t;
+
+int compare_list(const void* p1, const void* p2){
+	return ((*(sys_t *)p1).time > (*(sys_t *)p2).time)?-1:1;
+}
+
 void parent_proc(int fd){
+	
 	char ch;
 	sleep(5);
 	read(fd, &ch, 1);
@@ -99,6 +111,36 @@ void parent_proc(int fd){
 	}
 	printf("\n");
 	//while(1);
+	
+	/*
+	char line[1024] = "";
+	int wstatus = 0;
+	time_t next_frame = time(NULL);
+	sys_t call_list[1000];
+
+	int i = 0;
+	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
+		if(call_list[i].name[0] == 0){
+			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, call_list[i].time);
+
+		} else {
+			i++;
+			sscanf(line, "%*[<]<%lf>", call_list[i].time);
+			call_list[i].name[0] = 0;
+		}
+		qsort(call_list, i+1, sizeof(sys_t), compare_list);
+		if(time(NULL) > next_frame){
+			next_frame += 1;
+			for(int j=0; j<5; j++){
+				printf("%s time %d\n",call_list[i].name,(int)(call_list[i].time));
+			}
+			for(int k=0; k<80; k++){
+				printf("%c",'\0');
+			}
+			fflush(stdout);
+		}
+	}
+	*/
 }
 
 
