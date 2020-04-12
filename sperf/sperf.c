@@ -33,6 +33,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
  	if(pid_cp == 0){
  		close(pipefd[0]);
+		dup2(pipefd[1], 2);
  		child_proc(pipefd, argc, argv, envp);
  		assert(0);
 
@@ -46,7 +47,7 @@ int main(int argc, char* argv[], char* envp[]) {
 void child_proc(int* fd, int argc, char* argv[], char* envp[]){
 	int ig = open("/dev/null", 0);
 	dup2(ig, 1);
-	dup2(fd[1], 2);
+	//dup2(fd[1], 2);
 
 	char** strace_args = malloc(sizeof(char*)*(argc+2));
 	strace_args[0] = "strace";
