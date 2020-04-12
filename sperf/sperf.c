@@ -98,12 +98,14 @@ void parent_proc(int fd){
 	sys_t call_list[1000];
 	char call_name[50] = "";
 	double ex_time;
+	double tot_time;
 
 	int i = 0;
 	int len = 0;
 	int ptr = -1;
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
+		tot_time += ex_time;
 		for(int t=0; t<len; t++){
 			if(strcmp(call_name, call_list[t].name)==0){
 				ptr = t;
@@ -122,7 +124,7 @@ void parent_proc(int fd){
 		if(time(NULL) > next_frame){
 			next_frame += 1;
 			for(int j=0; j<5; j++){
-				printf("%s time %f\n",call_list[j].name,call_list[j].time);
+				printf("%s time %d\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
 			}
 			for(int k=0; k<80; k++){
 				printf("%c",'\0');
@@ -132,7 +134,7 @@ void parent_proc(int fd){
 	}
 	
 	for(int j=0; j<5; j++){
-		printf("%s time %f\n",call_list[j].name,call_list[j].time);
+		printf("%s time %d\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
 	}
 	
 	for(int k=0; k<80; k++){
