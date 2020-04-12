@@ -153,7 +153,7 @@ void parent_proc(int fd){
 		if(ptr == -1){
 			strcpy(call_list[len].name, call_name);
 			call_list[len].time = ex_time;
-			printf("found %s %f\n", call_list[len].name, call_list[len].time);
+			//printf("found %s %f\n", call_list[len].name, call_list[len].time);
 			len++;
 		} else {
 			//printf("same\n");
