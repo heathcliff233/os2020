@@ -101,7 +101,7 @@ void parent_proc(int fd){
 	int ptr = -1;
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
 		if(time(NULL) > next_frame){
-			next_frame = (int)(time(NULL)+1);
+			next_frame = (int)(time(NULL))+1;
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
 				printf("%s (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
