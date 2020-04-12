@@ -67,6 +67,7 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]){
 	printf("path %s\n", full_path);
 	
 	while((execve(tok_piece, strace_args, envp))==-1){
+		perror("shit not this");
 		//tok_piece = strtok(NULL, ":");
 		//assert(0);
 		memset(full_path, '\0', 100);
