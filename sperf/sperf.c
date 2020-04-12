@@ -130,7 +130,7 @@ void parent_proc(int fd){
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
 		//printf("fuck it \n");
 		if(call_list[i].name[0] == 0){
-			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, &(call_list[i].time));
+			sscanf(line, "%[^(]%*[^<]<%lf>", &(call_list[i].name), &(call_list[i].time));
 			printf("get name %s\n", call_list[i].name);
 		} else {
 			i++;
