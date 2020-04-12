@@ -85,7 +85,7 @@ static int readl(int fd, char* line){
 	int ptr = 0;
 	while(read(fd, &ch, 1) > 0){
 		line[ptr] = ch;
-		//printf("%c", ch);
+		printf("%c", ch);
 		if(ch == '\n'){
 			line[ptr] = '\0';
 			//printf("line\n");
@@ -128,18 +128,21 @@ void parent_proc(int fd){
 	char* call_name;
 
 	int i = 0;
+	int len = 0;
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
-		//printf("fuck it \n");
 		if(call_list[i].name[0] == 0){
 			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, &(call_list[i].time));
-			//strcpy(call_list[i].name, call_name);
-			//printf("get name %s\n", call_list[i].name);
 		} else {
 			i++;
 			sscanf(line, "%*[<]<%lf>", &(call_list[i].time));
 			call_list[i].name[0] = 0;
 		}
-		printf("shit %s \n", call_list[i].name);
+		//printf("shit %s \n", call_list[i].name);
+/*
+		for(int t=0; t<len; t++){
+			if(strcmp)
+		}
+*/
 		qsort(call_list, i+1, sizeof(sys_t), compare_list);
 		if(time(NULL) > next_frame){
 			next_frame += 1;
