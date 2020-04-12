@@ -125,7 +125,7 @@ void parent_proc(int fd){
 	int wstatus = 0;
 	time_t next_frame = time(NULL);
 	sys_t call_list[1000];
-	char* call_name;
+	char call_name[50] = "";
 	double ex_time;
 
 	int i = 0;
