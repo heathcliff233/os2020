@@ -85,7 +85,7 @@ static int readl(int fd, char* line){
 	int ptr = 0;
 	while(read(fd, &ch, 1) > 0){
 		line[ptr] = ch;
-		printf("%c", ch);
+		//printf("%c", ch);
 		if(ch == '\n'){
 			line[ptr] = '\0';
 			//printf("line\n");
@@ -128,7 +128,7 @@ void parent_proc(int fd){
 
 	int i = 0;
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
-		printf("fuck it \n");
+		//printf("fuck it \n");
 		if(call_list[i].name[0] == 0){
 			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, &(call_list[i].time));
 
