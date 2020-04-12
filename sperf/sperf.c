@@ -76,7 +76,7 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]){
 	}
 	assert(0);
 }
-
+/*
 static int readl(int fd, char* line){
 	char ch;
 	int ptr = 0;
@@ -93,7 +93,7 @@ static int readl(int fd, char* line){
 	}
 	return -1;
 }
-
+*//**//**//**//**//**//**//**/
 typedef struct syscallStruct{
 	char name[50];
 	double time;
