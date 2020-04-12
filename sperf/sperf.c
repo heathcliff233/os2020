@@ -159,7 +159,7 @@ void parent_proc(int fd){
 			printf("same\n");
 			call_list[ptr].time += ex_time;
 		}
-
+		ptr = -1;
 		qsort(call_list, len, sizeof(sys_t), compare_list);
 		if(time(NULL) > next_frame){
 			next_frame += 1;
