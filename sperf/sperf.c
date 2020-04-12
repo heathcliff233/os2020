@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <time.h>
@@ -121,11 +122,11 @@ void parent_proc(int fd){
 	int i = 0;
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
 		if(call_list[i].name[0] == 0){
-			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, call_list[i].time);
+			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, &(call_list[i].time));
 
 		} else {
 			i++;
-			sscanf(line, "%*[<]<%lf>", call_list[i].time);
+			sscanf(line, "%*[<]<%lf>", &(call_list[i].time));
 			call_list[i].name[0] = 0;
 		}
 		qsort(call_list, i+1, sizeof(sys_t), compare_list);
