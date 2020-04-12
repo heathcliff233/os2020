@@ -52,13 +52,11 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]){
 	char* tok_piece = strtok(avai_path, ":");
 	strcpy(full_path, tok_piece);
 	strcat(full_path, "/strace");
-	printf("path %s\n", full_path);
 	
 	while((execve(full_path, strace_args, envp))==-1){
 		memset(full_path, '\0', 100);
 		strcpy(full_path, strtok(NULL, ":"));
 		strcat(full_path, "/strace");
-		printf("%s\n", full_path);
 	}
 	assert(0);
 }
@@ -68,10 +66,8 @@ static int readl(int fd, char* line){
 	int ptr = 0;
 	while(read(fd, &ch, 1) > 0){
 		line[ptr] = ch;
-		//printf("%c", ch);
 		if(ch == '\n'){
 			line[ptr] = '\0';
-			//printf("line\n");
 			return 1;
 		} else if(ch == EOF){
 			line[ptr] = '\0';
@@ -104,6 +100,17 @@ void parent_proc(int fd){
 	int len = 0;
 	int ptr = -1;
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
+		if(time(NULL) > next_frame){
+			next_frame = (int)(time(NULL)+1);
+			//printf("\033[2J\033[1;1H");
+			for(int j=0; j<5; j++){
+				printf("%s time (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
+			}
+			for(int k=0; k<80; k++){
+				printf("%c",'\0');
+			}
+			fflush(stdout);
+		}
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
 		tot_time += ex_time;
 		for(int t=0; t<len; t++){
@@ -121,6 +128,7 @@ void parent_proc(int fd){
 		}
 		ptr = -1;
 		qsort(call_list, len, sizeof(sys_t), compare_list);
+		/*
 		if(time(NULL) > next_frame){
 			next_frame = (int)(time(NULL)+1);
 			//printf("\033[2J\033[1;1H");
@@ -132,6 +140,7 @@ void parent_proc(int fd){
 			}
 			fflush(stdout);
 		}
+		*/
 	}
 	
 	for(int j=0; j<5; j++){
