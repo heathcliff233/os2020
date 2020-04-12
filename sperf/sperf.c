@@ -114,7 +114,7 @@ void parent_proc(int fd){
 	printf("\n");
 	//while(1);
 	*/
-	
+	printf("in father proc\n");	
 	char line[1024] = "";
 	int wstatus = 0;
 	time_t next_frame = time(NULL);
