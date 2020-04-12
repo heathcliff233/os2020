@@ -74,7 +74,7 @@ void child_proc(int fd, int argc, char* argv[], char* envp[]){
 	}
 	assert(0);
 }
-/*
+
 static int readl(int fd, char* line){
 	char ch;
 	int ptr = 0;
@@ -100,9 +100,9 @@ typedef struct syscallStruct{
 int compare_list(const void* p1, const void* p2){
 	return ((*(sys_t *)p1).time > (*(sys_t *)p2).time)?-1:1;
 }
-*/
+
 void parent_proc(int fd){
-	
+	/*
 	char ch;
 	sleep(5);
 	read(fd, &ch, 1);
@@ -111,8 +111,8 @@ void parent_proc(int fd){
 	}
 	printf("\n");
 	//while(1);
+	*/	
 	
-	/*
 	char line[1024] = "";
 	int wstatus = 0;
 	time_t next_frame = time(NULL);
@@ -140,7 +140,7 @@ void parent_proc(int fd){
 			fflush(stdout);
 		}
 	}
-	*/
+	
 }
 
 
