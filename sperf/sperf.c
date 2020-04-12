@@ -84,9 +84,10 @@ static int readl(int fd, char* line){
 	int ptr = 0;
 	while(read(fd, &ch, 1) > 0){
 		line[ptr] = ch;
+		printf("%c", ch);
 		if(ch == '\n'){
 			line[ptr] = '\0';
-			printf("line\n");
+			//printf("line\n");
 			return 1;
 		} else if(ch == EOF){
 			line[ptr] = '\0';
