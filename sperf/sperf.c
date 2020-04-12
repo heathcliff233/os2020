@@ -104,7 +104,7 @@ void parent_proc(int fd){
 			next_frame = (int)(time(NULL)+1);
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
-				printf("%s time (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
+				printf("%s (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
 			}
 			for(int k=0; k<80; k++){
 				printf("%c",'\0');
@@ -144,7 +144,7 @@ void parent_proc(int fd){
 	}
 	
 	for(int j=0; j<5; j++){
-		printf("%s time (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
+		printf("%s (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
 	}
 	
 	for(int k=0; k<80; k++){
