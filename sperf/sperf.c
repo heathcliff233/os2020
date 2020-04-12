@@ -85,7 +85,7 @@ static int readl(int fd, char* line){
 	int ptr = 0;
 	while(read(fd, &ch, 1) > 0){
 		line[ptr] = ch;
-		printf("%c", ch);
+		//printf("%c", ch);
 		if(ch == '\n'){
 			line[ptr] = '\0';
 			//printf("line\n");
@@ -126,10 +126,13 @@ void parent_proc(int fd){
 	time_t next_frame = time(NULL);
 	sys_t call_list[1000];
 	char* call_name;
+	double ex_time;
 
 	int i = 0;
 	int len = 0;
+	int ptr = -1;
 	while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
+		/*
 		if(call_list[i].name[0] == 0){
 			sscanf(line, "%[^(]%*[^<]<%lf>", call_list[i].name, &(call_list[i].time));
 		} else {
@@ -138,12 +141,23 @@ void parent_proc(int fd){
 			call_list[i].name[0] = 0;
 		}
 		//printf("shit %s \n", call_list[i].name);
-/*
-		for(int t=0; t<len; t++){
-			if(strcmp)
-		}
 */
-		qsort(call_list, i+1, sizeof(sys_t), compare_list);
+		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
+		for(int t=0; t<len; t++){
+			if(strcmp(call_name, call_list[t].name)==0){
+				ptr = t;
+				break;
+			}
+		}
+		if(ptr == -1){
+			strcpy(call_list[len].name, call_name);
+			call_list[len].time = ex_time;
+			len++;
+		} else {
+			call_list[ptr].time += ex_time;
+		}
+
+		qsort(call_list, len, sizeof(sys_t), compare_list);
 		if(time(NULL) > next_frame){
 			next_frame += 1;
 			for(int j=0; j<5; j++){
