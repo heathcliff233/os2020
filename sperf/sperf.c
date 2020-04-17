@@ -104,7 +104,7 @@ void parent_proc(int fd){
     while(readl(fd, line) >= 0){
     	time_t pre = time(NULL);
 		if(time(NULL) > next_frame+1){
-			//printf("time %ld and frame %ld\n", time(NULL), next_frame);
+			printf("time %ld and frame %ld\n", time(NULL), next_frame);
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
@@ -116,7 +116,7 @@ void parent_proc(int fd){
 			fflush(stdout);
 			next_frame += 1;//= time(NULL);
 		}
-		
+
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
 		tot_time += ex_time;
 		for(int t=0; t<len; t++){
