@@ -101,6 +101,7 @@ void parent_proc(int fd){
 	int len = 0;
 	int ptr = -1;
 	time_t next_frame = time(NULL);
+	time_t now = time(NULL);
 	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
     while(readl(fd, line) >= 0){
     	time_t pre = time(NULL);
@@ -137,7 +138,7 @@ void parent_proc(int fd){
 		ptr = -1;
 		
 		qsort(call_list, len, sizeof(sys_t), compare_list);
-		time_t now = time(NULL);
+		now = time(NULL);
 		if((now-pre) > 1) assert(0);
 		//printf("time %ld\n", time(NULL));
 	}
