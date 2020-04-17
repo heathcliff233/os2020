@@ -176,7 +176,7 @@ void parent_proc(int fd){
               if (strcmp(call_list[i].name, "NONE") != 0) {
                 if (strcmp(call_list[i].name, syscall) == 0) {
                   call_list[i].time += dtime;
-                  totalTime += dtime;
+                  tot_time += dtime;
                   break;
                 }
               }
@@ -193,7 +193,8 @@ void parent_proc(int fd){
         }
         //memset(line, '\0', sizeof(line));
 		/*----------------------*/
-		qsort(call_list, len, sizeof(sys_t), compare_list);
+		//qsort(call_list, len, sizeof(sys_t), compare_list);
+        qsort(call_list, listLen, sizeof(sys_t), compare_list);
 		memset(line, '\0', sizeof(line));
 
 	}
