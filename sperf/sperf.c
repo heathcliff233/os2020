@@ -75,7 +75,7 @@ static int readl(int fd, char* line){
 			return 0;
 		}
 		ptr++;
-		assert(ptr < 1000);
+		assert(ptr < 1023);
 	}
 	return -1;
 }
