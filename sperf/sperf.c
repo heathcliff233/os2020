@@ -104,7 +104,7 @@ void parent_proc(int fd){
 		if(time(NULL) > next_frame+1){
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
-			printf("time %d\n", time(NULL));
+			printf("time %ld\n", time(NULL));
 			for(int j=0; j<5; j++){
 				printf("%s (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
 			}
