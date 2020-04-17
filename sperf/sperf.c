@@ -114,7 +114,7 @@ void parent_proc(int fd){
 	
     while(readl(fd, line) > 0){
     	time_t pre = time(NULL);
-		if(pre > next_frame+1){
+		if(pre >= next_frame+1){
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
 			qsort(call_list, listLen, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
