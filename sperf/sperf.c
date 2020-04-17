@@ -90,7 +90,7 @@ int compare_list(const void* p1, const void* p2){
 void parent_proc(int fd){
 	char line[1024] = "";
 	int wstatus = 0;
-	time_t next_frame = time(NULL);
+	
 	sys_t call_list[1000];
 	char call_name[50] = "";
 	double ex_time;
@@ -99,10 +99,12 @@ void parent_proc(int fd){
 	int i = 0;
 	int len = 0;
 	int ptr = -1;
+	time_t next_frame = time(NULL);
 	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
     while(readl(fd, line) >= 0){
-    	printf("time %ld\n", time(NULL));
+    	
 		if(time(NULL) > next_frame+1){
+			printf("time %ld\n", time(NULL));
 			qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
