@@ -116,6 +116,7 @@ void parent_proc(int fd){
     	time_t pre = time(NULL);
 		if(pre > next_frame+1){
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
+			qsort(call_list, listLen, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
 				printf("%s (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
@@ -194,11 +195,11 @@ void parent_proc(int fd){
         //memset(line, '\0', sizeof(line));
 		/*----------------------*/
 		//qsort(call_list, len, sizeof(sys_t), compare_list);
-        qsort(call_list, listLen, sizeof(sys_t), compare_list);
+        //qsort(call_list, listLen, sizeof(sys_t), compare_list);
 		memset(line, '\0', sizeof(line));
 
 	}
-	
+	qsort(call_list, listLen, sizeof(sys_t), compare_list);
 	for(int j=0; j<5; j++){
 		printf("%s (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
 	}
