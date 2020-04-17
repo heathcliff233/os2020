@@ -66,7 +66,6 @@ static int readl(int fd, char* line){
 	char ch;
 	int ptr = 0;
 	while(read(fd, &ch, 1) > 0){
-		printf("%c", ch);
 		line[ptr] = ch;
 		if(ch == '\n'){
 			line[ptr] = '\0';
@@ -76,7 +75,10 @@ static int readl(int fd, char* line){
 			return 0;
 		}
 		ptr++;
-		if(ptr > 1022) return -1;
+		if(ptr > 1022){
+			printf("%s\n", line);
+			assert(0);
+		}
 	}
 	return -1;
 }
