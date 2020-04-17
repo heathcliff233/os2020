@@ -107,7 +107,7 @@ void parent_proc(int fd){
     	time_t pre = time(NULL);
 		if(pre > next_frame+1){
 			//assert((pre-now)<1);
-			printf("time %ld and frame %ld\n", pre, next_frame);
+			//printf("time %ld and frame %ld\n", pre, next_frame);
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
