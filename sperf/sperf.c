@@ -101,8 +101,8 @@ void parent_proc(int fd){
 	int ptr = -1;
 	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
     while(readl(fd, line) >= 0){
-		if(time(NULL) > next_frame){
-			next_frame = time(NULL)+1;
+		if(time() > next_frame){
+			qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
 				printf("%s (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
@@ -111,6 +111,7 @@ void parent_proc(int fd){
 				printf("%c",'\0');
 			}
 			fflush(stdout);
+			next_frame = time();
 		}
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
 		tot_time += ex_time;
@@ -128,20 +129,8 @@ void parent_proc(int fd){
 			call_list[ptr].time += ex_time;
 		}
 		ptr = -1;
-		qsort(call_list, len, sizeof(sys_t), compare_list);
-		/*
-		if(time(NULL) > next_frame){
-			next_frame = (int)(time(NULL)+1);
-			//printf("\033[2J\033[1;1H");
-			for(int j=0; j<5; j++){
-				printf("%s time (%d%%)\n",call_list[j].name,(int)(call_list[j].time*100/tot_time));
-			}
-			for(int k=0; k<80; k++){
-				printf("%c",'\0');
-			}
-			fflush(stdout);
-		}
-		*/
+		//qsort(call_list, len, sizeof(sys_t), compare_list);
+		
 	}
 	
 	for(int j=0; j<5; j++){
