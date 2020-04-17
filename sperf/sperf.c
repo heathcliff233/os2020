@@ -132,7 +132,10 @@ void parent_proc(int fd){
 			call_list[ptr].time += ex_time;
 		}
 		ptr = -1;
+		time_t pre = time(NULL);
 		qsort(call_list, len, sizeof(sys_t), compare_list);
+		time_t now = time(NULL);
+		if(now-pre > 1) assert(0);
 		//printf("time %ld\n", time(NULL));
 	}
 	
