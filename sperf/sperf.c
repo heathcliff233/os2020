@@ -101,6 +101,7 @@ void parent_proc(int fd){
 	int ptr = -1;
 	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
     while(readl(fd, line) >= 0){
+    	printf("time %ld\n", time(NULL));
 		if(time(NULL) > next_frame+1){
 			qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
