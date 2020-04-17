@@ -14,6 +14,7 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]);
 void parent_proc(int fd);
 
 int main(int argc, char* argv[], char* envp[]) {
+	setbuf(stdout, NULL);
  	int pid_cp = -1;
  	int pipefd[2] = {};
  	assert(pipe(pipefd) != -1);
