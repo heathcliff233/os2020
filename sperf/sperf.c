@@ -103,7 +103,7 @@ void parent_proc(int fd){
 	time_t next_frame = time(NULL);
 	time_t now = time(NULL);
 	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
-    while(readl(fd, line) >= 0){
+    while(readl(fd, line) > 0){
     	time_t pre = time(NULL);
 		if(pre > next_frame+1){
 			assert((pre-now)<1);
