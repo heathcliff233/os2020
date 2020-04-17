@@ -75,10 +75,12 @@ static int readl(int fd, char* line){
 			return 0;
 		}
 		ptr++;
+		/*
 		if(ptr > 1022){
 			printf("%s\n", line);
 			assert(0);
 		}
+		*/
 	}
 	return -1;
 }
@@ -93,7 +95,7 @@ int compare_list(const void* p1, const void* p2){
 }
 
 void parent_proc(int fd){
-	char line[1024] = "";
+	char line[2048] = "";
 	int wstatus = 0;
 	
 	sys_t call_list[1000];
