@@ -102,7 +102,7 @@ void parent_proc(int fd){
 	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
     while(readl(fd, line) >= 0){
 		if(time(NULL) > next_frame+1){
-			//qsort(call_list, len, sizeof(sys_t), compare_list);
+			qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
 			printf("time %ld\n", time(NULL));
 			for(int j=0; j<5; j++){
@@ -130,7 +130,7 @@ void parent_proc(int fd){
 			call_list[ptr].time += ex_time;
 		}
 		ptr = -1;
-		qsort(call_list, len, sizeof(sys_t), compare_list);
+		//qsort(call_list, len, sizeof(sys_t), compare_list);
 		
 	}
 	
