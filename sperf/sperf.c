@@ -103,17 +103,14 @@ void parent_proc(int fd){
 	double ex_time;
 	double tot_time = 0;
 
-	int i = 0;
-	int len = 0;
-	int ptr = -1;
+	//int i = 0;
+	//int len = 0;
+	//int ptr = -1;
 	time_t next_frame = time(NULL);
-	//time_t now = time(NULL);
-	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
+	
     while(readl(fd, line) > 0){
     	time_t pre = time(NULL);
 		if(pre > next_frame+1){
-			//assert((pre-now)<1);
-			//printf("time %ld and frame %ld\n", pre, next_frame);
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
 			for(int j=0; j<5; j++){
@@ -123,9 +120,10 @@ void parent_proc(int fd){
 				printf("%c",'\0');
 			}
 			fflush(stdout);
-			next_frame  = pre;//= time(NULL);
+			next_frame  = pre;
 		}
 
+		/*
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
 		tot_time += ex_time;
 		for(int t=0; t<len; t++){
@@ -142,12 +140,58 @@ void parent_proc(int fd){
 			call_list[ptr].time += ex_time;
 		}
 		ptr = -1;
-		
+		*/
+
+		/*----------------------*/
+		int len = strlen(line);
+        int left = -1;
+        int right = len-1;
+        int leftparameter = -1;
+        for (int i = len-1; i >= 0; i--) {
+          if (line[i] == '<') {
+            left = i;
+            break;
+          }
+        }
+        for (int i = 0; i < len; i++) {
+          if (line[i] == '(') {
+            leftparameter = i;
+            break;
+          }
+        }
+        if (line[right]=='>'){
+          char time[100];
+          char syscall[50];
+          memset(syscall, '\0', 50);
+          memset(time, '\0', 100);
+          if (leftparameter > 0&&('a'<=buf[0] && 'z'>=buf[0])){
+            memcpy(time, &line[left+1], (right-left-1));
+            memcpy(syscall, &line[0], leftparameter);
+            double dtime = strtod(time, NULL);
+            for (int i = 0; i < len; i++) {
+              if (strcmp(syscallList[i].name, "NONE") != 0) {
+                if (strcmp(syscallList[i].name, syscall) == 0) {
+                  syscallList[i].time += dtime;
+                  totalTime += dtime;
+                  break;
+                }
+              }
+              if (strcmp(syscallList[i].name, "NONE") == 0) {
+                listLen += 1;
+                strcpy(syscallList[i].name, syscall);
+                syscallList[i].time = dtime;
+                totalTime += dtime;
+                assert(syscallList[i].name != NULL);
+                break;
+              }
+            }
+          }
+        }
+        //memset(line, '\0', sizeof(line));
+		/*----------------------*/
 		qsort(call_list, len, sizeof(sys_t), compare_list);
 		memset(line, '\0', sizeof(line));
-		//now = time(NULL);
-		//if((now-pre) > 1) assert(0);
-		//printf("time %ld\n", time(NULL));
+
 	}
 	
 	for(int j=0; j<5; j++){
