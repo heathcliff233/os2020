@@ -116,6 +116,7 @@ void parent_proc(int fd){
 			fflush(stdout);
 			next_frame += 1;//= time(NULL);
 		}
+		time_t pre = time(NULL);
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
 		tot_time += ex_time;
 		for(int t=0; t<len; t++){
@@ -132,7 +133,7 @@ void parent_proc(int fd){
 			call_list[ptr].time += ex_time;
 		}
 		ptr = -1;
-		time_t pre = time(NULL);
+		
 		qsort(call_list, len, sizeof(sys_t), compare_list);
 		time_t now = time(NULL);
 		if(now-pre > 1) assert(0);
