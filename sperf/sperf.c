@@ -66,6 +66,7 @@ static int readl(int fd, char* line){
 	char ch;
 	int ptr = 0;
 	while(read(fd, &ch, 1) > 0){
+		printf("%c", ch);
 		line[ptr] = ch;
 		if(ch == '\n'){
 			line[ptr] = '\0';
