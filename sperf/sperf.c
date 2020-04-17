@@ -139,6 +139,7 @@ void parent_proc(int fd){
 		ptr = -1;
 		
 		qsort(call_list, len, sizeof(sys_t), compare_list);
+		memset(line, '\0', sizeof(line));
 		//now = time(NULL);
 		//if((now-pre) > 1) assert(0);
 		//printf("time %ld\n", time(NULL));
