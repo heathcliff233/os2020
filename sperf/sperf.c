@@ -14,7 +14,6 @@ void child_proc(int* fd, int argc, char* argv[], char* envp[]);
 void parent_proc(int fd);
 
 int main(int argc, char* argv[], char* envp[]) {
-	//setbuf(stdout, NULL);
  	int pid_cp = -1;
  	int pipefd[2] = {};
  	assert(pipe(pipefd) != -1);
@@ -99,6 +98,10 @@ void parent_proc(int fd){
 	int wstatus = 0;
 	
 	sys_t call_list[1000];
+	for(int i=0; i<1000; i++){
+		strcpy(call_list[i].name, "NONE");
+		call_list[i].time = 0;
+	}
 	char call_name[50] = "";
 	double ex_time;
 	double tot_time = 0;
@@ -107,6 +110,7 @@ void parent_proc(int fd){
 	//int len = 0;
 	//int ptr = -1;
 	time_t next_frame = time(NULL);
+	int listLen = 0;
 	
     while(readl(fd, line) > 0){
     	time_t pre = time(NULL);
@@ -164,24 +168,24 @@ void parent_proc(int fd){
           char syscall[50];
           memset(syscall, '\0', 50);
           memset(time, '\0', 100);
-          if (leftparameter > 0&&('a'<=buf[0] && 'z'>=buf[0])){
+          if (leftparameter > 0&&('a'<=line[0] && 'z'>=line[0])){
             memcpy(time, &line[left+1], (right-left-1));
             memcpy(syscall, &line[0], leftparameter);
             double dtime = strtod(time, NULL);
             for (int i = 0; i < len; i++) {
-              if (strcmp(syscallList[i].name, "NONE") != 0) {
-                if (strcmp(syscallList[i].name, syscall) == 0) {
-                  syscallList[i].time += dtime;
+              if (strcmp(call_list[i].name, "NONE") != 0) {
+                if (strcmp(call_list[i].name, syscall) == 0) {
+                  call_list[i].time += dtime;
                   totalTime += dtime;
                   break;
                 }
               }
-              if (strcmp(syscallList[i].name, "NONE") == 0) {
+              if (strcmp(call_list[i].name, "NONE") == 0) {
                 listLen += 1;
-                strcpy(syscallList[i].name, syscall);
-                syscallList[i].time = dtime;
-                totalTime += dtime;
-                assert(syscallList[i].name != NULL);
+                strcpy(call_list[i].name, syscall);
+                call_list[i].time = dtime;
+                tot_time += dtime;
+                assert(call_list[i].name != NULL);
                 break;
               }
             }
