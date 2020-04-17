@@ -102,7 +102,7 @@ void parent_proc(int fd){
 	time_t next_frame = time(NULL);
 	//while(waitpid(-1, &wstatus, WNOHANG) == 0 && readl(fd, line) >= 0){
     while(readl(fd, line) >= 0){
-    	
+    	time_t pre = time(NULL);
 		if(time(NULL) > next_frame+1){
 			//printf("time %ld and frame %ld\n", time(NULL), next_frame);
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
@@ -116,7 +116,7 @@ void parent_proc(int fd){
 			fflush(stdout);
 			next_frame += 1;//= time(NULL);
 		}
-		time_t pre = time(NULL);
+		
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
 		tot_time += ex_time;
 		for(int t=0; t<len; t++){
