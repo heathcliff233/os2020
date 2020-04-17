@@ -112,7 +112,7 @@ void parent_proc(int fd){
 				printf("%c",'\0');
 			}
 			fflush(stdout);
-			next_frame = time(NULL);
+			next_frame += 1;//= time(NULL);
 		}
 		sscanf(line, "%[^(]%*[^<]<%lf>", call_name, &ex_time);	
 		tot_time += ex_time;
