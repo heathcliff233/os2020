@@ -105,6 +105,7 @@ void parent_proc(int fd){
     while(readl(fd, line) >= 0){
     	time_t pre = time(NULL);
 		if(pre > next_frame+1){
+			assert((pre-now)<1);
 			printf("time %ld and frame %ld\n", pre, next_frame);
 			//qsort(call_list, len, sizeof(sys_t), compare_list);
 			//printf("\033[2J\033[1;1H");
@@ -137,7 +138,7 @@ void parent_proc(int fd){
 		
 		qsort(call_list, len, sizeof(sys_t), compare_list);
 		time_t now = time(NULL);
-		if(now-pre > 1) assert(0);
+		if((now-pre) > 1) assert(0);
 		//printf("time %ld\n", time(NULL));
 	}
 	
