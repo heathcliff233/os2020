@@ -42,10 +42,12 @@ int main(int argc, char *argv[]) {
     }
     compile(tmp_file);
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
+    /*
     if(handle==NULL){
     	printf("load failed\n");
     	continue;
     }
+    */
     if(evaluate == 0){
     	printf("OK\n");
     } else {
