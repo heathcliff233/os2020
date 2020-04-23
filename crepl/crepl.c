@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     	printf("get one\n");
     }
     
-    char tmp_file[128] = "/media/psf/Home/Desktop/daerxia/os20/os-workbench/crepl/tmp/XXXXXX";
+    char tmp_file[128] = "./tmp/XXXXXX";
     //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
     if(fd<0)printf("fail to create tmp\n");
