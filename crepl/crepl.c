@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     	printf("get one\n");
     }
     
-    char tmp_file[32] = "XXXXXX";
+    char tmp_file[32] = "./tmp/XXXXXX";
     //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
     if(fd<0)printf("fail to create tmp\n");
@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
 
     //========compile=======
 
-    //strcpy(src, tmp_file);
-    sprintf(src, "/proc/self/fd/%d", fd);
+    strcpy(src, tmp_file);
+    //sprintf(src, "/proc/self/fd/%d", fd);
     sprintf(out, "./%s.so", src);
 
 	//printf("%s\n", src);
