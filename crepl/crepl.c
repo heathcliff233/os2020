@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 
-//void compile(char* path);
+void compile(char* path);
 char src[128], out[128];
 #if defined(__i386__)
 	#define CC_ABI "-m32"
