@@ -4,6 +4,7 @@
 #include <dlfcn.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 void compile(char* path);
 char src[32], out[32];
