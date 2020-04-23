@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     fflush(stdout);
     evaluate = 1;
     assert(fgets(line, sizeof(line), stdin));
-    if(strlen(line)>3 ){//&& strncmp(line, "int",3)){
+    if(strlen(line)>3 && strncmp(line, "int",3)==0){
     	evaluate = 0;
     	printf("get one\n");
     }
