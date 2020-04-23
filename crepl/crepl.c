@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
     if(fd<0)printf("fail to create tmp\n");
-    unlink(tmp_file);
+    //unlink(tmp_file);
     if(evaluate == 1){
     	write(fd, "int __expr_wrapper4(){return ", 29);
     	write(fd, line, strlen(line));
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     	int (*fun)(void) = dlsym(handle, "__expr_wrapper4");
     	printf("%d\n", fun());
     }
-    unlink(out);
+    //unlink(out);
   }
   return 0;
 }
