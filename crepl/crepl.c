@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     	printf("get one\n");
     }
     
-    char tmp_file[128] = "./tmp/XXXXXX";
+    char tmp_file[128] = "/tmp/XXXXXX";
     //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
     if(fd<0)printf("fail to create tmp\n");
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     sprintf(out, "%s.so", src);
 
 	//printf("%s\n", src);
-	if(evaluate==0)strcpy(src, "./tmp/shit");
+	//if(evaluate==0)strcpy(src, "./tmp/shit");
 	int ppid = fork();
 	if(ppid == 0){
 		//close(1);
@@ -76,10 +76,10 @@ int main(int argc, char *argv[]) {
     //========finish =======
 
     //unlink(tmp_file);
-    if(evaluate==0)strcpy(out, "9vNrFS.so");
+    //if(evaluate==0)strcpy(out, "9vNrFS.so");
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
     printf("%s\n", out);
-    if(!handle){
+    if(handle==NULL){
     	printf("load failed\n");
     	continue;
     }
