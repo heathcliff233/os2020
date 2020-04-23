@@ -32,10 +32,10 @@ int main(int argc, char *argv[]) {
 
     if(evaluate){
     	write(fd, "int __expr_wrapper4(){return ", 29);
-    	write(fd, line);
+    	write(fd, line, strlen(line));
     	write(fd, ";}", 2);
     } else {
-    	write(fd, line);
+    	write(fd, line, strlen(line));
     }
     compile(tmp_file);
     unlink(tmp_file);
@@ -66,7 +66,6 @@ void compile(char* path){
 		wait(&wstatus);
 		if(wstatus!=0){
 			printf("Compile error\n");
-			continue;
 		}
 	}
 }
