@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
     //unlink(tmp_file);
     //if(evaluate==0)strcpy(out, "9vNrFS.so");
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
-    printf("out %s\n", out);
+    //printf("out %s\n", out);
     if(handle==NULL){
     	printf("load failed\n");
     	continue;
@@ -88,8 +88,9 @@ int main(int argc, char *argv[]) {
     } else {
     	int (*fun)(void) = dlsym(handle, "__expr_wrapper4");
     	printf("%d\n", fun());
+    	unlink(out);
     }
-    //unlink(out);
+    
   }
   return 0;
 }
