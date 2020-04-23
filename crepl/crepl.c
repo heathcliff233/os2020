@@ -27,7 +27,10 @@ int main(int argc, char *argv[]) {
     fflush(stdout);
     flag = 1;
     evaluate = 1;
-    assert(fgets(line, sizeof(line), stdin));
+    //assert(fgets(line, sizeof(line), stdin));
+    if(!fgets(line, sizeof(line), stdin)){
+    	continue;
+    }
     if(strlen(line)>3 && strncmp(line, "int ",4)==0){
     	evaluate = 0;
     }
