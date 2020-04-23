@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     	printf("get one\n");
     }
     
-    char tmp_file[32] = "/tmp/XXXXXX";
+    char tmp_file[32] = "./tmp/XXXXXX";
     //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
     if(fd<0)printf("fail to create tmp\n");
@@ -52,17 +52,15 @@ int main(int argc, char *argv[]) {
 
     strcpy(src, tmp_file);
     //sprintf(src, "/proc/self/fd/%d", fd);
-    sprintf(out, "./%s.so", src);
+    sprintf(out, "%s.so", src);
 
 	//printf("%s\n", src);
 	int ppid = fork();
 	if(ppid == 0){
 		//close(1);
 		//close(2);
-		char* shit[] = {"cat", src};
-		execvp("cat", shit);
-		//execvp("gcc",cargv);
-		//assert(0);
+		execvp("gcc",cargv);
+		assert(0);
 	} //else {
 
 		//unlink(tmp_file);
