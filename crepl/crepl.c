@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-char *cargv[] = {"gcc", "-x", "c", "-shared", "-o", CC_ABI, "-fPIC", out, src};
+char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-x", "c", "-shared", "-o", out, src};
 
 void compile(char* path){
 	printf("path %s\n", path);
