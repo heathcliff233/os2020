@@ -59,7 +59,9 @@ int main(int argc, char *argv[]) {
 	if(ppid == 0){
 		//close(1);
 		//close(2);
-		execvp("gcc",cargv);
+		char* shit[] = {"cat", src};
+		execvp("cat", shit);
+		//execvp("gcc",cargv);
 		assert(0);
 	} //else {
 
