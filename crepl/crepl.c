@@ -50,7 +50,8 @@ int main(int argc, char *argv[]) {
 
     //========compile=======
 
-    strcpy(src, tmp_file);
+    //strcpy(src, tmp_file);
+    sprintf(src, "/proc/self/fd/%d", fd);
     sprintf(out, "./%s.so", src);
 
 	//printf("%s\n", src);
