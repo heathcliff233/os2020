@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     char tmp_file[] = "~/tmp/XXXXXX";
     //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
-    if(fd<=0)printf("fail to create tmp\n");
+    if(fd<0)printf("fail to create tmp\n");
 
     if(evaluate == 1){
     	write(fd, "int __expr_wrapper4(){return ", 29);
