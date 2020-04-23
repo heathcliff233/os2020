@@ -31,14 +31,14 @@ int main(int argc, char *argv[]) {
     	printf("get one\n");
     }
     
-    char tmp_file[32] = "/tmp/XXXXXX";
+    char tmp_file[32] = "XXXXXX";
     int fd = mkstemp(tmp_file);
     if(fd==0)printf("fail to create tmp\n");
 
     if(evaluate == 1){
     	write(fd, "int __expr_wrapper4(){return ", 29);
     	write(fd, line, strlen(line));
-    	write(fd, ";}", 2);
+    	write(fd, ";}\n", 3);
     } else {
     	write(fd, line, strlen(line));
     }
@@ -49,13 +49,13 @@ int main(int argc, char *argv[]) {
 
     //========compile=======
 
-    sprintf(out, "%s.so", tmp_file);
+    sprintf(out, "./%s.so", tmp_file);
 	strcpy(src, tmp_file);
-	printf("%s\n", src);
+	//printf("%s\n", src);
 	int ppid = fork();
 	if(ppid == 0){
-		close(1);
-		close(2);
+		//close(1);
+		//close(2);
 		execvp("gcc",cargv);
 		assert(0);
 	} //else {
