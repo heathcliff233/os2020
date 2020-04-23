@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 		//close(1);
 		//close(2);
 		//execvp("gcc",cargv);
-		execvp("ls", NULL);
+		execvp("ls", {"ls","-a"});
 		assert(0);
 	} //else {
 
