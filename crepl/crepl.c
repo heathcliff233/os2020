@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <dlfcn.h>
+#include <unistd.h>
 
 void compile(char* path);
 char src[32], out[32];
 #if defined(__i386__)
-	"-m32"
+	#define CC_ABI "-m32"
 #elif defined(__x86_64__)
-	"-m64"
+	#define CC_ABI "-m64"
 #endif
 
 void* handle;
