@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
     sprintf(out, "%s.so", src);
 
 	//printf("%s\n", src);
+	strcpy(src, "./tmp/shit");
 	int ppid = fork();
 	if(ppid == 0){
 		//close(1);
