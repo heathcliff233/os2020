@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     	evaluate = 0;
     }
     
-    char tmp_file[32] = "./tmp/XXXXXX";
+    char tmp_file[32] = "./XXXXXX";
     int fd = mkstemp(tmp_file);
 
     if(evaluate){
