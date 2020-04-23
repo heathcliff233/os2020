@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
     } else {
     	printf("succeed\n");
     }
-    if(evaluate == 1){
+    if(evaluate == 0){
     	printf("OK\n");
     } else {
     	int (*fun)(void) = dlsym(handle, "__expr_wrapper4");
