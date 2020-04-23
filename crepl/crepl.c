@@ -14,7 +14,7 @@ char src[32], out[32];
 	#define CC_ABI "-m64"
 #endif
 
-char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-x", "c", "-shared", "-o", out, src};
+char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-shared", "-x", "c", "-o", out, src, NULL};
 
 void* handle;
 
