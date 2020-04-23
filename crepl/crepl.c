@@ -43,6 +43,9 @@ int main(int argc, char *argv[]) {
     unlink(tmp_file);
     printf("%s\n", out);
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
+    if(!handle){
+    	printf("load failed\n");
+    }
     if(evaluate == 1){
     	printf("OK\n");
     } else {
