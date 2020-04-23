@@ -40,37 +40,7 @@ int main(int argc, char *argv[]) {
     } else {
     	write(fd, line, strlen(line));
     }
-
-
-
     compile(tmp_file);
-
-    //========compile=======
-/*
-    strcpy(src, tmp_file);
-    //sprintf(src, "/proc/self/fd/%d", fd);
-    sprintf(out, "%s.so", src);
-
-
-	int ppid = fork();
-	if(ppid == 0){
-		close(1);
-		close(2);
-		execvp("gcc",cargv);
-		assert(0);
-	} //else {
-
-		//unlink(tmp_file);
-
-		int wstatus = 0;
-		wait(&wstatus);
-		if(wstatus!=0){
-			printf("Compile error\n");
-		}
-	//}
-*/
-    //========finish =======
-
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
     if(handle==NULL){
     	printf("load failed\n");
@@ -98,12 +68,12 @@ void compile(char* path){
 		close(2);
 		execvp("gcc",cargv);
 		assert(0);
-	} //else {
+	} else {
 		int wstatus = 0;
 		wait(&wstatus);
 		if(wstatus!=0){
 			printf("Compile error\n");
 		}
-	//}
+	}
 }
 
