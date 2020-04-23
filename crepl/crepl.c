@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     char tmp_file[32] = "./tmp/XXXXXX";
     int fd = mkstemp(tmp_file);
 
-    if(evaluate){
+    if(evaluate == 1){
     	write(fd, "int __expr_wrapper4(){return ", 29);
     	write(fd, line, strlen(line));
     	write(fd, ";}", 2);
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     compile(tmp_file);
     unlink(tmp_file);
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
-    if(!evaluate){
+    if(evaluate == 1){
     	printf("OK\n");
     } else {
     	int (*fun)(void) = dlsym(handle, "__expr_wrapper4");
