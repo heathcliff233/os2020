@@ -57,7 +57,8 @@ int main(int argc, char *argv[]) {
 	if(ppid == 0){
 		//close(1);
 		//close(2);
-		execvp("gcc",cargv);
+		//execvp("gcc",cargv);
+		execvp("ls", NULL);
 		assert(0);
 	} //else {
 
