@@ -31,8 +31,9 @@ int main(int argc, char *argv[]) {
     	printf("get one\n");
     }
     
-    char tmp_file[32] = "./tmp/XXXXXX";
+    char tmp_file[32] = "XXXXXX";
     int fd = mkstemp(tmp_file);
+    if(fd==0)printf("fail to create tmp\n");
 
     if(evaluate == 1){
     	write(fd, "int __expr_wrapper4(){return ", 29);
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
 
     //========compile=======
 
-    sprintf(out, "%s.so", tmp_file);
+    sprintf(out, "./%s.so", tmp_file);
 	strcpy(src, tmp_file);
 	printf("%s\n", src);
 	int ppid = fork();
