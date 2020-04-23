@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 		char* shit[] = {"cat", src};
 		execvp("cat", shit);
 		//execvp("gcc",cargv);
-		assert(0);
+		//assert(0);
 	} //else {
 
 		//unlink(tmp_file);
