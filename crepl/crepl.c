@@ -28,14 +28,11 @@ int main(int argc, char *argv[]) {
     assert(fgets(line, sizeof(line), stdin));
     if(strlen(line)>3 && strncmp(line, "int ",4)==0){
     	evaluate = 0;
-    	//printf("get one\n");
     }
     
     char tmp_file[128] = "/tmp/XXXXXX";
-    //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
     if(fd<0)printf("fail to create tmp\n");
-    //unlink(tmp_file);
     if(evaluate == 1){
     	write(fd, "int __expr_wrapper4(){return ", 29);
     	write(fd, line, strlen(line));
@@ -46,16 +43,15 @@ int main(int argc, char *argv[]) {
 
 
 
-    //compile(tmp_file);
+    compile(tmp_file);
 
     //========compile=======
-
+/*
     strcpy(src, tmp_file);
     //sprintf(src, "/proc/self/fd/%d", fd);
     sprintf(out, "%s.so", src);
 
-	//printf("%s\n", src);
-	//if(evaluate==0)strcpy(src, "./tmp/shit");
+
 	int ppid = fork();
 	if(ppid == 0){
 		close(1);
@@ -72,13 +68,10 @@ int main(int argc, char *argv[]) {
 			printf("Compile error\n");
 		}
 	//}
-
+*/
     //========finish =======
 
-    //unlink(tmp_file);
-    //if(evaluate==0)strcpy(out, "9vNrFS.so");
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
-    //printf("out %s\n", out);
     if(handle==NULL){
     	printf("load failed\n");
     	continue;
@@ -95,23 +88,22 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-/*
+
 void compile(char* path){
 	sprintf(out, "%s.so", path);
 	strcpy(src, path);
-	printf("%s\n", src);
 	int ppid = fork();
 	if(ppid == 0){
 		close(1);
 		close(2);
 		execvp("gcc",cargv);
 		assert(0);
-	} else {
+	} //else {
 		int wstatus = 0;
 		wait(&wstatus);
 		if(wstatus!=0){
 			printf("Compile error\n");
 		}
-	}
+	//}
 }
-*/
+
