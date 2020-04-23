@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
     fflush(stdout);
     evaluate = 1;
     assert(fgets(line, sizeof(line), stdin));
+    printf("%s\n", line);
     if(strlen(line)>3 && strncmp(line, "int ",4)){
     	evaluate = 0;
     }
