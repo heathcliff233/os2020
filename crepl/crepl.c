@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     evaluate = 1;
     //assert(fgets(line, sizeof(line), stdin));
     if(!fgets(line, sizeof(line), stdin)){
-    	continue;
+    	break;
     }
     if(strlen(line)>3 && strncmp(line, "int ",4)==0){
     	evaluate = 0;
