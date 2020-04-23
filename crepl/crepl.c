@@ -17,6 +17,7 @@ char src[128], out[128];
 char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-shared", "-x", "c", "-o", out, src, NULL};
 
 void* handle;
+int flag;
 
 int main(int argc, char *argv[]) {
   static char line[4096];
@@ -24,6 +25,7 @@ int main(int argc, char *argv[]) {
   while (1) {
     printf("crepl> ");
     fflush(stdout);
+    flag = 1;
     evaluate = 1;
     assert(fgets(line, sizeof(line), stdin));
     if(strlen(line)>3 && strncmp(line, "int ",4)==0){
@@ -41,6 +43,7 @@ int main(int argc, char *argv[]) {
     	write(fd, line, strlen(line));
     }
     compile(tmp_file);
+    if(flag==0)continue;
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
     /*
     if(handle==NULL){
@@ -75,6 +78,7 @@ void compile(char* path){
 		wait(&wstatus);
 		if(wstatus!=0){
 			printf("Compile error\n");
+			flag = 0;
 		}
 	}
 }
