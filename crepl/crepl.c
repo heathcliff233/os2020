@@ -32,7 +32,8 @@ int main(int argc, char *argv[]) {
     }
     
     char tmp_file[32] = "XXXXXX";
-    int fd = mkstemp(tmp_file);
+    sprintf(src, "./%s.c", tmp_file);
+    int fd = mkstemp(src);
     if(fd==0)printf("fail to create tmp\n");
 
     if(evaluate == 1){
@@ -50,7 +51,7 @@ int main(int argc, char *argv[]) {
     //========compile=======
 
     sprintf(out, "./%s.so", tmp_file);
-	strcpy(src, tmp_file);
+
 	//printf("%s\n", src);
 	int ppid = fork();
 	if(ppid == 0){
