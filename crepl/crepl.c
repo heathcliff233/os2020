@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 
-void compile(char* path);
+//void compile(char* path);
 char src[32], out[32];
 #if defined(__i386__)
 	#define CC_ABI "-m32"
@@ -39,12 +39,38 @@ int main(int argc, char *argv[]) {
     } else {
     	write(fd, line, strlen(line));
     }
-    compile(tmp_file);
+
+
+
+    //compile(tmp_file);
+
+    //========compile=======
+
+    sprintf(out, "%s.so", tmp_file);
+	strcpy(src, tmp_file);
+	printf("%s\n", src);
+	int ppid = fork();
+	if(ppid == 0){
+		close(1);
+		close(2);
+		execvp("gcc",cargv);
+		assert(0);
+	} else {
+		int wstatus = 0;
+		wait(&wstatus);
+		if(wstatus!=0){
+			printf("Compile error\n");
+		}
+	}
+
+    //========finish =======
+
     unlink(tmp_file);
     printf("%s\n", out);
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
     if(!handle){
     	printf("load failed\n");
+    	continue;
     }
     if(evaluate == 1){
     	printf("OK\n");
@@ -59,6 +85,7 @@ int main(int argc, char *argv[]) {
 
 char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-x", "c", "-shared", "-o", out, src};
 
+/*
 void compile(char* path){
 	sprintf(out, "%s.so", path);
 	strcpy(src, path);
@@ -77,3 +104,4 @@ void compile(char* path){
 		}
 	}
 }
+*/
