@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <dlfcn.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 void compile(char* path);
 char src[32], out[32];
@@ -58,7 +59,7 @@ void compile(char* path){
 	if(ppid == 0){
 		close(1);
 		close(2);
-		exevp("gcc",cargv);
+		execvp("gcc",cargv);
 		assert(0);
 	} else {
 		int wstatus = 0;
