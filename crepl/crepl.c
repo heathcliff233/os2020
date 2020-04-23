@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
     //========finish =======
 
     //unlink(tmp_file);
-    
+    if(evaluate==0)strcpy(out, "9vNrFS.so");
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
     printf("%s\n", out);
     if(!handle){
