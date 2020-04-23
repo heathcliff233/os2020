@@ -17,14 +17,14 @@ void* handle;
 
 int main(int argc, char *argv[]) {
   static char line[4096];
-  bool evaluate = true;
+  int evaluate = 1;
   while (1) {
     printf("crepl> ");
     fflush(stdout);
-    evaluate = true;
+    evaluate = 1;
     assert(fgets(line, sizeof(line), stdin));
     if(strlen(line)>3 && strncmp(line, "int ",4)){
-    	evaluate = false;
+    	evaluate = 0;
     }
     
     char tmp_file[32] = "./tmp/XXXXXX";
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     }
     unlink(out);
   }
-  return 0
+  return 0;
 }
 
 char *cargv[] = {"gcc", "-x", "c", "-shared", "-o", CC_ABI, "-fPIC", out, src};
