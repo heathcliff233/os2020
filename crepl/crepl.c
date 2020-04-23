@@ -32,8 +32,8 @@ int main(int argc, char *argv[]) {
     }
     
     char tmp_file[32] = "XXXXXX";
-    sprintf(src, "./%s.c", tmp_file);
-    int fd = mkstemp(src);
+    sprintf(src, "./%s", tmp_file);
+    int fd = mkstemp(tmp_file);
     if(fd==0)printf("fail to create tmp\n");
 
     if(evaluate == 1){
