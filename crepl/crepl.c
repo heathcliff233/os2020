@@ -56,7 +56,9 @@ int main(int argc, char *argv[]) {
 char *cargv[] = {"gcc", "-x", "c", "-shared", "-o", CC_ABI, "-fPIC", out, src};
 
 void compile(char* path){
+	printf("path %s\n", path);
 	sprintf(out, "%s.so", path);
+	printf("out %s\n", out);
 	int ppid = fork();
 	if(ppid == 0){
 		close(1);
