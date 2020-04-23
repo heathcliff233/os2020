@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     }
     compile(tmp_file);
     unlink(tmp_file);
-    printf("still good\n");
+    printf("%s\n", out);
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
     if(evaluate == 1){
     	printf("OK\n");
