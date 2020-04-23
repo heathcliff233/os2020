@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
     fflush(stdout);
     evaluate = 1;
     assert(fgets(line, sizeof(line), stdin));
-    printf("%s", line);
     if(strlen(line)>3 && strncmp(line, "int ",4)){
     	evaluate = 0;
+    	printf("get one\n");
     }
     
     char tmp_file[32] = "./tmp/XXXXXX";
