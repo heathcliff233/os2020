@@ -58,6 +58,7 @@ char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-x", "c", "-shared", "-o", out, src};
 void compile(char* path){
 	sprintf(out, "%s.so", path);
 	strcpy(src, path);
+	printf("%s\n", src);
 	int ppid = fork();
 	if(ppid == 0){
 		close(1);
