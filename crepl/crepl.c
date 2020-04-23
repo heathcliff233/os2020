@@ -58,17 +58,20 @@ int main(int argc, char *argv[]) {
 		close(2);
 		execvp("gcc",cargv);
 		assert(0);
-	} else {
+	} //else {
+
+		unlink(tmp_file);
+		
 		int wstatus = 0;
 		wait(&wstatus);
 		if(wstatus!=0){
 			printf("Compile error\n");
 		}
-	}
+	//}
 
     //========finish =======
 
-    unlink(tmp_file);
+    //unlink(tmp_file);
     printf("%s\n", out);
     handle = dlopen(out, RTLD_LAZY|RTLD_GLOBAL);
     if(!handle){
