@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 		//close(1);
 		//close(2);
 		//execvp("gcc",cargv);
-		char shit[] = {"ls", "-a"};
+		char* shit[] = {"ls", "-a"};
 		execvp("ls", shit);
 		assert(0);
 	} //else {
