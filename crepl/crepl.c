@@ -31,11 +31,11 @@ int main(int argc, char *argv[]) {
     	printf("get one\n");
     }
     
-    char tmp_file[] = "XXXXXX";
+    char tmp_file[32] = "XXXXXX";
     //sprintf(src, "./%s", tmp_file);
     int fd = mkstemp(tmp_file);
     if(fd<0)printf("fail to create tmp\n");
-
+    unlink(tmp_file);
     if(evaluate == 1){
     	write(fd, "int __expr_wrapper4(){return ", 29);
     	write(fd, line, strlen(line));
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 		assert(0);
 	} //else {
 
-		unlink(tmp_file);
+		//unlink(tmp_file);
 
 		int wstatus = 0;
 		wait(&wstatus);
