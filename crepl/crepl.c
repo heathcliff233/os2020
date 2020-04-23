@@ -82,6 +82,8 @@ int main(int argc, char *argv[]) {
     if(handle==NULL){
     	printf("load failed\n");
     	continue;
+    } else {
+    	printf("succeed\n");
     }
     if(evaluate == 1){
     	printf("OK\n");
