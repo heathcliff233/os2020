@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
 	//if(evaluate==0)strcpy(src, "./tmp/shit");
 	int ppid = fork();
 	if(ppid == 0){
-		//close(1);
-		//close(2);
+		close(1);
+		close(2);
 		execvp("gcc",cargv);
 		assert(0);
 	} //else {
