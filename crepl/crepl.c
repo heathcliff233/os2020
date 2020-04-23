@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     assert(fgets(line, sizeof(line), stdin));
     if(strlen(line)>3 && strncmp(line, "int ",4)==0){
     	evaluate = 0;
-    	printf("get one\n");
+    	//printf("get one\n");
     }
     
     char tmp_file[128] = "/tmp/XXXXXX";
@@ -82,8 +82,6 @@ int main(int argc, char *argv[]) {
     if(handle==NULL){
     	printf("load failed\n");
     	continue;
-    } else {
-    	printf("succeed\n");
     }
     if(evaluate == 0){
     	printf("OK\n");
