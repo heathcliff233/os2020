@@ -14,6 +14,8 @@ char src[32], out[32];
 	#define CC_ABI "-m64"
 #endif
 
+char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-x", "c", "-shared", "-o", out, src};
+
 void* handle;
 
 int main(int argc, char *argv[]) {
@@ -82,8 +84,6 @@ int main(int argc, char *argv[]) {
   }
   return 0;
 }
-
-char *cargv[] = {"gcc", "-fPIC", CC_ABI, "-x", "c", "-shared", "-o", out, src};
 
 /*
 void compile(char* path){
