@@ -16,6 +16,7 @@ static void kmt_init() {
     }
     task_cnt[i] = 0;
   }
+  putstr("in kmt init\n");
   os->on_irq(INT8_MIN, _EVENT_NULL, kmt_context_save);
   os->on_irq(INT8_MAX, _EVENT_NULL, kmt_schedule); 
 
