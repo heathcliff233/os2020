@@ -106,7 +106,7 @@ static void* kalloc(size_t size) {
     }
     init_info(cur, _cpu(), 1<<bits);
   }
-  
+  putstr("init info\n");
   if(size == 4096){
     mutex_lock(&cur->lock);
     cur->bitmap[0] |= 1;
