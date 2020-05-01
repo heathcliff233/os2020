@@ -134,7 +134,7 @@ static void* kalloc(size_t size) {
   cur->count += 1;
   mutex_unlock(&cur->lock);
   //printf("count %d\n i %d j %d\n", cur->count, i, j);
-  //if(DEBUG)printf("finish kalloc\n");
+  putstr("finish kalloc\n");
   uintptr_t ret =  (((uintptr_t)cur)+((i*32+j)*(cur->type)));
   /*
   assert(ret > (uintptr_t)_heap.start);
