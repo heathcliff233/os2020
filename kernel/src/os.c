@@ -58,6 +58,7 @@ static _Context *os_trap(_Event ev, _Context *ctx) {
 
 static void os_on_irq(int seq, int event, handler_t handler) {
     irq_handler_t *prev=&root_handler,*p=(&root_handler)->next;
+    putstr("on_irq\n");
     while(p){
         if(p->seq>seq||p==&root_handler)break;
         prev=p;
