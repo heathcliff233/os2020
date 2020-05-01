@@ -64,10 +64,10 @@ static void os_on_irq(int seq, int event, handler_t handler) {
         prev=p;
         p=p->next;
     }
-    putstr("on_irq\n");
+    
     prev->next = pmm->alloc(sizeof(handler_t));//new(root_handler);
     prev=prev->next;
-
+    putstr("on_irq\n");
     prev->seq=seq;
     prev->event=event;
     prev->handler=handler;
