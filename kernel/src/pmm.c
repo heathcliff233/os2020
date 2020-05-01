@@ -12,6 +12,7 @@ static int getb(size_t size) {
 }
 
 //=============== start define mutex lock ================
+/*
 typedef uintptr_t mutex_t;
 #define MUTEX_INITIALIZER 0
 void mutex_lock(mutex_t* locked);
@@ -30,6 +31,7 @@ void mutex_lock(mutex_t* lk) {
 void mutex_unlock(mutex_t* lk) {
   atomic_xchg(lk, 0);
 }
+*/
 static mutex_t big_lock = MUTEX_INITIALIZER;
 //=============== end of definition =====================
 
@@ -173,8 +175,26 @@ static void pmm_init() {
   //if(DEBUG) printf("init finished\n");
 }
 
+static void* kalloc_safe(size_t size){
+  int i = _intr_read();
+  _intr_write(0);
+  void *ret = kalloc(size);
+  if (i) _intr_write(1);
+
+  return ret;
+}
+
+static void kfree_safe(void* ptr){
+  int i = _intr_read();
+  _intr_write(0);
+  kfree(ptr);
+  if (i) _intr_write(1);
+}
+
 MODULE_DEF(pmm) = {
   .init  = pmm_init,
-  .alloc = kalloc,
-  .free  = kfree,
+  //.alloc = kalloc,
+  .alloc = kalloc_safe,
+  //.free  = kfree,
+  .free = kfree_safe,
 };
