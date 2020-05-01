@@ -34,10 +34,11 @@ static void os_init() {
 }
 
 static void os_run() {
-  _intr_write(0);
-  printf("ass\n");
   _intr_write(1);
-  while (1) ;
+  printf("ass\n");
+  while (1) {
+    _yield();
+  }
 }
 
 static _Context *os_trap(_Event ev, _Context *ctx) {
