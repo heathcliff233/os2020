@@ -12,7 +12,7 @@ static irq_handler_t root_handler = {
 
 static void os_init() {
   pmm->init();
-  kmt->inti();
+  kmt->init();
 }
 
 static void os_run() {
@@ -22,7 +22,7 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *ctx) {
   _Context *next = NULL;
-  for(irq_handler_t* h = root_handler; h!=NULL; h=h->next) {
+  for(irq_handler_t* h = &root_handler; h!=NULL; h=h->next) {
   //for (auto &h: handlers_sorted_by_seq) {
     if (h->event == _EVENT_NULL || h->event == ev.event) {
       _Context *r = h->handler(ev, ctx);
@@ -42,7 +42,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
         prev=p;
         p=p->next;
     }
-    prev->next=new(root_handler);
+    prev->next = pmm->alloc(sizeof(handler_t));//new(root_handler);
     prev=prev->next;
 
     prev->seq=seq;
@@ -54,4 +54,6 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 MODULE_DEF(os) = {
   .init = os_init,
   .run  = os_run,
+  .trap = os_trap,
+  .on_irq = os_on_irq,
 };

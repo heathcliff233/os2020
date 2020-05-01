@@ -21,7 +21,7 @@ int spinlock_holding(spinlock_t* lk);
 void spinlock_acquire(spinlock_t* lk);
 void spinlock_release(spinlock_t* lk);
 //============ end define ====================
-
+#define FL_IF 0x00000200
 #define STACK_SIZE 4096
 #define MAX_TASK 24
 
@@ -40,3 +40,6 @@ typedef struct semaphore {
     volatile int head,tail;
 } sem_t;
 
+void kmt_sem_init(sem_t* sem, const char* name, int value);
+void kmt_sem_wait(sem_t* sem);
+void kmt_sem_signal(sem_t* sem);

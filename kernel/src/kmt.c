@@ -1,11 +1,11 @@
 #include <common.h>
 
-static spin_lock tasklock;
+static spinlock_t tasklock;
 task_t* current_tasks[MAX_CPU] = {};
 task_t* tasks[MAX_CPU][MAX_TASK] = {};
 static int task_cnt[MAX_CPU] = {};
 
-static _Context* kmt_contex_save(_Event e, _Context* c);
+static _Context* kmt_context_save(_Event e, _Context* c);
 static _Context* kmt_schedule(_Event e, _Context* c);
 
 static void kmt_init() {
@@ -16,13 +16,13 @@ static void kmt_init() {
     }
     task_cnt[i] = 0;
   }
-  os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
-  os->on_irq(INT_MAX, _EVENT_NULL, kmt_schedule); 
+  os->on_irq(INT8_MIN, _EVENT_NULL, kmt_context_save);
+  os->on_irq(INT8_MAX, _EVENT_NULL, kmt_schedule); 
 
   kmt->spin_init(&tasklock, "kmt_task");
 }
 
-static _Context* kmt_contex_save(_Event e, _Context* c) {
+static _Context* kmt_context_save(_Event e, _Context* c) {
   kmt->spin_lock(&tasklock);
 
   if (current_tasks[_cpu()] != NULL) {
@@ -56,7 +56,10 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
 
 static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), void* arg) {
   task->name = name;
-  _Area stack =(_Area){&task->stack, (void*)((uint32_t)(&task->stack) + STACK_SIZE)};
+  _Area stack =
+    {(void*)task->stack, 
+    (void*)task->stack + STACK_SIZE 
+  };
   task->context = _kcontext(stack, entry, arg);
 
   kmt->spin_lock(&tasklock);
@@ -78,6 +81,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
     assert(j<MAX_TASK);
   }
   kmt->spin_unlock(&tasklock);
+  return 0;
 }
 
 static void kmt_teardown(task_t* task) {
