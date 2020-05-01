@@ -114,11 +114,12 @@ static void* kalloc(size_t size) {
     
     return (void*)((uintptr_t)cur);
   }
-  putstr("finish page\n");
+  
   int i=0;
   int j=0;
   uint32_t sign = 0;
   mutex_lock(&cur->lock);
+  putstr("finish page\n");
   while(cur->bitmap[i]+1 == 0){
     i++;
   }
