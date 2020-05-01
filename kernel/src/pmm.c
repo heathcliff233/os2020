@@ -84,7 +84,7 @@ static bool full(page_t* page){
 }
 
 static void* kalloc(size_t size) {
-  //if(DEBUG)printf("begin alloc\n");
+  putstr("begin alloc\n");
   //assert(size > 0);
   //assert(size <= 4096);
   int ran = rand()%16;
