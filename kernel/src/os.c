@@ -13,6 +13,15 @@ static irq_handler_t root_handler = {
 static void os_init() {
   pmm->init();
   kmt->init();
+
+#ifdef DEBUG
+  kmt->sem_init(&empty, "empty", 5);  // 缓冲区大小为 5
+  kmt->sem_init(&fill,  "fill",  0);
+  for (int i = 0; i < 4; i++) // 4 个生产者
+    kmt->create(task_alloc(), "producer", producer, NULL);
+  for (int i = 0; i < 5; i++) // 5 个消费者
+    kmt->create(task_alloc(), "consumer", consumer, NULL);
+#endif
 }
 
 static void os_run() {
