@@ -127,7 +127,7 @@ static void* kalloc(size_t size) {
     j++;
   }
   //assert(j>=0);
-  //if(DEBUG)printf("change bitmap\n");
+  putstr("change bitmap\n");
   //mutex_lock(&big_lock);
   //assert(j<32);
   cur->bitmap[i] |= (1<<j);
