@@ -10,9 +10,11 @@ static irq_handler_t root_handler = {
   0, _EVENT_NULL, NULL, NULL
 };
 
+/*
 void echo_test(void* arg) {
   while(1) putstr("ass");
 }
+*/
 
 static void os_init() {
   pmm->init();
