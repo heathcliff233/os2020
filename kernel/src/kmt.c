@@ -16,7 +16,6 @@ static void kmt_init() {
     }
     task_cnt[i] = 0;
   }
-  putstr("in kmt init\n");
   os->on_irq(INT8_MIN, _EVENT_NULL, kmt_context_save);
   os->on_irq(INT8_MAX, _EVENT_NULL, kmt_schedule); 
 
@@ -47,7 +46,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   }
 
   if (valid_cnt) {
-    current_tasks[_cpu()] = valid_task[0];
+    current_tasks[_cpu()] = valid_task[rand()%valid_cnt];
     ret = current_tasks[_cpu()]->context;
   }
 
