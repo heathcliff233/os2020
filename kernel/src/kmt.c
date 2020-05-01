@@ -23,6 +23,7 @@ static void kmt_init() {
 }
 
 static _Context* kmt_context_save(_Event e, _Context* c) {
+  putstr("in context save\n");
   kmt->spin_lock(&tasklock);
 
   if (current_tasks[_cpu()] != NULL) {
@@ -35,6 +36,7 @@ static _Context* kmt_context_save(_Event e, _Context* c) {
 }
 
 static _Context* kmt_schedule(_Event e, _Context* c) {
+  putstr("in context schedule\n");
   kmt->spin_lock(&tasklock);
   _Context* ret = c;
   int valid_cnt = 0;
