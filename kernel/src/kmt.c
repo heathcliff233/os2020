@@ -51,6 +51,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   }
 
   kmt->spin_unlock(&tasklock);
+  putstr("finish schedule");
   return ret;
 }
 
