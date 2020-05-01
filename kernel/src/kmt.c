@@ -30,6 +30,7 @@ static _Context* kmt_context_save(_Event e, _Context* c) {
   }
 
   kmt->spin_unlock(&tasklock);
+  putstr("finish context save\n");
   return NULL;
 }
 
