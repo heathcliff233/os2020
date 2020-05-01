@@ -38,7 +38,10 @@ static void os_init() {
 static void os_run() {
   _intr_write(1);
   //putstr("ass\n");
-  while(1);
+  while(1){
+    _yield();
+  }
+  panic("shit failed!\n");
 }
 
 static _Context *os_trap(_Event ev, _Context *ctx) {
