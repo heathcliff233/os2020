@@ -18,12 +18,12 @@ static void kmt_init() {
   }
   os->on_irq(INT8_MIN, _EVENT_NULL, kmt_context_save);
   os->on_irq(INT8_MAX, _EVENT_NULL, kmt_schedule); 
-  putstr("on irq finish\n");
+  //putstr("on irq finish\n");
   kmt->spin_init(&tasklock, "kmt_task");
 }
 
 static _Context* kmt_context_save(_Event e, _Context* c) {
-  putstr("in context save\n");
+  //putstr("in context save\n");
   kmt->spin_lock(&tasklock);
 
   if (current_tasks[_cpu()] != NULL) {
@@ -31,12 +31,12 @@ static _Context* kmt_context_save(_Event e, _Context* c) {
   }
 
   kmt->spin_unlock(&tasklock);
-  putstr("finish context save\n");
+  //putstr("finish context save\n");
   return NULL;
 }
 
 static _Context* kmt_schedule(_Event e, _Context* c) {
-  putstr("in context schedule\n");
+  //putstr("in context schedule\n");
   kmt->spin_lock(&tasklock);
   _Context* ret = c;
   int valid_cnt = 0;
@@ -54,7 +54,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   }
 
   kmt->spin_unlock(&tasklock);
-  putstr("finish schedule");
+  //putstr("finish schedule");
   return ret;
 }
 
@@ -85,7 +85,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
     assert(j<MAX_TASK);
   }
   kmt->spin_unlock(&tasklock);
-  putstr("created!\n");
+  //putstr("created!\n");
   return 0;
 }
 

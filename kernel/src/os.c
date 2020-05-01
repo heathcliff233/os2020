@@ -37,7 +37,7 @@ static void os_init() {
 
 static void os_run() {
   _intr_write(1);
-  putstr("ass\n");
+  //putstr("ass\n");
   while(1);
 }
 
@@ -66,7 +66,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     }
     
     prev->next = pmm->alloc(sizeof(handler_t));//new(root_handler);
-    putstr("on_irq\n");
+    //putstr("on_irq\n");
     prev=prev->next;
     
     prev->seq=seq;
