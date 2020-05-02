@@ -39,7 +39,7 @@ static void os_init() {
 
 static void os_run() {
   _intr_write(1);
-  //putstr("ass\n");
+  putstr("ass\n");
   while(1){
     //_yield();
   }
