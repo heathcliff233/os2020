@@ -43,7 +43,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   int valid_cnt = 0;
   task_t* valid_task[MAX_TASK];
   for(int i=0; i<MAX_TASK; i++) {
-    if(tasks[_cpu()]) {
+    if(tasks[_cpu()][i]) {
       valid_task[valid_cnt] = tasks[_cpu()][i];
       valid_cnt++;
     }
