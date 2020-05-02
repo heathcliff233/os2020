@@ -89,7 +89,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
     assert(j<MAX_TASK);
   }
   kmt->spin_unlock(&tasklock);
-  //putstr("created!\n");
+  putstr("created!\n");
   return 0;
 }
 

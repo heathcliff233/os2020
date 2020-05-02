@@ -35,7 +35,7 @@ static void os_init() {
     kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
   }
 //#endif
-  putstr("after os init and kmt create\n");
+  //putstr("after os init and kmt create\n");
 }
 
 static void os_run() {
