@@ -61,16 +61,16 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
 }
 
 static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), void* arg) {
-  putstr("kmt created ");
-  putstr("name\n");
+  //putstr("kmt created ");
+  //putstr("name\n");
   task->name = name;
   _Area stack ={
     (void*)task->stack,
     (void*)task->stack + STACK_SIZE
   };
-  putstr("stack created\n");
+  //putstr("stack created\n");
   task->context = _kcontext(stack, entry, arg);
-  putstr("ctx added\n");
+  //putstr("ctx added\n");
   kmt->spin_lock(&tasklock);
   int min = MAX_TASK+1;
   int pivot = -1;
@@ -90,7 +90,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
     assert(j<MAX_TASK);
   }
   kmt->spin_unlock(&tasklock);
-  putstr("created!\n");
+  //putstr("created!\n");
   return 0;
 }
 
