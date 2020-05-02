@@ -76,7 +76,7 @@ int spinlock_holding(spinlock_t* lk){
 void spinlock_acquire(spinlock_t* lk){
   spinlock_pushcli();
   if(spinlock_holding(lk)) {
-    printf(lk->name);
+    putstr(lk->name);
     panic("acquire");
   }
   mutex_lock(&(lk->lock));
