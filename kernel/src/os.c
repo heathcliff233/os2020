@@ -137,7 +137,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     trap_handlers[seq][ptr].seq = seq;
     trap_handlers[seq][ptr].event = event;
     trap_handlers[seq][ptr].handler = handler;
-    printf("finish on_irq\n");
+    putstr("finish on_irq\n");
     // util_log("Trap init", trap_handlers[seq][ptr].valid, LOG_SUCCESS,
     // LOG_NHEX); util_log("Trap init", seq, LOG_SUCCESS, LOG_NHEX);
     // util_log("Trap init", ptr, LOG_SUCCESS, LOG_NHEX);
