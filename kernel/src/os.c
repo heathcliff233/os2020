@@ -47,7 +47,7 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *ctx) {
   _Context *next = NULL;
-  for(irq_handler_t* h = &root_handler; h!=NULL; h=h->next) {
+  for(irq_handler_t* h = (&root_handler)->next; h!=NULL; h=h->next) {
   //for (auto &h: handlers_sorted_by_seq) {
     if (h->event == _EVENT_NULL || h->event == ev.event) {
       _Context *r = h->handler(ev, ctx);
