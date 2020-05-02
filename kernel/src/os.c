@@ -20,7 +20,7 @@ static void os_init() {
   pmm->init();
   kmt->init();
 
-#ifdef DEBUG
+//#ifdef DEBUG
 /*
   kmt->sem_init(&empty, "empty", 5);  // 缓冲区大小为 5
   kmt->sem_init(&fill,  "fill",  0);
@@ -32,7 +32,7 @@ static void os_init() {
   for(int i=0; i<5; i++) {
     kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
   }
-#endif
+//#endif
   putstr("after os init and kmt create\n");
 }
 
@@ -70,7 +70,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     }
     
     prev->next = pmm->alloc(sizeof(handler_t));//new(root_handler);
-    putstr("on_irq\n");
+    //putstr("on_irq\n");
     prev=prev->next;
     
     prev->seq=seq;

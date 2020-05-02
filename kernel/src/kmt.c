@@ -16,15 +16,15 @@ static void kmt_init() {
     }
     task_cnt[i] = 0;
   }
-  putstr("before on irq\n");
+  //putstr("before on irq\n");
   os->on_irq(INT8_MIN, _EVENT_NULL, kmt_context_save);
   os->on_irq(INT8_MAX, _EVENT_NULL, kmt_schedule); 
-  putstr("on irq finish\n");
+  //utstr("on irq finish\n");
   kmt->spin_init(&tasklock, "kmt_task");
 }
 
 static _Context* kmt_context_save(_Event e, _Context* c) {
-  putstr("in context save\n");
+  //putstr("in context save\n");
   kmt->spin_lock(&tasklock);
 
   if (current_tasks[_cpu()] != NULL) {
@@ -32,7 +32,7 @@ static _Context* kmt_context_save(_Event e, _Context* c) {
   }
 
   kmt->spin_unlock(&tasklock);
-  putstr("finish context save\n");
+  //putstr("finish context save\n");
   return NULL;
 }
 
