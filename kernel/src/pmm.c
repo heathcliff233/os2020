@@ -70,6 +70,7 @@ static void init_info(page_t* page, int cpu_id, int type){
   page->type = type;
   page->count = 0;
   page->next = NULL;
+  page->lock = MUTEX_INITIALIZER;
   for(int i=0; i<128; i++){
     page->bitmap[i] = 0;
   }
