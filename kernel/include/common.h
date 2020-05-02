@@ -20,6 +20,7 @@ void spinlock_init(spinlock_t* lk, const char* name);
 int spinlock_holding(spinlock_t* lk);
 void spinlock_acquire(spinlock_t* lk);
 void spinlock_release(spinlock_t* lk);
+void spinlock_self();
 //============ end define ====================
 #define FL_IF 0x00000200
 #define STACK_SIZE 4096
