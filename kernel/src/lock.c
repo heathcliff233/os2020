@@ -41,7 +41,7 @@ void spinlock_init(spinlock_t* lk, const char* name) {
 
 void spinlock_pushcli() {
   //int eflags = readeflags();
-  int it = _intr_read();
+  uintptr_t it = _intr_read();
   _intr_write(0);
   if(ncli[_cpu()] == 0){
     //nintena[_cpu()] = eflags & FL_IF;
@@ -60,7 +60,7 @@ void spinlock_popcli() {
   if(ncli[_cpu()] < 0) {
     panic("popcli");
   }
-  if(ncli[_cpu()] == 0 && nintena[_cpu()]){
+  if(ncli[_cpu()] == 0 && nintena[_cpu()]==1){
     _intr_write(1);
   }
 }
