@@ -89,14 +89,14 @@ void spinlock_acquire(spinlock_t* lk){
     panic("acquire");
   }
   mutex_lock(&(lk->lock));
-  __sync_synchronize();
+  //__sync_synchronize();
   lk->owner = _cpu();
 }
 
 void spinlock_release(spinlock_t* lk){
   if(!spinlock_holding(lk)) panic("release");
   lk->owner = -1;
-  __sync_synchronize();
+  //__sync_synchronize();
   mutex_unlock(&(lk->lock));
   spinlock_popcli();
 }
