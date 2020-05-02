@@ -51,6 +51,7 @@ void spinlock_pushcli() {
 }
 
 void spinlock_popcli() {
+  putstr("pop\n");
   int it = _intr_read();
   //if(readeflags()&FL_IF)
   if(it) {
