@@ -18,7 +18,7 @@ static void kmt_init() {
   }
   os->on_irq(INT8_MIN, _EVENT_NULL, kmt_context_save);
   os->on_irq(INT8_MAX, _EVENT_NULL, kmt_schedule); 
-  //putstr("on irq finish\n");
+  putstr("on irq finish\n");
   kmt->spin_init(&tasklock, "kmt_task");
 }
 
