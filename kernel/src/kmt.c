@@ -49,7 +49,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
       valid_cnt++;
     }
   }
-
+  panic_on(valid_cnt>=MAX_TASK,"shit big cnt!!");
   if (valid_cnt!=0) {
     current_tasks[_cpu()] = valid_task[rand()%valid_cnt];
     ret = current_tasks[_cpu()]->context;
