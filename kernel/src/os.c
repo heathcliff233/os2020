@@ -55,9 +55,20 @@ static void os_init() {
   putstr("after os init and kmt create\n");
 }
 
+static spinlock_t hello_lock;
+
+static void hello() {
+  //kmt->spin_init(&hello_lock, "hello");
+  kmt->spin_lock(&hello_lock);
+  putstr("hello world\n");
+  kmt->spin_unlock(&hello_lock);
+}
+
 static void os_run() {
   _intr_write(1);
-  putstr("hello\n");
+  kmt->spin_init(&hello_lock, "hello");
+  hello();
+  //putstr("hello\n");
   while(1){
     _yield();
     //putstr("in os run\n");
