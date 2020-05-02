@@ -62,6 +62,7 @@ void spinlock_popcli() {
   }
   if(ncli[_cpu()] == 0 && nintena[_cpu()]==1){
     _intr_write(1);
+    putstr("open\n");
   }
 }
 
