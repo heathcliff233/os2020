@@ -48,11 +48,12 @@ static void os_init() {
   for (int i = 0; i < 5; i++) // 5 个消费者
     kmt->create(task_alloc(), "consumer", consumer, NULL);
 */
-assert(0);
+/*
 kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
   for(int i=0; i<5; i++) {
     kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
   }
+*/
 //#endif
   putstr("after os init and kmt create\n");
 }
