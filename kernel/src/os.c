@@ -22,7 +22,7 @@ static void os_init() {
   kmt->init();
   putstr("kmt init finished\n");
 
-#ifdef DEBUG
+//#ifdef DEBUG
 /*
   kmt->sem_init(&empty, "empty", 5);  // 缓冲区大小为 5
   kmt->sem_init(&fill,  "fill",  0);
@@ -34,7 +34,7 @@ static void os_init() {
   for(int i=0; i<5; i++) {
     kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
   }
-#endif
+//#endif
   putstr("after os init and kmt create\n");
 }
 
