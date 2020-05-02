@@ -59,7 +59,7 @@ kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
 static void os_run() {
   _intr_write(1);
   while(1){
-    putstr("in os run\n");
+    //putstr("in os run\n");
   }
   panic("shit failed!\n");
 }
