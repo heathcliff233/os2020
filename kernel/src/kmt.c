@@ -65,7 +65,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
   putstr("name\n");
   task->name = name;
   _Area stack =
-    {(void*)task->stack, 
+    {&task->stack,//(void*)task->stack, 
     (void*)((&task->stack) + STACK_SIZE)
   };
   putstr("stack created\n");
