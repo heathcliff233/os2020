@@ -69,9 +69,9 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
     (void*)((&task->stack) + STACK_SIZE)
   };
   task->context = _kcontext(stack, entry, arg);
-
+  putstr("ctx added\n");
   kmt->spin_lock(&tasklock);
-  int min = 0x3f3f3f3f;//MAX_TASK+1;
+  int min = MAX_TASK+1;
   int pivot = -1;
   for (int i=0; i<_ncpu(); i++) {
     if (task_cnt[i] <= min) {
