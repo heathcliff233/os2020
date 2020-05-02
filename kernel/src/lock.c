@@ -30,8 +30,8 @@ static inline uint32_t readeflags() {
   return efl;
 }
 */
-int nintena[8] = {};
-int ncli[8] = {};
+int nintena[8] = {1,1,1,1,1,1,1,1};
+int ncli[8] = {0,0,0,0,0,0,0,0};
 
 void spinlock_init(spinlock_t* lk, const char* name) {
   lk->lock = MUTEX_INITIALIZER;
