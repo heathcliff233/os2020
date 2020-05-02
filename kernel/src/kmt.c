@@ -9,7 +9,6 @@ static _Context* kmt_context_save(_Event e, _Context* c);
 static _Context* kmt_schedule(_Event e, _Context* c);
 
 static void kmt_init() {
-  putstr("in kmt init\n");
   for (int i=0; i<MAX_CPU; i++) {
     current_tasks[i] = NULL;
     for (int j=0; j<MAX_TASK; j++) {

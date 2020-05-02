@@ -18,9 +18,7 @@ void echo_test(void* arg) {
 
 static void os_init() {
   pmm->init();
-  putstr("pmm init finished\n");
   kmt->init();
-  putstr("kmt init finished\n");
 
 //#ifdef DEBUG
 /*
