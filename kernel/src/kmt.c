@@ -61,6 +61,8 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
 }
 
 static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), void* arg) {
+  putstr("kmt created ");
+  putstr("name\n");
   task->name = name;
   _Area stack =
     {(void*)task->stack, 
