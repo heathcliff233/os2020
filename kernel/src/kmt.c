@@ -44,13 +44,13 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   int valid_cnt = 0;
   task_t* valid_task[MAX_TASK];
   for(int i=0; i<MAX_TASK; i++) {
-    if(tasks[_cpu()][i]) {
+    if(tasks[_cpu()][i]!=NULL) {
       valid_task[valid_cnt] = tasks[_cpu()][i];
       valid_cnt++;
     }
   }
 
-  if (valid_cnt) {
+  if (valid_cnt!=0) {
     current_tasks[_cpu()] = valid_task[rand()%valid_cnt];
     ret = current_tasks[_cpu()]->context;
   }
@@ -81,7 +81,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
   }
   task_cnt[pivot] += 1;
   for (int j=0; j<MAX_TASK; j++) {
-    if (!tasks[pivot][j]) {
+    if (tasks[pivot][j]==NULL) {
       task->cpu = pivot;
       tasks[pivot][j] = task;
       break;
