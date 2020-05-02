@@ -99,4 +99,5 @@ void spinlock_release(spinlock_t* lk){
   __sync_synchronize();
   mutex_unlock(&(lk->lock));
   spinlock_popcli();
+  return;
 }
