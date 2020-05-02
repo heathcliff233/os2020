@@ -65,14 +65,14 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
   task->name = name;
   _Area stack =
     {(void*)task->stack, 
-    (void*)task->stack + STACK_SIZE 
+    (void*)((&task->stack) + STACK_SIZE)
   };
   task->context = _kcontext(stack, entry, arg);
 
   kmt->spin_lock(&tasklock);
-  int min = MAX_TASK;
+  int min = MAX_TASK+1;
   int pivot = -1;
-  for (int i=0; i<_cpu(); i++) {
+  for (int i=0; i<_ncpu(); i++) {
     if (task_cnt[i] <= min) {
       min = task_cnt[i];
       pivot = i;
