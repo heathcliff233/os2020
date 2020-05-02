@@ -36,7 +36,7 @@ static void trap_init() {
 static void os_init() {
   pmm->init();
   kmt->init();
-
+  putstr("before trap init\n");
   trap_init();
 
 //#ifdef DEBUG
