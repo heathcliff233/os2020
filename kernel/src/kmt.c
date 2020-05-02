@@ -68,6 +68,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
     {(void*)task->stack, 
     (void*)((&task->stack) + STACK_SIZE)
   };
+  putstr("stack created\n");
   task->context = _kcontext(stack, entry, arg);
   putstr("ctx added\n");
   kmt->spin_lock(&tasklock);
