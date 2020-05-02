@@ -36,9 +36,9 @@ static void trap_init() {
 static void os_init() {
   pmm->init();
   kmt->init();
-  putstr("before trap init\n");
+  
   trap_init();
-
+  putstr("before trap init\n");
 //#ifdef DEBUG
 /*
   kmt->sem_init(&empty, "empty", 5);  // 缓冲区大小为 5
