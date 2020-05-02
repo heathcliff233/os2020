@@ -22,7 +22,7 @@ void echo_test(void* arg) {
 static irq_handler_t trap_handlers[INT_SEQ_MAX][INT_NR_MAX];
 static _Context* trap_handler_invalid(_Event e, _Context* c) {
     // should not reach here
-    assert(0);
+    panic(0);
 }
 static void trap_init() {
     for (int i = INT_SEQ_MIN; i < INT_SEQ_MAX; i++) {
@@ -130,7 +130,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     }
     if (ptr == INT_NR_MAX) {
         // No free slot, should enlarge INT_NR_MAX
-        assert(0);
+        panic(0);
         return;
     }
     trap_handlers[seq][ptr].valid = 1;
