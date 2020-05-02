@@ -75,7 +75,10 @@ int spinlock_holding(spinlock_t* lk){
 
 void spinlock_acquire(spinlock_t* lk){
   spinlock_pushcli();
-  if(spinlock_holding(lk)) panic("acquire");
+  if(spinlock_holding(lk)) {
+    printf(lk->name);
+    panic("acquire");
+  }
   mutex_lock(&(lk->lock));
   __sync_synchronize();
   lk->owner = _cpu();
