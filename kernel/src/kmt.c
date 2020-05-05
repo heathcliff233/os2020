@@ -31,7 +31,7 @@ static _Context* kmt_context_save(_Event e, _Context* c) {
   if (current_tasks[_cpu()] != NULL) {
     *current_tasks[_cpu()]->context = *c;
   }
-
+  putstr("before unlock\n");
   kmt->spin_unlock(&tasklock);
   putstr("finish context save\n");
   return NULL;
