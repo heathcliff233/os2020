@@ -53,7 +53,10 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   if (valid_cnt!=0) {
     //printf("avai tasks %d\n", valid_cnt);
     char cs = '0'+valid_cnt;
-    putstr("avai tasks ");
+    char cp = '0'+_cpu();
+    _putc('#');
+    _putc(cp);
+    putstr(" avai tasks ");
     _putc(cs);
     putstr("\n");
     current_tasks[_cpu()] = valid_task[rand()%valid_cnt];
