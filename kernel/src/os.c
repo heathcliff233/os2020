@@ -14,11 +14,11 @@ static irq_handler_t root_handler = {
 };
 */
 //===============
-/*
+
 void echo_test(void* arg) {
   while(1) putstr("ass");
 }
-*/
+
 //===========================================================
 
 #define INT_SEQ_MIN 0
@@ -56,11 +56,11 @@ static void os_init() {
     kmt->create(task_alloc(), "consumer", consumer, NULL);
 */
 
-/*
+
   for(int i=0; i<5; i++) {
     kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
   }
-*/
+
 
 //#endif
 //  putstr("after os init and kmt create\n");
