@@ -38,7 +38,7 @@ static _Context* kmt_context_save(_Event e, _Context* c) {
 }
 
 static _Context* kmt_schedule(_Event e, _Context* c) {
-  //putstr("in context schedule\n");
+  putstr("in context schedule\n");
   kmt->spin_lock(&tasklock);
   _Context* ret = c;
   int valid_cnt = 0;
@@ -51,6 +51,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   }
   panic_on(valid_cnt>=MAX_TASK,"shit big cnt!!");
   if (valid_cnt!=0) {
+    printf("avai tasks %d\n", valid_cnt);
     current_tasks[_cpu()] = valid_task[rand()%valid_cnt];
     ret = current_tasks[_cpu()]->context;
   }
