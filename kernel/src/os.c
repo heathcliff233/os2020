@@ -139,6 +139,7 @@ static _Context* os_trap(_Event ev, _Context* context) {
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
+    putstr("on irq\n");
     int ptr;
     for (ptr = INT_SEQ_MIN; ptr < INT_NR_MAX; ptr++) {
         if (trap_handlers[seq][ptr].valid == 0) {
