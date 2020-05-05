@@ -25,21 +25,21 @@ static void kmt_init() {
 }
 
 static _Context* kmt_context_save(_Event e, _Context* c) {
-  putstr("in context save\n");
+  //putstr("in context save\n");
   kmt->spin_lock(&tasklock);
-  putstr("locked\n");
+  //putstr("locked\n");
   if (current_tasks[_cpu()] != NULL) {
     //*current_tasks[_cpu()]->context = *c;
     current_tasks[_cpu()]->context = c;
   }
-  putstr("before unlock\n");
+  //putstr("before unlock\n");
   kmt->spin_unlock(&tasklock);
-  putstr("finish context save\n");
+  //putstr("finish context save\n");
   return NULL;
 }
 
 static _Context* kmt_schedule(_Event e, _Context* c) {
-  putstr("in context schedule\n");
+  //putstr("in context schedule\n");
   kmt->spin_lock(&tasklock);
   _Context* ret = c;
   int valid_cnt = 0;
@@ -53,6 +53,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
   panic_on(valid_cnt>=MAX_TASK,"shit big cnt!!");
   if (valid_cnt!=0) {
     //printf("avai tasks %d\n", valid_cnt);
+    /*
     char cs = '0'+valid_cnt;
     char cp = '0'+_cpu();
     _putc('#');
@@ -60,6 +61,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
     putstr(" avai tasks ");
     _putc(cs);
     putstr("\n");
+    */
     current_tasks[_cpu()] = valid_task[rand()%valid_cnt];
     ret = current_tasks[_cpu()]->context;
   }
@@ -70,8 +72,8 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
 }
 
 static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), void* arg) {
-  putstr("kmt created ");
-  putstr("name\n");
+  //putstr("kmt created ");
+  //putstr("name\n");
   task->name = name;
   _Area stack ={
     (void*)task->stack,

@@ -14,10 +14,11 @@ static irq_handler_t root_handler = {
 };
 */
 //===============
-
+/*
 void echo_test(void* arg) {
   while(1) putstr("ass");
 }
+*/
 //===========================================================
 
 #define INT_SEQ_MIN 0
@@ -55,9 +56,12 @@ static void os_init() {
     kmt->create(task_alloc(), "consumer", consumer, NULL);
 */
 
+/*
   for(int i=0; i<5; i++) {
     kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
   }
+*/
+
 //#endif
 //  putstr("after os init and kmt create\n");
 }
@@ -122,7 +126,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 
 static _Context* os_trap(_Event ev, _Context* context) {
     // util_log("TRAP", trap_nr[_cpu()]++, LOG_WARNING, LOG_NHEX);
-    putstr("trap\n");
+    //putstr("trap\n");
     _Context* ret = NULL;
     for (int i = INT_SEQ_MIN; i < INT_SEQ_MAX; i++) {
         for (int j = 0; j < INT_NR_MAX; j++) {
@@ -148,7 +152,7 @@ static _Context* os_trap(_Event ev, _Context* context) {
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
-    putstr("on irq\n");
+    //putstr("on irq\n");
     int ptr;
     for (ptr = INT_SEQ_MIN; ptr < INT_NR_MAX; ptr++) {
         if (trap_handlers[seq][ptr].valid == 0) {
@@ -164,7 +168,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     trap_handlers[seq][ptr].seq = seq;
     trap_handlers[seq][ptr].event = event;
     trap_handlers[seq][ptr].handler = handler;
-    putstr("finish on_irq\n");
+    //putstr("finish on_irq\n");
     // util_log("Trap init", trap_handlers[seq][ptr].valid, LOG_SUCCESS,
     // LOG_NHEX); util_log("Trap init", seq, LOG_SUCCESS, LOG_NHEX);
     // util_log("Trap init", ptr, LOG_SUCCESS, LOG_NHEX);
