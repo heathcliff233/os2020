@@ -85,7 +85,7 @@ int spinlock_holding(spinlock_t* lk){
 void spinlock_acquire(spinlock_t* lk){
   spinlock_pushcli();
   if(spinlock_holding(lk)) {
-    //putstr(lk->name);
+    putstr(lk->name);
     panic("acquire");
   }
   mutex_lock(&(lk->lock));
@@ -99,8 +99,8 @@ void spinlock_release(spinlock_t* lk){
   __sync_synchronize();
   mutex_unlock(&(lk->lock));
   spinlock_popcli();
-  //putstr("lk name ");
-  //putstr(lk->name);
-  //putstr("\n");
+  putstr("lk name ");
+  putstr(lk->name);
+  putstr("\n");
   return;
 }
