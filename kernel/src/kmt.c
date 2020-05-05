@@ -27,7 +27,7 @@ static void kmt_init() {
 static _Context* kmt_context_save(_Event e, _Context* c) {
   putstr("in context save\n");
   kmt->spin_lock(&tasklock);
-
+  putstr("locked\n");
   if (current_tasks[_cpu()] != NULL) {
     *current_tasks[_cpu()]->context = *c;
   }
