@@ -87,12 +87,12 @@ void spinlock_acquire(spinlock_t* lk){
   _putc(cp);
   _putc('\n');
   spinlock_pushcli();
-  /*
+  
   if(spinlock_holding(lk)) {
     putstr(lk->name);
     panic("acquire");
   }
-  */
+  
   mutex_lock(&(lk->lock));
   __sync_synchronize();
   lk->owner = _cpu();
