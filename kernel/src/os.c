@@ -39,7 +39,7 @@ static void os_init() {
   kmt->init();
   
   
-  putstr("before trap init\n");
+  //putstr("before trap init\n");
 //#ifdef DEBUG
 /*
   kmt->sem_init(&empty, "empty", 5);  // 缓冲区大小为 5
@@ -49,29 +49,30 @@ static void os_init() {
   for (int i = 0; i < 5; i++) // 5 个消费者
     kmt->create(task_alloc(), "consumer", consumer, NULL);
 */
-  for(int i=0; i<5; i++) {
-    kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
-  }
+
+//  for(int i=0; i<5; i++) {
+//    kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
+//  }
 //#endif
-  putstr("after os init and kmt create\n");
+//  putstr("after os init and kmt create\n");
 }
 
 static spinlock_t hello_lock;
-
+/*
 static void hello() {
   //kmt->spin_init(&hello_lock, "hello");
   kmt->spin_lock(&hello_lock);
   putstr("hello world\n");
   kmt->spin_unlock(&hello_lock);
 }
-
+*/
 static void os_run() {
   _intr_write(1);
   kmt->spin_init(&hello_lock, "hello");
-  hello();
+  //hello();
   //putstr("hello\n");
   while(1){
-    _yield();
+    //_yield();
     //putstr("in os run\n");
   }
   panic("shit failed!\n");
@@ -153,7 +154,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     trap_handlers[seq][ptr].seq = seq;
     trap_handlers[seq][ptr].event = event;
     trap_handlers[seq][ptr].handler = handler;
-    putstr("finish on_irq\n");
+    //putstr("finish on_irq\n");
     // util_log("Trap init", trap_handlers[seq][ptr].valid, LOG_SUCCESS,
     // LOG_NHEX); util_log("Trap init", seq, LOG_SUCCESS, LOG_NHEX);
     // util_log("Trap init", ptr, LOG_SUCCESS, LOG_NHEX);
