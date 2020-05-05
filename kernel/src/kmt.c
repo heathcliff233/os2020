@@ -17,10 +17,10 @@ static void kmt_init() {
     }
     task_cnt[i] = 0;
   }
-  //putstr("before on irq\n");
+  putstr("before on irq\n");
   os->on_irq(0, _EVENT_NULL, kmt_context_save);
   os->on_irq(3, _EVENT_NULL, kmt_schedule); 
-  //utstr("on irq finish\n");
+  putstr("on irq finish\n");
   kmt->spin_init(&tasklock, "kmt_task");
 }
 
