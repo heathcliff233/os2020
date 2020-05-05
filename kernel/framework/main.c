@@ -6,8 +6,8 @@ int main() {
   _cte_init(os->trap);
   //_vme_init(pmm->alloc, pmm->free);
   os->init();
-  _putc('a');
-  _putc('\n');
+  //_putc('a');
+  //_putc('\n');
   _mpe_init(os->run);
   return 1;
 }
