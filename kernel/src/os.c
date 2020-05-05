@@ -72,7 +72,7 @@ static void os_run() {
   //hello();
   //putstr("hello\n");
   while(1){
-    _yield();
+    //_yield();
     //putstr("in os run\n");
   }
   panic("shit failed!\n");
