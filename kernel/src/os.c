@@ -50,14 +50,14 @@ static void os_init() {
     kmt->create(task_alloc(), "consumer", consumer, NULL);
 */
 
-//  for(int i=0; i<5; i++) {
-//    kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
-//  }
+  for(int i=0; i<5; i++) {
+    kmt->create(pmm->alloc(sizeof(task_t)), "shit", echo_test, "a");
+  }
 //#endif
 //  putstr("after os init and kmt create\n");
 }
 
-static spinlock_t hello_lock;
+//static spinlock_t hello_lock;
 /*
 static void hello() {
   //kmt->spin_init(&hello_lock, "hello");
@@ -68,11 +68,11 @@ static void hello() {
 */
 static void os_run() {
   _intr_write(1);
-  kmt->spin_init(&hello_lock, "hello");
+  //kmt->spin_init(&hello_lock, "hello");
   //hello();
   //putstr("hello\n");
   while(1){
-    //_yield();
+    _yield();
     //putstr("in os run\n");
   }
   panic("shit failed!\n");
