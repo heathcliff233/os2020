@@ -83,9 +83,6 @@ int spinlock_holding(spinlock_t* lk){
 }
 
 void spinlock_acquire(spinlock_t* lk){
-  char cp = '0'+ _intr_read();
-  _putc(cp);
-  _putc('\n');
   spinlock_pushcli();
   
   if(spinlock_holding(lk)) {

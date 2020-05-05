@@ -3,23 +3,23 @@
 typedef struct irq{
     int seq,event;
     handler_t handler;
-    //int valid;
-    struct irq *next;
+    int valid;
+    //struct irq *next;
 } irq_handler_t;
 
 //===============
-
+/*
 static irq_handler_t root_handler = {
   0, _EVENT_NULL, NULL, NULL
 };
-
+*/
 //===============
 
 void echo_test(void* arg) {
   while(1) putstr("ass");
 }
 //===========================================================
-/*
+
 #define INT_SEQ_MIN 0
 #define INT_SEQ_MAX 4
 #define INT_NR_MAX 4
@@ -36,10 +36,10 @@ static void trap_init() {
         }
     }
 }
-*/
+
 //============================================================
 static void os_init() {
-  //trap_init();
+  trap_init();
   pmm->init();
   kmt->init();
   
@@ -84,7 +84,7 @@ static void os_run() {
 }
 
 //===============
-
+/*
 static _Context *os_trap(_Event ev, _Context *ctx) {
   _Context *next = NULL;
   for(irq_handler_t* h = (&root_handler)->next; h!=NULL; h=h->next) {
@@ -115,11 +115,11 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     prev->handler=handler;
     prev->next=p;
 }
-
+*/
 //===============
 
 //==============================================================
-/*
+
 static _Context* os_trap(_Event ev, _Context* context) {
     // util_log("TRAP", trap_nr[_cpu()]++, LOG_WARNING, LOG_NHEX);
     putstr("trap\n");
@@ -169,7 +169,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     // LOG_NHEX); util_log("Trap init", seq, LOG_SUCCESS, LOG_NHEX);
     // util_log("Trap init", ptr, LOG_SUCCESS, LOG_NHEX);
 }
-*/
+
 //==============================================================
 
 MODULE_DEF(os) = {
