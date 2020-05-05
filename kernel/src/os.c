@@ -34,10 +34,11 @@ static void trap_init() {
 }
 //============================================================
 static void os_init() {
+  trap_init();
   pmm->init();
   kmt->init();
   
-  trap_init();
+  
   putstr("before trap init\n");
 //#ifdef DEBUG
 /*
