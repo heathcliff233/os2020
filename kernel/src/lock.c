@@ -101,5 +101,6 @@ void spinlock_release(spinlock_t* lk){
   spinlock_popcli();
   putstr("lk name ");
   putstr(lk->name);
+  putstr("\n");
   return;
 }
