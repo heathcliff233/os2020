@@ -114,6 +114,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 //==============================================================
 static _Context* os_trap(_Event ev, _Context* context) {
     // util_log("TRAP", trap_nr[_cpu()]++, LOG_WARNING, LOG_NHEX);
+    putstr("trap\n");
     _Context* ret = NULL;
     for (int i = INT_SEQ_MIN; i < INT_SEQ_MAX; i++) {
         for (int j = 0; j < INT_NR_MAX; j++) {
