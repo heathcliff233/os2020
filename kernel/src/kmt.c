@@ -61,7 +61,6 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
     putstr("\n");
     current_tasks[_cpu()] = valid_task[rand()%valid_cnt];
     ret = current_tasks[_cpu()]->context;
-    assert(0);
   }
 
   kmt->spin_unlock(&tasklock);
