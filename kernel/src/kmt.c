@@ -18,10 +18,11 @@ static void kmt_init() {
     task_cnt[i] = 0;
   }
   //putstr("before on irq\n");
+  kmt->spin_init(&tasklock, "kmt_task");
   os->on_irq(0, _EVENT_NULL, kmt_context_save);
   os->on_irq(3, _EVENT_NULL, kmt_schedule); 
   //putstr("on irq finish\n");
-  kmt->spin_init(&tasklock, "kmt_task");
+  
 }
 
 static _Context* kmt_context_save(_Event e, _Context* c) {
@@ -74,6 +75,7 @@ static _Context* kmt_schedule(_Event e, _Context* c) {
 static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), void* arg) {
   //putstr("kmt created ");
   //putstr("name\n");
+  kmt->spin_lock(&tasklock);
   task->name = name;
   _Area stack ={
     (void*)task->stack,
@@ -82,7 +84,7 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
   //putstr("stack created\n");
   task->context = _kcontext(stack, entry, arg);
   //putstr("ctx added\n");
-  kmt->spin_lock(&tasklock);
+  
   int min = MAX_TASK+1;
   int pivot = -1;
   for (int i=0; i<_ncpu(); i++) {

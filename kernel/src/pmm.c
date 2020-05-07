@@ -87,7 +87,7 @@ static bool full(page_t* page){
 static void* kalloc(size_t size) {
   //putstr("begin alloc\n");
   //assert(size > 0);
-  //assert(size <= 4096);
+  assert(size <= 4096);
   int ran = rand()%16;
   int bits = getb(size);
   page_t* cur = private_list[_cpu()][bits][ran];

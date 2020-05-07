@@ -28,10 +28,11 @@ void spinlock_self();
 
 typedef struct task {
     int valid;
+    int cpu;
     const char* name;
     _Context* context;
     uint8_t stack[STACK_SIZE];
-    int cpu;
+    
 } task_t;
 
 typedef struct semaphore {
