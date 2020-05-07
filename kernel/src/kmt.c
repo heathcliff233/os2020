@@ -113,6 +113,8 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
 
 static void kmt_teardown(task_t* task) {
   kmt->spin_lock(&tasklock);
+  pmm->free(task->stack.start);
+  pmm->free(task);
   int tar_cpu = task->cpu;
   for(int i=0; i<MAX_TASK; i++) {
     if(tasks[tar_cpu][i] == task) {
