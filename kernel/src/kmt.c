@@ -77,13 +77,13 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
   //putstr("name\n");
   kmt->spin_lock(&tasklock);
   task->name = name;
+  /*
   _Area stack ={
     (void*)task->stack,
     (void*)task->stack + STACK_SIZE
   };
-  //putstr("stack created\n");
-  task->context = _kcontext(stack, entry, arg);
-  //putstr("ctx added\n");
+  */
+  
   
   int min = MAX_TASK+1;
   int pivot = -1;
@@ -96,8 +96,12 @@ static int kmt_create(task_t* task, const char* name, void (*entry)(void* arg), 
   task_cnt[pivot] += 1;
   for (int j=0; j<MAX_TASK; j++) {
     if (tasks[pivot][j]==NULL) {
-      task->cpu = pivot;
+      
       tasks[pivot][j] = task;
+      task->cpu = pivot;
+      task->stack.start = pmm->alloc(STACK_SIZE);
+      task->stack.end = task->stack.start + STACK_SIZE;
+      task->context = _kcontext(task->stack, entry, arg);
       break;
     }
     assert(j<MAX_TASK);

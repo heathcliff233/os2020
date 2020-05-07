@@ -31,7 +31,8 @@ typedef struct task {
     int cpu;
     const char* name;
     _Context* context;
-    uint8_t stack[STACK_SIZE];
+    _Area stack;
+    //uint8_t stack[STACK_SIZE];
     
 } task_t;
 
