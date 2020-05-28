@@ -157,7 +157,7 @@ int get_long_name(dir_entry_t *dir, bmp_image_t *ptr) {
     for(int i = 0; i < 5; ++i) name[len++] = (char)(cur->name1[i]);
     for(int i = 0; i < 6; ++i) {name[len++] = (char)(cur->name2[i]);}
     for(int i = 0; i < 2; ++i) name[len++] = (char)(cur->name3[i]);
-    Assert(len < 128, "Too long file name!");
+    assert(len < 128);
     cur = (long_name_t*)((uintptr_t)cur - sizeof(long_name_t));
   }
   name[len] = '\0';
