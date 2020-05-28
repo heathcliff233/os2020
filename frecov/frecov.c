@@ -41,7 +41,6 @@ typedef struct fat32_boot_sector{
     uint8_t BS_FilSysType[8];
 } __attribute__((packed)) fat_header_t;
 
-
 typedef struct dir_entry {
   char filename[8]; //文件名
   char extname[3]; //扩展名
@@ -67,9 +66,21 @@ typedef struct BMP_IMAGE {
   char full_name[128];
 }__attribute__((packed)) bmp_image_t;
 
+typedef struct LONG_NAME_ENTRY {
+  uint8_t id;
+  uint16_t name1[5];
+  uint8_t type; //0x0f
+  uint8_t ntres;
+  uint8_t check_sum;
+  uint16_t name2[6];
+  uint16_t whatsthis;
+  uint16_t name3[2];
+}__attribute__((packed)) long_name_t;
+
 void fat_info();
 void scan_bmp();
 void print_sha();
+int get_long_name(dir_entry_t *dir, bmp_image_t *ptr); 
 
 off_t img_size;
 void* img_start;
@@ -105,18 +116,17 @@ void scan_bmp() {
     char cmd[150];
     while((uintptr_t)cur < (uintptr_t)(img_start) + img_size &&bmpcnt < 1010) {
       if(cur->extname[0] == 'B' && cur->extname[1] == 'M' && cur->extname[2] == 'P' && (uint8_t)cur->filename[0] != 0xe5) {
-        //对比目录项扩展名发现bmp图片
         bmpcnt ++;
         bmp[bmpcnt].id = bmpcnt;
         bmp[bmpcnt].start_clst = ((cur->start_hi) << 16) + cur->start_lo;
         bmp[bmpcnt].size = cur->filesz;
         strncpy(bmp[bmpcnt].full_name, cur->filename, 15);
-        /*
+        
         if(cur->ntres == 0x0) {
           int ret = get_long_name(cur, &bmp[bmpcnt]);
           if(ret == 0) {bmpcnt --;}
         }
-        */
+        
         snprintf(cmd, 150, "sha1sum %s", bmp[bmpcnt].full_name);
         system(cmd);
 
@@ -125,3 +135,32 @@ void scan_bmp() {
     }
 }
 
+int get_long_name(dir_entry_t *dir, bmp_image_t *ptr) {
+  long_name_t *cur = (long_name_t*)(((uintptr_t)dir) - sizeof(long_name_t));
+  char name[128];
+  int len = 0;
+  int ready_to_break = 0;
+  while(!ready_to_break) {
+    if(cur->type != (uint8_t)0x0f) {
+      if(name[len-1] == 'm') {
+        name[len++] = 'p';
+        break;
+      }
+      else 
+        if(name[len-1] == 'b') {
+        name[len++] = 'm'; name[len++] = 'p';
+        break;
+      }
+        else return 0;
+    }
+    if(cur->id > 0x40) ready_to_break = 1;
+    for(int i = 0; i < 5; ++i) name[len++] = (char)(cur->name1[i]);
+    for(int i = 0; i < 6; ++i) {name[len++] = (char)(cur->name2[i]);}
+    for(int i = 0; i < 2; ++i) name[len++] = (char)(cur->name3[i]);
+    Assert(len < 128, "Too long file name!");
+    cur = (long_name_t*)((uintptr_t)cur - sizeof(long_name_t));
+  }
+  name[len] = '\0';
+  strncpy(ptr->full_name, name, 128);
+  return 1;
+}
