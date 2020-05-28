@@ -102,6 +102,7 @@ int main(int argc, char *argv[]) {
 
     fat_info();
     scan_bmp();
+    print_sha();
 
     return 0;
 }
@@ -113,7 +114,7 @@ void fat_info() {
 
 void scan_bmp() {
     dir_entry_t* cur = (dir_entry_t*)root_entry;
-    char cmd[150];
+    //char cmd[150];
     while((uintptr_t)cur < (uintptr_t)(img_start) + img_size &&bmpcnt < 1010) {
       if(cur->extname[0] == 'B' && cur->extname[1] == 'M' && cur->extname[2] == 'P' && (uint8_t)cur->filename[0] != 0xe5) {
         bmpcnt ++;
@@ -146,12 +147,11 @@ int get_long_name(dir_entry_t *dir, bmp_image_t *ptr) {
         name[len++] = 'p';
         break;
       }
-      else 
-        if(name[len-1] == 'b') {
+      else if(name[len-1] == 'b') {
         name[len++] = 'm'; name[len++] = 'p';
         break;
       }
-        else return 0;
+      else return 0;
     }
     if(cur->id > 0x40) ready_to_break = 1;
     for(int i = 0; i < 5; ++i) name[len++] = (char)(cur->name1[i]);
