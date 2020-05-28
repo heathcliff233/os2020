@@ -127,8 +127,8 @@ void scan_bmp() {
           if(ret == 0) {bmpcnt --;}
         }
         
-        snprintf(cmd, 150, "sha1sum %s", bmp[bmpcnt].full_name);
-        system(cmd);
+        //snprintf(cmd, 150, "sha1sum %s", bmp[bmpcnt].full_name);
+        //system(cmd);
 
       }
       cur = (dir_entry_t*)(((uintptr_t)cur) + sizeof(dir_entry_t));
@@ -163,4 +163,13 @@ int get_long_name(dir_entry_t *dir, bmp_image_t *ptr) {
   name[len] = '\0';
   strncpy(ptr->full_name, name, 128);
   return 1;
+}
+
+void print_sha() {
+  fflush(stdout);
+  for(int i = 0; i <bmpcnt; ++i) {
+    char cmd[150];
+    snprintf(cmd, 150, "sha1sum %s", bmp[i].full_name);
+    system(cmd);
+  }
 }
