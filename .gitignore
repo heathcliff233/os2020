@@ -7,4 +7,8 @@ a.out
 a.out-*
 *-32*
 *-64*
+<<<<<<< HEAD
 *.img
+=======
+/kernel/tools/mkfs
+>>>>>>> 073d9b5f8f6009feefa9020243f5e4ea65dd2ff6
